@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-jsp-apache public
+web: java $JAVA_OPTS -jar target/dependency/humanresourcesystem-runner.jar --port $PORT target/*.war
