@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-jsp-apache public.
+web: vendor/bin/heroku-jsp-apache public
