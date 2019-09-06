@@ -7,9 +7,9 @@ import java.sql.*;
 
 public class DBConnection {
 	
-	private static final String DB_CONNECTION = "jdbc:postgres://ckqxwwkldfexal:ee20e3e7c214ad851f1573af0f8f9035ce73ffcf2c1cf8c173aa84ad26aef8d7@ec2-54-83-33-14.compute-1.amazonaws.com:5432/dba3bnrqvjmifs";
-	private static final String DB_User = "ckqxwwkldfexal";
-	private static final String DB_Password = "ee20e3e7c214ad851f1573af0f8f9035ce73ffcf2c1cf8c173aa84ad26aef8d7";
+	private static final String DB_CONNECTION = "jdbc:postgres://ec2-107-22-160-185.compute-1.amazonaws.com:5432/d5jrjtoi3jojjg";
+	private static final String DB_User = "vvweskpjovgfiy";
+	private static final String DB_Password = "5e4e5b2e57eac91647625358c8798c3a4edd5de7d5709134aa3bba178c3ee3c1";
 	
 	static Connection connection = null;
 	static PreparedStatement ps = null;
@@ -17,13 +17,7 @@ public class DBConnection {
 	public static PreparedStatement prepare(String statement) throws SQLException, URISyntaxException{
 		try {
 			Class.forName("org.postgresql.Driver");
-			URI dbURI = new URI(System.getenv("DATABASE_URL"));
-			//URI dbURI = new URI("postgres://ckqxwwkldfexal:ee20e3e7c214ad851f1573af0f8f9035ce73ffcf2c1cf8c173aa84ad26aef8d7@ec2-54-83-33-14.compute-1.amazonaws.com:5432/dba3bnrqvjmifs");
-			String username = dbURI.getUserInfo().split(":")[0];
-			String pwd = dbURI.getUserInfo().split(":")[1];
-			String url = "jdbc:postgresql://"+dbURI.getHost()+":"+dbURI.getPort()+dbURI.getPath();
-			
-			connection = DriverManager.getConnection(url, username, pwd);
+			connection = DriverManager.getConnection(DB_CONNECTION, DB_User, DB_Password);
 			connection.setAutoCommit(false);
 			ps = connection.prepareStatement(statement);
 		}catch(SQLException e) {
