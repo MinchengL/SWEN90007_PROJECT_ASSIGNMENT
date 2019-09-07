@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import database.User;
-
 /**
  * Servlet implementation class LoginServlet
  */
@@ -33,15 +31,8 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
-		int count;
-		try {
-			count = User.getUserCount();
-			PrintWriter writer = response.getWriter();
-			writer.println("<h3> The number of current users is "+count+"</h3>");
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PrintWriter writer = response.getWriter();
+		writer.println("<h3> Hello World Again????</h3>");
 		
 	}
 
