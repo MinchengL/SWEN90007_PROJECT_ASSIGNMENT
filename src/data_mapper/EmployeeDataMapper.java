@@ -13,23 +13,23 @@ import javax.print.attribute.HashAttributeSet;
 
 import database.DBConnection;
 
-public class AdminDataMapper {
+public class EmployeeDataMapper {
 	
-	public static ArrayList<Admin> searchbyid(int id){
-		String sql = "SELECT admin_id, username,firstname, lastname from admin_table WHERE admin_id ="+id;
+	public static ArrayList<Employee> searchbyid(int id){
+		String sql = "SELECT employee_id, username,firstname, lastname from employee_table WHERE employee_id ="+id;
 		Connection connection;
-		ArrayList<Admin> results = new ArrayList<Admin>();
+		ArrayList<Employee> results = new ArrayList<Employee>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				int admin_id = rs.getInt(1);
+				int employee_id = rs.getInt(1);
 				String username = rs.getString(2);
 				String firstname = rs.getString(3);
 				String lastname = rs.getString(4);
-				Admin admin = new Admin(username, firstname, lastname);
-				results.add(admin);
+				Employee employee = new Employee(username, firstname, lastname);
+				results.add(employee);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -51,7 +51,7 @@ public class AdminDataMapper {
 		{
 			value = "'"+pvalue+"'";
 		}
-		String sql = "SELECT admin_id, phonenumber, birthday, email from admin_table WHERE "+parameter+" = "+value;
+		String sql = "SELECT employee_id, phonenumber, birthday, email from employee_table WHERE "+parameter+" = "+value;
 		Connection connection = null;
 		String result = null;
 		try {
@@ -59,9 +59,9 @@ public class AdminDataMapper {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				if(target.equals("admin_id")) {
-					int admin_id = rs.getInt(1);
-					result = admin_id+"";
+				if(target.equals("employee_id")) {
+					int employee_id = rs.getInt(1);
+					result = employee_id+"";
 				}else if(target.equals("phonenumber")) {
 					int phonenumber = rs.getInt(2);
 					result = phonenumber+"";
@@ -85,14 +85,14 @@ public class AdminDataMapper {
 		return result;
 	}
 	
-	public static boolean insert(Admin admin) {
+	public static boolean insert(Employee employee) {
 		
 		Connection connection;
 		int result=0;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO admin_table (username, firstname, lastname) VALUES ( "+admin.getUserName()+",'"+admin.getFirstName()+"', '"+admin.getLastName()+")";
+			String sql= "INSERT INTO employee_table (username, firstname, lastname) VALUES ( "+employee.getUserName()+",'"+employee.getFirstName()+"', '"+employee.getLastName()+")";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -105,13 +105,13 @@ public class AdminDataMapper {
 		
 	}
 	
-	public static boolean update(Admin admin) {
+	public static boolean update(Employee employee) {
 		Connection connection;
 		int result=0;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "UPDATE admin_table SET username ='"+admin.getUserName()+ "', firstname ='"+admin.getFirstName()+"', phonenumber ="+admin.getLastName()+"WHERE admin_id ="+ admin.getUserID();
+			String sql= "UPDATE employee_table SET username ='"+employee.getUserName()+ "', firstname ='"+employee.getFirstName()+"', phonenumber ="+employee.getLastName()+"WHERE employee_id ="+ employee.getUserID();
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -125,13 +125,13 @@ public class AdminDataMapper {
 	
 	
 	
-	public static boolean delete(Admin admin) {
+	public static boolean delete(Employee employee) {
 		Connection connection;
 		int result=0;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "DELETE FROM public.admin_table WHERE admin_id = "+admin.getUserID();
+			String sql= "DELETE FROM public.employee_table WHERE employee_id = "+employee.getUserID();
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
