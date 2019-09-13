@@ -9,7 +9,7 @@ import java.util.Date;
 
 import models.Department;
 
-abstract class User {
+public abstract class User {
 	
 	private String userName = null;
 	private String passWord = null;
@@ -21,15 +21,13 @@ abstract class User {
 	private Date birthday = null;
 	private String email = null;
 	
-	public User(String userName, String passWord, String firstName, String lastName, ArrayList<Department> department)
+	public User(String userName, String firstName, String lastName)
 	{
 		//userID should be generated automatically here.
 		//There could be different rewrite methods with different parameters.
 		this.userName = userName;
-		this.passWord = passWord;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.department = department;
 	}
 	
 	public String getUserName() {

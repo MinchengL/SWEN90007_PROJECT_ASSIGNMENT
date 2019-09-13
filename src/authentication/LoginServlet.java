@@ -1,6 +1,7 @@
 package authentication;
 
 import java.io.IOException;
+import service_layer.feature_a;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
@@ -32,8 +33,9 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html");
+		String count = feature_a.getUserNum();
 		PrintWriter writer = response.getWriter();
-		writer.println("<h3> hello world HHHHHHHH</h3>");
+		writer.println("<h3>"+count+"</h3>");
 	}
 
 	/**

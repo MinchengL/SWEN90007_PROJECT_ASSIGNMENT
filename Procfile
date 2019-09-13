@@ -1,1 +1,1 @@
-web: java -jar target/humanresourcesystem.jar --port $PORT
+web: java -jar target/humanresourcesystem.jar --port $PORT target/*.war

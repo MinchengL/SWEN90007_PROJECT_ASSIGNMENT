@@ -15,9 +15,8 @@ public class Admin extends User{
 	private Date birthday = null;
 	private String email = null;
 
-	public Admin(String userName, String passWord, String firstName, String lastName,
-			ArrayList<Department> department) {
-		super(userName, passWord, firstName, lastName, department);
+	public Admin(String userName, String firstName, String lastName) {
+		super(userName, firstName, lastName);
 		// TODO Auto-generated constructor stub
 	}
 
