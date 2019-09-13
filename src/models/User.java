@@ -18,7 +18,7 @@ public abstract class User {
 	private String lastName = null;
 	private ArrayList<Department> department = new ArrayList<Department>();
 	private int phoneNumber;
-	private Date birthday = null;
+	private String birthday = null;
 	private String email = null;
 	
 	public User(String userName, String firstName, String lastName)
@@ -66,10 +66,10 @@ public abstract class User {
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 	public String getEmail() {

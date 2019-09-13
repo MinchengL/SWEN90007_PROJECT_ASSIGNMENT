@@ -42,37 +42,25 @@ public class EmployeeDataMapper {
 		return results;
 	}
 
-	public static String searchfordetails(String parameter, String pvalue, String target) {
-		if(parameter.equals(target)) {
-			System.out.println("The search target shoudl not be the input.");
-		}
+	public static HashMap<String, String> searchfordetails(String parameter, String pvalue) {
 		String value = pvalue;
 		if(parameter.equals("name"))
 		{
 			value = "'"+pvalue+"'";
 		}
-		String sql = "SELECT employee_id, phonenumber, birthday, email from employee_table WHERE "+parameter+" = "+value;
+		String sql = "SELECT employee_id, phonenumber, birthday, email, password from employee_table WHERE "+parameter+" = "+value;
 		Connection connection = null;
-		String result = null;
+		HashMap<String, String> result = new HashMap<>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				if(target.equals("employee_id")) {
-					int employee_id = rs.getInt(1);
-					result = employee_id+"";
-				}else if(target.equals("phonenumber")) {
-					int phonenumber = rs.getInt(2);
-					result = phonenumber+"";
-				}
-				else if (target.equals("birthday")) {
-					String birthday = rs.getString(4);
-					result = birthday;
-				}else {
-					String email = rs.getString(3);
-					result = email;
-				}
+				result.put("employee_id", rs.getInt(1)+"");
+				result.put("phonenumber",rs.getInt(2)+"");
+				result.put("birthday", rs.getString(3));
+				result.put("email", rs.getString(4));
+				result.put("password", rs.getString(5));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -81,7 +69,6 @@ public class EmployeeDataMapper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(result);
 		return result;
 	}
 	
