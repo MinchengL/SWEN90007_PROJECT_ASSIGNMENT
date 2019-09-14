@@ -7,7 +7,7 @@ import models.*;
 public class EmployeeIdentityMap {
 	
 	private static EmployeeIdentityMap employeeIdentityMap = null;
-	private static Map<Long, Employee> map = new HashMap<>();
+	private static Map<String, Employee> map = new HashMap<>();
 
 	private EmployeeIdentityMap() {}
 	
@@ -18,12 +18,12 @@ public class EmployeeIdentityMap {
 		return employeeIdentityMap;
 	}
 	
-	public void put(long id, Employee e) {
-		map.put(id, e);
+	public void put(String username, Employee e) {
+		map.put(username, e);
 	}
 	
-	public Employee get(long id) {
-		return map.get(id);
+	public Employee get(String username) {
+		return map.get(username);
 	}
 	
 

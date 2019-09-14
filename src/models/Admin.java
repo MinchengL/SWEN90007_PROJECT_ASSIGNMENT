@@ -11,7 +11,7 @@ import unitofwork.unitofworkAdmin;
 public class Admin extends User{
 	
 	private String userName = null;
-	private String passWord = null;
+	private String passWord;
 	private int userID = 0; // corresponds to id in database
 	private String firstName = null;
 	private String lastName = null;
@@ -20,8 +20,13 @@ public class Admin extends User{
 	private String birthday = null;
 	private String email = null;
 
+	public Admin(String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email) {
+		super(userName, passWord, firstName, lastName, phoneNumber, birthday, email);
+		unitofworkAdmin.getCurrent().registerNew(this);
+	}
 	public Admin(int UserID, String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email, ArrayList<Department> department) {
 		super(UserID, userName, passWord,firstName, lastName, phoneNumber, birthday, email);
+		this.passWord = passWord;
 		this.department = department;
 	}
 	
@@ -30,11 +35,12 @@ public class Admin extends User{
 		unitofworkAdmin.getCurrent().registerDirty(this);
 	}
 	public String getPassWord() {
-		if(passWord == null)
+		if(this.passWord == "")
 		{
 			load();
 		}
-		return passWord;
+		System.out.println(this.passWord);
+		return this.passWord;
 	}
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;

@@ -7,7 +7,7 @@ import models.*;
 public class AdminIdentityMap {
 	
 	private static AdminIdentityMap adminIdentityMap = null;
-	private static Map<Long, Admin> map = new HashMap<>();
+	private static Map<String, Admin> map = new HashMap<>();
 
 	private AdminIdentityMap() {}
 	
@@ -18,12 +18,12 @@ public class AdminIdentityMap {
 		return adminIdentityMap;
 	}
 	
-	public void put(long id, Admin e) {
-		map.put(id, e);
+	public void put(String username, Admin e) {
+		map.put(username, e);
 	}
 	
-	public Admin get(long id) {
-		return map.get(id);
+	public Admin get(String username) {
+		return map.get(username);
 	}
 	
 

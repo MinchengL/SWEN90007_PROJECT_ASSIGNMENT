@@ -34,7 +34,7 @@ public class EmployeeDataMapper {
 				int phoneNumber = rs.getInt(7);
 				String birthday = rs.getString(8);
 				String email = rs.getString(9);
-				Department department = loadDepartment(department_id);
+				Department department = DepartmentDataMapper.search("department_id", department_id+"");
 				employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
 			}
 		} catch (SQLException e) {
@@ -45,6 +45,38 @@ public class EmployeeDataMapper {
 			e.printStackTrace();
 		}
 		return employee;
+	}
+	
+	public static ArrayList<Employee> searchbydepartment(int departmentid){
+		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE department_id = "+departmentid;
+		Connection connection;
+		ArrayList<Employee> employees = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int employee_id = rs.getInt(1);
+				String username = rs.getString(2);
+				String password = rs.getString(3);
+				String firstname = rs.getString(4);
+				String lastname = rs.getString(5);
+				int department_id = rs.getInt(6);
+				int phoneNumber = rs.getInt(7);
+				String birthday = rs.getString(8);
+				String email = rs.getString(9);
+				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+				employees.add(employee);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return employees;
 	}
 	
 	public static boolean insert(Employee employee) {

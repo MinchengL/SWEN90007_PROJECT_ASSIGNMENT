@@ -46,10 +46,10 @@ public class LoginServlet extends HttpServlet {
 		User user = service.loginUser(username, password);
 		
 		if(user == null) {
-			response.sendRedirect("/loginFailed.jsp");
+			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
 		}
 		else {
-			response.sendRedirect("/departmentManagement.jsp");
+			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 		}
 
 	}
