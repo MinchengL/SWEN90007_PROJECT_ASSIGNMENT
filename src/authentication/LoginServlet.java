@@ -1,9 +1,11 @@
 package authentication;
 
 import service_layer.*;
-import models.User;
+import models.*;
+import data_mapper.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -39,9 +41,9 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		String username = null;
-		username = request.getParameter(username);
+		username = request.getParameter("username");
 		String password = null;
-		password = request.getParameter(password);
+		password = request.getParameter("password");
 		IUserService service = new UserServiceImpl();
 		User user = service.loginUser(username, password);
 		
@@ -49,6 +51,9 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
 		}
 		else {
+			int userType = service.getUsertype(username, password);
+			request.getSession().setAttribute("user", user);
+			request.getSession().setAttribute("usertype", userType);
 			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 		}
 

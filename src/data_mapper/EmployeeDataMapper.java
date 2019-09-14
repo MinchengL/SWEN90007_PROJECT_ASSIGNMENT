@@ -17,7 +17,7 @@ import database.DBConnection;
 public class EmployeeDataMapper {
 	
 	public static Employee search(String name){
-		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE name = '"+name+"'";
+		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE username = '"+name+"'";
 		Connection connection;
 		Employee employee=null;
 		try {

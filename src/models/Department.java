@@ -19,6 +19,10 @@ public class Department {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.location = location;
+		System.out.println(unitofworkDepartment.getCurrent() == null);
+		if(unitofworkDepartment.getCurrent()==null) {
+			unitofworkDepartment.newCurrent();
+		}
 		unitofworkDepartment.getCurrent().registerNew(this);
 	}
 	public Department(int departmentID, String name, int phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {

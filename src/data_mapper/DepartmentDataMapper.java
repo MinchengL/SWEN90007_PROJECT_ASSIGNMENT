@@ -15,6 +15,36 @@ import models.Employee;
 
 public class DepartmentDataMapper {
 	
+	public static ArrayList<Department> loadAllDepartment(){
+		String sql = "SELECT * from department_table";
+		Connection connection = null;
+		ArrayList<Department> resList = new ArrayList<>();
+		Department result = null;
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int department_id = rs.getInt(1);
+				String name = rs.getString(2);
+				String location = rs.getString(3);
+				int phoneNumber = rs.getInt(4);
+				
+				ArrayList<Admin> admins = loadAdmins(department_id);
+				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
+				result = new Department(department_id,name, phoneNumber, location, admins, employees);
+				resList.add(result);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resList;
+	}
+	
 	public static Department search(String parameter, String pvalue){
 		String value = pvalue;
 		if(parameter.equals("name"))
@@ -99,7 +129,7 @@ public class DepartmentDataMapper {
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO department_table (department_id, name, location, phonenumber) VALUES ( "+department.getDepartmentID()+",'"+department.getName()+"', '"+department.getLocation()+"', "+department.getPhoneNumber()+")";
+			String sql= "INSERT INTO department_table (name, location, phonenumber) VALUES ('"+department.getName()+"', '"+department.getLocation()+"', "+department.getPhoneNumber()+")";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

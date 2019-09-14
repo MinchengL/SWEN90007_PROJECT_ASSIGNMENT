@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import IdentityMap.DepartmentIdentityMap;
+import unitofwork.*;
 
 /**
  * Servlet implementation class DatabaseInitializationServlet
@@ -37,7 +38,10 @@ public class DatabaseInitializationServlet extends HttpServlet {
     
     public void init() throws ServletException{
     		
-    		//Database_Initailisation.initailize_dataset();
+    		Database_Initailisation.initailize_dataset();
+    		unitofworkAdmin.newCurrent();
+    		unitofworkDepartment.newCurrent();
+    		unitofworkEmployee.newCurrent();
     		//System.out.println(feature_a.loginbyAdmin("jack", "1234").getLastName());
 	}
 
