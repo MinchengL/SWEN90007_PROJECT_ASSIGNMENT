@@ -1,18 +1,12 @@
 package data_mapper;
 
 import java.net.URISyntaxException;
-import java.rmi.server.LoaderHandler;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLNonTransientConnectionException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
-
-import com.sun.glass.ui.TouchInputSupport;
 
 import database.DBConnection;
 import models.Admin;

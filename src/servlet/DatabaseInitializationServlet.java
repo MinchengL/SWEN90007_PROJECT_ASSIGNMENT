@@ -37,7 +37,7 @@ public class DatabaseInitializationServlet extends HttpServlet {
     
     public void init() throws ServletException{
     		
-    		Database_Initailisation.initailize_dataset();
+    		//Database_Initailisation.initailize_dataset();
     		//System.out.println(feature_a.loginbyAdmin("jack", "1234").getLastName());
 	}
 

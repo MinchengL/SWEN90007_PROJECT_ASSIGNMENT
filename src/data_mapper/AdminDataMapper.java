@@ -13,8 +13,6 @@ import java.util.Set;
 import javax.print.attribute.HashAttributeSet;
 
 import database.DBConnection;
-import javafx.beans.binding.When;
-import javafx.scene.web.WebHistory;
 
 public class AdminDataMapper {
 	
