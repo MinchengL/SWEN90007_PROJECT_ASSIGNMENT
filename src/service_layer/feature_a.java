@@ -71,6 +71,10 @@ public class feature_a {
 		return DepartmentDataMapper.loadAllDepartment();
 	}
 	
+	public static Department getDepartment(String id) {
+		return DepartmentDataMapper.search("department_id", id);
+	}
+	
 	public static void addDepartment(String name, int phoneNumber, String location) {
 		Department department = new Department(name, phoneNumber, location);
 		if(unitofworkDepartment.getCurrent()==null) {
@@ -80,12 +84,15 @@ public class feature_a {
 		
 	}
 	
-	public static void editDepartment() {
+	public static void editDepartment(String name, int phoneNumber, String location) {
 		
 	}
 	
-	public static void deleteDepartment(int id) {
-
+	public static void deleteDepartment(String id) {
+		Department department = DepartmentDataMapper.search("department_id", id);
+		if(unitofworkDepartment.getCurrent()==null) {
+			unitofworkDepartment.newCurrent();
+		}
 	}
 	
 }

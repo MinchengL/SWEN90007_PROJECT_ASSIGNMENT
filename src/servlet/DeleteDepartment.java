@@ -1,5 +1,8 @@
 package servlet;
 
+import data_mapper.DepartmentDataMapper;
+import service_layer.*;
+import models.Department;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +30,10 @@ public class DeleteDepartment extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getParameter("id"));
+		String id = request.getParameter("id");
+		feature_a.deleteDepartment(id);
+		
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 	}
 
 	/**

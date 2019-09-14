@@ -42,11 +42,11 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= dptlist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= dptlist.get(i).getLocation() %></td>
 			 <td>
-			 <form action="EditDepartment" method="post">
 			 <a href="EditDepartment?id=<%=dptlist.get(i).getDepartmentID()%>">Edit</a>
-			 </form>
 			 </td>
-			 <td><a  href="DeleteDepartment?id=<%=dptlist.get(i).getDepartmentID()%>">Delete</a></td>
+			 <td>
+			 <a  href="DeleteDepartment?id=<%=dptlist.get(i).getDepartmentID()%>">Delete</a>
+			 </td>
 		 </tr>
 <% }
  %>
