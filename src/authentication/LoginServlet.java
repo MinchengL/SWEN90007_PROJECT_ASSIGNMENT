@@ -1,7 +1,8 @@
 package authentication;
 
+import service_layer.*;
+import models.User;
 import java.io.IOException;
-import service_layer.feature_a;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
@@ -14,14 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SimpleServlet
  */
+@WebServlet(
+		"/LoginServlet"
+		)
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String usernamed;
-	private String passwordd;
+	private String username;
+	private String password;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
+
     public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -32,10 +37,21 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		String count = feature_a.getUserNum();
-		PrintWriter writer = response.getWriter();
-		writer.println("<h3>"+count+"</h3>");
+		response.setContentType("text/html;charset=UTF-8");
+		String username = null;
+		username = request.getParameter(username);
+		String password = null;
+		password = request.getParameter(password);
+		IUserService service = new UserServiceImpl();
+		User user = service.loginUser(username, password);
+		
+		if(user == null) {
+			response.sendRedirect("/loginFailed.jsp");
+		}
+		else {
+			response.sendRedirect("/departmentManagement.jsp");
+		}
+
 	}
 
 	/**
