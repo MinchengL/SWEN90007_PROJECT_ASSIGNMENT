@@ -1,12 +1,14 @@
 package data_mapper;
 
 import java.net.URISyntaxException;
+import java.rmi.server.LoaderHandler;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientConnectionException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
@@ -15,10 +17,11 @@ import com.sun.glass.ui.TouchInputSupport;
 import database.DBConnection;
 import models.Admin;
 import models.Department;
+import models.Employee;
 
 public class DepartmentDataMapper {
 	
-	public static ArrayList<Department> search(String parameter, String pvalue){
+	public static Department search(String parameter, String pvalue){
 		String value = pvalue;
 		if(parameter.equals("name"))
 		{
@@ -26,7 +29,7 @@ public class DepartmentDataMapper {
 		}
 		String sql = "SELECT department_id, name, phoneNumber, location from department_table WHERE "+parameter+" = "+value;
 		Connection connection = null;
-		ArrayList<Department> results = new ArrayList<Department>();
+		Department results = null;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
@@ -36,8 +39,9 @@ public class DepartmentDataMapper {
 				String name = rs.getString(2);
 				int phoneNumber = rs.getInt(3);
 				String location = rs.getString(4);
-				Department department = new Department(department_id,name, phoneNumber, location);
-				results.add(department);
+				ArrayList<Admin> admins = loadAdmins(department_id);
+				ArrayList<Employee> employees = loadEmployees(department_id);
+				results = new Department(department_id,name, phoneNumber, location, admins, employees);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -46,41 +50,41 @@ public class DepartmentDataMapper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(results.size());
 		return results;
 	}
 	
-	public static String searchfordetails(String parameter, String pvalue, String target) {
-		if(parameter.equals(target)) {
-			System.out.println("The search target shoudl not be the input.");
+	private static ArrayList<Admin> loadAdmins(int department_id) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		ArrayList<Admin> admins = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement= connection.createStatement();
+			String sql = "SELECT admin_id from admin_department_table WHERE department_id = "+department_id;
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int admin_id = rs.getInt(1);
+				Admin admin = AdminDataMapper.search("admin_id", admin_id+"");
+				admins.add(admin);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
-		String value = pvalue;
-		if(parameter.equals("name"))
-		{
-			value = "'"+pvalue+"'";
-		}
-		String sql = "SELECT department_id, name, phoneNumber, location from department_table WHERE "+parameter+" = "+value;
+		return admins;
+	}
+
+	public static ArrayList<Integer> searchforadmins(int id){
+		String sql = "SELECT admin_id from department_table WHERE id = "+id;
 		Connection connection = null;
-		String result = null;
+		ArrayList<Integer> results = new ArrayList<>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				if(target.equals("department_id")) {
-					int department_id = rs.getInt(1);
-					result = department_id+"";
-				}else if(target.equals("name")) {
-					String name = rs.getString(2);
-					result = name;
-				}
-				else if (target.equals("location")) {
-					String location = rs.getString(4);
-					result = location;
-				}else {
-					int phoneNumber = rs.getInt(3);
-					result = ""+phoneNumber;
-				}
+				int admin_id = rs.getInt(1);
+				results.add(admin_id);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -89,9 +93,9 @@ public class DepartmentDataMapper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(result);
-		return result;
+		return results;
 	}
+	
 	
 	public static boolean insert(Department department) {
 		
@@ -121,6 +125,7 @@ public class DepartmentDataMapper {
 			Statement statement = connection.createStatement();
 			String sql= "UPDATE department_table SET name ='"+department.getName()+ "', location ='"+department.getName()+"', phonenumber ="+department.getPhoneNumber()+"WHERE department_id ="+ department.getDepartmentID();
 			result = statement.executeUpdate(sql);
+			updateAdminList(department);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -133,6 +138,40 @@ public class DepartmentDataMapper {
 	
 	
 	
+	private static void updateAdminList(Department department) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		int result=0;
+		try {
+			ArrayList<Admin> admins = new ArrayList<>();
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			String sql= "SELECT from admin_id from admin_department_table WHERE department_id ="+ department.getDepartmentID();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int admin_id = rs.getInt(1);
+				for(Admin admin:department.getAdmins()) {
+					if(admin.getUserID()!=admin_id) {
+						admins.add(admin);
+					}
+				}
+			}
+			Statement statement2 = connection.createStatement();
+			for(Admin admin: admins) {
+				String sql2= "INSERT INTO admin_department_table(admin_id, department_id) VALUES ("+admin.getUserID()+","+department.getDepartmentID()+")";
+				result = statement2.executeUpdate(sql2);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static boolean delete(Department department) {
 		Connection connection;
 		int result=0;

@@ -16,18 +16,24 @@ public abstract class User {
 	private int userID; // corresponds to id in database
 	private String firstName = null;
 	private String lastName = null;
-	private ArrayList<Department> department = new ArrayList<Department>();
+	//private ArrayList<Department> department = new ArrayList<Department>();
 	private int phoneNumber;
 	private String birthday = null;
 	private String email = null;
 	
-	public User(String userName, String firstName, String lastName)
+	public User(int userID, String userName, String password, String firstName, String lastName, int phoneNumber, String birthday, String email)
 	{
 		//userID should be generated automatically here.
 		//There could be different rewrite methods with different parameters.
 		this.userName = userName;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.userID = userID;
+		this.passWord = password;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
+		
 	}
 	
 	public String getUserName() {
@@ -53,12 +59,6 @@ public abstract class User {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public ArrayList<Department> getDepartment() {
-		return department;
-	}
-	public void setDepartment(ArrayList<Department> department) {
-		this.department = department;
 	}
 	public int getPhoneNumber() {
 		return phoneNumber;

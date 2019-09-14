@@ -20,9 +20,9 @@ public class Admin extends User{
 	private String birthday = null;
 	private String email = null;
 
-	public Admin(String userName, String firstName, String lastName) {
-		super(userName, firstName, lastName);
-		// TODO Auto-generated constructor stub
+	public Admin(int UserID, String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email, ArrayList<Department> department) {
+		super(UserID, userName, passWord,firstName, lastName, phoneNumber, birthday, email);
+		this.department = department;
 	}
 	
 	public void setUserName(String userName) {
@@ -89,27 +89,40 @@ public class Admin extends User{
 		return userID;
 	}
 	
+	public ArrayList<Department> getDepartment() {
+		if(department.size()==0) {
+			load();
+		}
+		return department;
+	}
+
+	public void setDepartment(ArrayList<Department> department) {
+		this.department = department;
+		unitofworkAdmin.getCurrent().registerDirty(this);
+	}
+
 	public void load() {
-		HashMap<String, String> map = new HashMap<>();
-		map = AdminDataMapper.searchfordetails("username", this.userName);
+		Admin admin = AdminDataMapper.search("username", this.userName);
 		if(passWord == null)
 		{
-			this.passWord = map.get("password");
+			this.passWord =admin.getPassWord();
 		}
 		if(phoneNumber == 0)
 		{
-			this.phoneNumber = Integer.parseInt(map.get("phonenumber"));
+			this.phoneNumber =admin.getPhoneNumber();
 		}
 		if(birthday==null) {
-			this.birthday = map.get("birthday");
+			this.birthday = admin.getBirthday();
 		}
 		if(email==null) {
-			this.email = map.get("email");
+			this.email = admin.getEmail();
 		}
 		if(userID==0) {
-			this.userID = Integer.parseInt(map.get("admin_id"));
+			this.userID = admin.getUserID();
 		}
-		
+		if(department.size()==0) {
+			this.department = admin.getDepartment();
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ import unitofwork.unitofworkDepartment;
 import database.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,17 +35,17 @@ public class DatabaseInitializationServlet extends HttpServlet {
     public void init() throws ServletException{
     		
     		Database_Initailisation.initailize_dataset();
-    		//Department department = new Department();
     		DepartmentIdentityMap identityMap = DepartmentIdentityMap.getInstance();
     		unitofworkDepartment.newCurrent();
     		Department department = identityMap.get(1);
     		if(department == null) {
-    			department = DepartmentDataMapper.search("department_id", "1").get(0);
-    			identityMap.put(1, department);
+    			HashMap<String, String> result= DepartmentDataMapper.search("name", "IT");
+    			department = new Department(Integer.parseInt(result.get("department_id")), result.get("name"), Integer.parseInt(result.get("phoneNumber")),result.get("location"));
+    			identityMap.put(department.getDepartmentID(), department);
     		}
-    		System.out.println(identityMap.get(1).getName());
-    		department.setPhoneNumber(12345690);
-    		unitofworkDepartment.getCurrent().commit();
+    		System.out.println(identityMap.get(1).getLocation());
+    		//department.setPhoneNumber(12345690);
+    		//unitofworkDepartment.getCurrent().commit();
     		
     		
 	}

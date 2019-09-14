@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import unitofwork.unitofworkDepartment;
 import data_mapper.DepartmentDataMapper;
@@ -20,17 +21,19 @@ public class Department {
 		this.location = location;
 		unitofworkDepartment.getCurrent().registerNew(this);
 	}
-	public Department(int departmentID, String name, int phoneNumber, String location) {
+	public Department(int departmentID, String name, int phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {
 		this.departmentID=departmentID;
 		this.name=name;
 		this.phoneNumber=phoneNumber;
 		this.location=location;
+		this.admins=admins;
+		this.employees = employees;
 	}
 	
 	public int getDepartmentID() {
 		if(this.departmentID == 0) {
-			String result = DepartmentDataMapper.searchfordetails("name", this.name, "department_id");
-			this.departmentID = Integer.parseInt(result);
+			Department result = DepartmentDataMapper.search("name", this.name);
+			this.departmentID =result.getDepartmentID();
 		}
 		return departmentID;
 	}
@@ -38,10 +41,6 @@ public class Department {
 		this.departmentID = departmentid;
 	}
 	public String getName() {
-		if(this.name== null) {
-			String result = DepartmentDataMapper.searchfordetails("department_id", this.name, "department_id");
-			this.departmentID = Integer.parseInt(result);
-		}
 		return name;
 	}
 	public void setName(String name) {
@@ -70,9 +69,14 @@ public class Department {
 		this.employees.add(employee);
 	}
 	public ArrayList<Admin> getAdmins() {
+		if(admins.size()==0) {
+			Department result = DepartmentDataMapper.search("name", this.name);
+			this.admins =result.getAdmins();
+		}
 		return admins;
 	}
 	public void setAdmins(Admin admin) {
 		this.admins.add(admin);
+		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
 }
