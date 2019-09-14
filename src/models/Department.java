@@ -32,8 +32,7 @@ public class Department {
 	
 	public int getDepartmentID() {
 		if(this.departmentID == 0) {
-			Department result = DepartmentDataMapper.search("name", this.name);
-			this.departmentID =result.getDepartmentID();
+			load();
 		}
 		return departmentID;
 	}
@@ -63,20 +62,32 @@ public class Department {
 		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
 	public ArrayList<Employee> getEmployees() {
+		if(employees.size()==0) {
+			load();
+		}
 		return employees;
-	}
-	public void setEmployees(Employee employee) {
-		this.employees.add(employee);
 	}
 	public ArrayList<Admin> getAdmins() {
 		if(admins.size()==0) {
-			Department result = DepartmentDataMapper.search("name", this.name);
-			this.admins =result.getAdmins();
+			load();
 		}
 		return admins;
 	}
 	public void setAdmins(Admin admin) {
 		this.admins.add(admin);
 		unitofworkDepartment.getCurrent().registerDirty(this);
+	}
+	private void load() {
+		// TODO Auto-generated method stub
+		Department result = DepartmentDataMapper.search("name", this.name);
+		if(this.departmentID==0) {
+			this.departmentID = result.getDepartmentID();
+		}
+		if(this.employees.size()==0) {
+			this.employees = result.getEmployees();
+		}
+		if(this.admins.size()==0) {
+			this.admins = result.getAdmins();
+		}
 	}
 }

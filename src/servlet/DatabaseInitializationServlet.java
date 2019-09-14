@@ -35,6 +35,7 @@ public class DatabaseInitializationServlet extends HttpServlet {
     public void init() throws ServletException{
     		
     		Database_Initailisation.initailize_dataset();
+    		/*
     		DepartmentIdentityMap identityMap = DepartmentIdentityMap.getInstance();
     		unitofworkDepartment.newCurrent();
     		Department department = identityMap.get(1);
@@ -46,6 +47,8 @@ public class DatabaseInitializationServlet extends HttpServlet {
     		System.out.println(identityMap.get(1).getLocation());
     		//department.setPhoneNumber(12345690);
     		//unitofworkDepartment.getCurrent().commit();
+    		 * 
+    		 */
     		
     		
 	}

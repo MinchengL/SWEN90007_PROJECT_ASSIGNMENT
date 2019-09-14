@@ -40,7 +40,7 @@ public class DepartmentDataMapper {
 				int phoneNumber = rs.getInt(3);
 				String location = rs.getString(4);
 				ArrayList<Admin> admins = loadAdmins(department_id);
-				ArrayList<Employee> employees = loadEmployees(department_id);
+				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
 				results = new Department(department_id,name, phoneNumber, location, admins, employees);
 			}
 		} catch (SQLException e) {
@@ -53,6 +53,7 @@ public class DepartmentDataMapper {
 		return results;
 	}
 	
+
 	private static ArrayList<Admin> loadAdmins(int department_id) {
 		// TODO Auto-generated method stub
 		Connection connection;

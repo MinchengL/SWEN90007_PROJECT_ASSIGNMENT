@@ -116,22 +116,16 @@ public class Employee extends User{
 			this.phoneNumber = employee.getPhoneNumber();
 		}
 		if(birthday==null) {
-			this.birthday = map.get("birthday");
+			this.birthday = employee.getBirthday();
 		}
 		if(email==null) {
-			this.email = map.get("email");
+			this.email = employee.getEmail();
 		}
 		if(userID==0) {
-			this.userID = Integer.parseInt(map.get("admin_id"));
+			this.userID = employee.getUserID();
 		}
 		if(department==null) {
-			int department_id = Integer.parseInt(map.get("department_id"));
-			this.department = DepartmentIdentityMap.getInstance().get(department_id);
-			if(this.department==null) {
-				HashMap<String, String> result= DepartmentDataMapper.search("name", "IT");
-    				department = new Department(Integer.parseInt(result.get("department_id")), result.get("name"), Integer.parseInt(result.get("phonenumber")),result.get("location"));
-    				DepartmentIdentityMap.getInstance().put(department.getDepartmentID(), department);
-			}
+			this.department = employee.getDepartment();
 		}
 		
 	}
