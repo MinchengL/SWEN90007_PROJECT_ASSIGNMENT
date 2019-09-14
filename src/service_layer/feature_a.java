@@ -80,4 +80,12 @@ public class feature_a {
 		
 	}
 	
+	public static void editDepartment() {
+		
+	}
+	
+	public static void deleteDepartment(int id) {
+
+	}
+	
 }

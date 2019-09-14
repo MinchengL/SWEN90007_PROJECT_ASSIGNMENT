@@ -20,7 +20,7 @@
                     </tr>
                 </table>
             <br>
-                <input type="submit" value="Login" style="color:#BC8F8F">
+                <input type="submit" value="Login">
             </form>
     </div>
 </body>
