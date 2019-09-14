@@ -36,6 +36,15 @@ public abstract class User {
 		
 	}
 	
+	public User(String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
+	}
+	
 	public String getUserName() {
 		return userName;
 	}

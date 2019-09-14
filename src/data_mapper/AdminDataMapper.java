@@ -20,7 +20,7 @@ public class AdminDataMapper {
 	
 	public static Admin search(String parameter, String pvalue){
 		String value = pvalue;
-		if(parameter.equals("name"))
+		if(parameter.equals("username"))
 		{
 			value = "'"+pvalue+"'";
 		}
@@ -82,8 +82,8 @@ public class AdminDataMapper {
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO admin_table (admin_id, username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
-						+admin.getUserID()+",'"+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
+			String sql= "INSERT INTO admin_table (username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
+						+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
 						+"',"+admin.getPhoneNumber()+",'"+admin.getBirthday()+"','"+admin.getEmail()+"')";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
