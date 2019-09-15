@@ -6,6 +6,7 @@ import data_mapper.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -48,13 +49,17 @@ public class LoginServlet extends HttpServlet {
 		User user = service.loginUser(username, password);
 		
 		if(user == null) {
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			//response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			response.sendRedirect("/loginFailed.jsp");
 		}
 		else {
 			int userType = service.getUsertype(username, password);
+			Logger logger = Logger.getAnonymousLogger();
+			logger.info("usertype is "+userType);
 			request.getSession().setAttribute("user", user);
 			request.getSession().setAttribute("usertype", userType);
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+			//response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+			response.sendRedirect("/departmentManagement.jsp");
 		}
 
 	}

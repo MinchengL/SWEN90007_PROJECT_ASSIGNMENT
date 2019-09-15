@@ -37,7 +37,7 @@ public class SearchDepartmentServlet extends HttpServlet {
 		request.getSession().setAttribute("searchDepartment", str);
 		ArrayList<Department> departments = SystemService.searchDepartment(str);
 
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 
 	}
 

@@ -38,7 +38,7 @@ public class EditDepartmentServlet extends HttpServlet {
 		Department department = SystemService.getDepartment(id);
 		request.getSession().setAttribute("department", department);
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editDepartment.jsp");
+		response.sendRedirect("/editDepartment.jsp");
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class EditDepartmentServlet extends HttpServlet {
 		Department department = SystemService.getDepartment(id);
 		SystemService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 }

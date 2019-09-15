@@ -33,7 +33,7 @@ public class DeleteDepartmentServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		SystemService.deleteDepartment(id);
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 	/**
