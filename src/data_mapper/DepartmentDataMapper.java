@@ -126,10 +126,18 @@ public class DepartmentDataMapper {
 		
 		Connection connection;
 		int result=0;
+		int max_id = 0;
 		try {
 			connection = DBConnection.getConnection();
+			Statement id_statement =connection.createStatement();
+			String id_sql = "SELECT MAX(department_id) from department_table";
+			ResultSet rs = id_statement.executeQuery(id_sql);
+			while(rs.next()) {
+				max_id = rs.getInt(1);
+			}
+			int id = max_id+1;
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO department_table (name, location, phonenumber) VALUES ('"+department.getName()+"', '"+department.getLocation()+"', "+department.getPhoneNumber()+")";
+			String sql= "INSERT INTO department_table (department_id, name, location, phonenumber) VALUES ("+id+",'"+department.getName()+"', '"+department.getLocation()+"', "+department.getPhoneNumber()+")";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -148,7 +156,7 @@ public class DepartmentDataMapper {
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "UPDATE department_table SET name ='"+department.getName()+ "', location ='"+department.getName()+"', phonenumber ="+department.getPhoneNumber()+"WHERE department_id ="+ department.getDepartmentID();
+			String sql= "UPDATE department_table SET name ='"+department.getName()+ "', location ='"+department.getLocation()+"', phonenumber ="+department.getPhoneNumber()+"WHERE department_id ="+ department.getDepartmentID();
 			result = statement.executeUpdate(sql);
 			updateAdminList(department);
 		} catch (SQLException e) {
@@ -171,7 +179,7 @@ public class DepartmentDataMapper {
 			ArrayList<Admin> admins = new ArrayList<>();
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "SELECT from admin_id from admin_department_table WHERE department_id ="+ department.getDepartmentID();
+			String sql= "SELECT admin_id from admin_department_table WHERE department_id ="+ department.getDepartmentID();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
 				int admin_id = rs.getInt(1);

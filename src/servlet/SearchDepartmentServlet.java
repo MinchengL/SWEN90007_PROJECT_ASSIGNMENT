@@ -1,8 +1,6 @@
 package servlet;
 
-import data_mapper.DepartmentDataMapper;
 import service_layer.*;
-import models.Department;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DeleteDepartment
+ * Servlet implementation class SearchDepartmentServlet
  */
-@WebServlet("/DeleteDepartmentServlet")
-public class DeleteDepartmentServlet extends HttpServlet {
+@WebServlet("/SearchDepartmentServlet")
+public class SearchDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteDepartmentServlet() {
+    public SearchDepartmentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,10 +28,9 @@ public class DeleteDepartmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String id = request.getParameter("id");
-		SystemService.deleteDepartment(id);
-		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		String str = request.getParameter("searchDepartment");
+		SystemService.searchDepartment(str);
+
 	}
 
 	/**

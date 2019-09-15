@@ -63,6 +63,9 @@ public class Department {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+		if(unitofworkDepartment.getCurrent()==null) {
+			unitofworkDepartment.newCurrent();
+		}
 		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
 	public ArrayList<Employee> getEmployees() {

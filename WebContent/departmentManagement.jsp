@@ -20,12 +20,24 @@ import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="se
 User user = (User)session.getAttribute("user");
 String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
-ArrayList<Department> dptlist = feature_a.getAllDepartment();
+String type = usertype == 1 ? "admin" : "employee";
+ArrayList<Department> dptlist = SystemService.getAllDepartment();
 int len = dptlist.size();
  %>
  
- <%= username %> + <%= usertype %>
+ <%= username %> + <%= type %>
+ 
+<form id="searchform" name="/searchForm" action="LoginServlet" method="post">
+                <table border="0">
+                    <tr>
+                        <td>Search for Department:</td>
+                        <td><input type="text" name="searchDepartment" placeholder="Department ID or name"></td>
+                    </tr>
+                </table>
+                <a href="SearchDepartmentServlet"  onclick="window.location='departmentDepartment.jsp'">Search</a>
+            </form>
 <table>
+
   <tr>
     <th>DepartmentID</th>
     <th>DepartmentName</th> 
@@ -42,10 +54,10 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= dptlist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= dptlist.get(i).getLocation() %></td>
 			 <td>
-			 <a href="EditDepartment?id=<%=dptlist.get(i).getDepartmentID()%>" >Edit</a>
+			 <a href="EditDepartmentServlet?id=<%=dptlist.get(i).getDepartmentID()%>"  onclick="window.location='editDepartment.jsp'">Edit</a>
 			 </td>
 			 <td>
-			 <a  href="DeleteDepartment?id=<%=dptlist.get(i).getDepartmentID()%>" onclick="window.location='editDepartment.jsp'">Delete</a>
+			 <a  href="DeleteDepartmentServlet?id=<%=dptlist.get(i).getDepartmentID()%>">Delete</a>
 			 </td>
 		 </tr>
 <% }

@@ -36,7 +36,7 @@ public class AddDepartmentServlet extends HttpServlet {
 		int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
 		String location = null;
 		location = request.getParameter("location");
-		feature_a.addDepartment(name, phoneNumber, location);
+		SystemService.addDepartment(name, phoneNumber, location);
 		
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 	}

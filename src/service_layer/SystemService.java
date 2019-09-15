@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import IdentityMap.*;
 import data_mapper.*;
 
-public class feature_a {
+public class SystemService {
 	
 	private static final String getUserNumStatement = "SELECT * from user_table";
 	
@@ -84,8 +84,15 @@ public class feature_a {
 		
 	}
 	
-	public static void editDepartment(String name, int phoneNumber, String location) {
-		
+	public static void editDepartment(Department department, String name, int phoneNumber, String location) {
+		department.setLocation(location);
+		department.setName(name);
+		department.setPhoneNumber(phoneNumber);
+		if(unitofworkDepartment.getCurrent()==null)
+		{
+			unitofworkDepartment.newCurrent();
+		}
+		unitofworkDepartment.getCurrent().commit();
 	}
 	
 	public static void deleteDepartment(String id) {
@@ -95,6 +102,10 @@ public class feature_a {
 		}
 		unitofworkDepartment.getCurrent().registerDeleted(department);
 		unitofworkDepartment.getCurrent().commit();
+	}
+	
+	public static ArrayList<Department> searchDepartment(String str){
+		
 	}
 	
 }
