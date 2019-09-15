@@ -105,7 +105,16 @@ public class SystemService {
 	}
 	
 	public static ArrayList<Department> searchDepartment(String str){
-		
+		ArrayList<Department> departments = new ArrayList<>();
+		Department department = DepartmentDataMapper.search("department_id", str);
+		if(department!=null) {
+			departments.add(department);
+		}
+		department = DepartmentDataMapper.search("name", str);
+		if(department!=null) {
+			departments.add(department);
+		}
+		return departments;
 	}
 	
 }
