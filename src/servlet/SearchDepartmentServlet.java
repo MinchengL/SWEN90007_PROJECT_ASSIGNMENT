@@ -29,6 +29,7 @@ public class SearchDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String str = request.getParameter("searchDepartment");
+		request.getSession().setAttribute("searchDepartment", str);
 		SystemService.searchDepartment(str);
 
 	}
