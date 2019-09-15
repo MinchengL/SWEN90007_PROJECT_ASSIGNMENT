@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" 
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
 import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,13 +41,18 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= dptlist.get(i).getName() %></td>
 			 <td align = "center"><%= dptlist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= dptlist.get(i).getLocation() %></td>
-			 <td><input type="submit" value="Edit" style="color:#000000"></td>
-			 <td><input type="submit" value="Delete" style="color:#000000"></td>
+			 <td>
+			 <form action="EditDepartment" method="post">
+			 <a href="EditDepartment?id=<%=dptlist.get(i).getDepartmentID()%>">Edit</a>
+			 </form>
+			 </td>
+			 <td><a  href="DeleteDepartment?id=<%=dptlist.get(i).getDepartmentID()%>">Delete</a></td>
 		 </tr>
 <% }
  %>
 
 </table>
+</br>
 <button onclick="window.location='addDepartment.jsp'">Add New Department</button>
 
 </div>
