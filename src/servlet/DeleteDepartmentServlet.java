@@ -1,5 +1,8 @@
 package servlet;
 
+import data_mapper.DepartmentDataMapper;
+import service_layer.*;
+import models.Department;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class EditDepartment
+ * Servlet implementation class DeleteDepartment
  */
-@WebServlet("/EditDepartment")
-public class EditDepartment extends HttpServlet {
+@WebServlet("/DeleteDepartmentServlet")
+public class DeleteDepartmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditDepartment() {
+    public DeleteDepartmentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +30,10 @@ public class EditDepartment extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getParameter("id"));
+		String id = request.getParameter("id");
+		feature_a.deleteDepartment(id);
+		
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 	}
 
 	/**
