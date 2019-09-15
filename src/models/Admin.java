@@ -39,7 +39,6 @@ public class Admin extends User{
 		{
 			load();
 		}
-		System.out.println(this.passWord);
 		return this.passWord;
 	}
 	public void setPassWord(String passWord) {

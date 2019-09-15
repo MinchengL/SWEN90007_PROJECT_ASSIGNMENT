@@ -1,3 +1,4 @@
+<%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*"
     pageEncoding="UTF-8"%>
@@ -21,20 +22,24 @@ User user = (User)session.getAttribute("user");
 String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
 String type = usertype == 1 ? "admin" : "employee";
-ArrayList<Department> dptlist = SystemService.getAllDepartment();
+
+ArrayList<Department> dptlist = new ArrayList<>();
+Object str = session.getAttribute("searchDepartment");
+if(str != null) {dptlist = SystemService.searchDepartment(str.toString());}
+else {dptlist = SystemService.getAllDepartment();}
 int len = dptlist.size();
  %>
  
  <%= username %> + <%= type %>
  
-<form id="searchform" name="/searchForm" action="LoginServlet" method="post">
+<form id="searchform" name="/searchForm" action="SearchDepartmentServlet" method="post">
                 <table border="0">
                     <tr>
                         <td>Search for Department:</td>
                         <td><input type="text" name="searchDepartment" placeholder="Department ID or name"></td>
                     </tr>
                 </table>
-                <a href="SearchDepartmentServlet"  onclick="window.location='departmentDepartment.jsp'">Search</a>
+                <input type="submit" value="Search">
             </form>
 <table>
 
