@@ -13,7 +13,7 @@ import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="se
 <nav>
 <a href="departmentManagement.jsp">Department Management</a> |
 <a href="departmentManagement.jsp">Attendance Management</a> |
-<a href="index.jsp">Logout</a>
+<a href="LogoutServlet">Logout</a>
 </nav>
 
 <div class="container">
@@ -40,7 +40,11 @@ int len = dptlist.size();
                     </tr>
                 </table>
                 <input type="submit" value="Search">
-            </form>
+</form>
+<form id="clearform" name="/clearForm" action="ClearDepartmentServlet" method="post">
+	<input type="submit" value="Clear">
+</form>
+            
 <table>
 
   <tr>
