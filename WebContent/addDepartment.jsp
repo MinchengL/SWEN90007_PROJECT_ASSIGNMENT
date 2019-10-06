@@ -18,6 +18,7 @@
 			<td>Phone Number:</td>
 			<td><input type="number" name="phoneNumber"></td>
 			</tr>
+			<tr>
 			<td>Location:</td>
 			<td><input type="text" name="location"></td>
 			</tr>
@@ -25,6 +26,6 @@
             <br>
                 <input type="submit" value="ConFirm">
 	</form>
-    </div>
+</div>
 </body>
 </html>

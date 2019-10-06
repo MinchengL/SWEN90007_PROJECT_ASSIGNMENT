@@ -12,7 +12,7 @@ import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="se
 <body>
 <nav>
 <a href="departmentManagement.jsp">Department Management</a> |
-<a href="departmentManagement.jsp">Attendance Management</a> |
+<a href="attendanceManagement.jsp">Attendance Management</a> |
 <a href="LogoutServlet">Logout</a>
 </nav>
 
@@ -25,8 +25,8 @@ String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<Department> dptlist = new ArrayList<>();
 Object str = session.getAttribute("searchDepartment");
-if(str != null) {dptlist = SystemService.searchDepartment(str.toString());}
-else {dptlist = SystemService.getAllDepartment();}
+if(str != null) {dptlist = DepartmentService.searchDepartment(str.toString());}
+else {dptlist = DepartmentService.getAllDepartment();}
 int len = dptlist.size();
  %>
  

@@ -24,14 +24,14 @@ String location = department.getLocation();
 			</tr>
 			<tr>
 			<td>Department Name:</td>
-			<td><input type="text" name="name" placeholder="<%= name %>"></td>
+			<td><input type="text" name="name" value="<%= name %>"></td>
 			</tr>
 			<tr>
 			<td>Phone Number:</td>
-			<td><input type="number" name="phoneNumber" placeholder="<%= phoneNumber %>"></td>
+			<td><input type="number" name="phoneNumber" value="<%= phoneNumber %>"></td>
 			</tr>
 			<td>Location:</td>
-			<td><input type="text" name="location" placeholder="<%= location %>"></td>
+			<td><input type="text" name="location" value="<%= location %>"></td>
 			</tr>
                 </table>
             <br>

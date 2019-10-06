@@ -1,26 +1,26 @@
 package servlet;
 
-import models.Department;
+import service_layer.AttendanceService;
 
 import java.io.IOException;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service_layer.*;
 
 /**
- * Servlet implementation class AddDepartmentServlet
+ * Servlet implementation class AddEmployeeServlet
  */
-@WebServlet("/AddDepartmentServlet")
-public class AddDepartmentServlet extends HttpServlet {
+@WebServlet("/AddEmployeeServlet")
+public class AddEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddDepartmentServlet() {
+    public AddEmployeeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +31,15 @@ public class AddDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
-		String name = null;
-		name = request.getParameter("name");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String department = request.getParameter("department");
 		int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
-		String location = null;
-		location = request.getParameter("location");
-		DepartmentService.addDepartment(name, phoneNumber, location);
-		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+		String birthday = request.getParameter("birthday");
+		String email = request.getParameter("email");
+		AttendanceService.addEmployee(firstName, lastName, department, phoneNumber, birthday, email);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
+//		response.sendRedirect("/attendanceManagement.jsp");
 	}
 
 	/**

@@ -31,9 +31,9 @@ public class DeleteDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String id = request.getParameter("id");
-		SystemService.deleteDepartment(id);
-		
-		response.sendRedirect("/departmentManagement.jsp");
+		DepartmentService.deleteDepartment(id);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+//		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 	/**

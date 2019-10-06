@@ -35,10 +35,10 @@ public class EditDepartmentServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String id = request.getParameter("id");
 		request.getSession().setAttribute("id", id);
-		Department department = SystemService.getDepartment(id);
+		Department department = DepartmentService.getDepartment(id);
 		request.getSession().setAttribute("department", department);
-		
-		response.sendRedirect("/editDepartment.jsp");
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editDepartment.jsp");
+//		response.sendRedirect("/editDepartment.jsp");
 	}
 
 	/**
@@ -52,10 +52,10 @@ public class EditDepartmentServlet extends HttpServlet {
 		String phonenumber = request.getParameter("phoneNumber");
 		String location = request.getParameter("location");
 		String id = request.getSession().getAttribute("id").toString();
-		Department department = SystemService.getDepartment(id);
-		SystemService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
-		
-		response.sendRedirect("/departmentManagement.jsp");
+		Department department = DepartmentService.getDepartment(id);
+		DepartmentService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+//		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 }

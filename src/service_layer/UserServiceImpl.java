@@ -18,9 +18,9 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public User loginUser(String username, String password) {
 		// TODO Auto-generated method stub
-		Admin admin = SystemService.loginbyAdmin(username, password);
+		Admin admin = AuthenticationService.loginbyAdmin(username, password);
 		if(admin == null) {
-			Employee empl = SystemService.loginbyEmployee(username, password);
+			Employee empl = AuthenticationService.loginbyEmployee(username, password);
 			return empl;
 		}
 
@@ -30,10 +30,10 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public int getUsertype(String username, String password) {
-		if(SystemService.loginbyAdmin(username, password) != null) {
+		if(AuthenticationService.loginbyAdmin(username, password) != null) {
 			return 1;
 		}
-		else if (SystemService.loginbyEmployee(username, password) != null) {
+		else if (AuthenticationService.loginbyEmployee(username, password) != null) {
 			return 2;
 		}
 		return 0;
