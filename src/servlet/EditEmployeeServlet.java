@@ -2,27 +2,25 @@ package servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.SessionCookieConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Department;
-import service_layer.*;
-import unitofwork.unitofworkDepartment;
+import models.Employee;
+import service_layer.EmployeeService;
 
 /**
- * Servlet implementation class EditDepartment
+ * Servlet implementation class EditEmployeeServlet
  */
-@WebServlet("/EditDepartmentServlet")
-public class EditDepartmentServlet extends HttpServlet {
+@WebServlet("/EditEmployeeServlet")
+public class EditEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditDepartmentServlet() {
+    public EditEmployeeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,11 +32,11 @@ public class EditDepartmentServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		String id = request.getParameter("id");
-		request.getSession().setAttribute("dptid", id);
-		Department department = DepartmentService.getDepartment(id);
-		request.getSession().setAttribute("department", department);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editDepartment.jsp");
-//		response.sendRedirect("/editDepartment.jsp");
+		request.getSession().setAttribute("empid", id);
+		Employee employee = EmployeeService.getEmployee(id);
+		request.getSession().setAttribute("employee", employee);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editEmployee.jsp");
+//		response.sendRedirect("/editEmployee.jsp");
 	}
 
 	/**
@@ -46,16 +44,18 @@ public class EditDepartmentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		response.setContentType("text/html;charset=UTF-8");
-		String name = request.getParameter("name");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String department = request.getParameter("department");
 		String phonenumber = request.getParameter("phoneNumber");
-		String location = request.getParameter("location");
-		String id = request.getSession().getAttribute("dptid").toString();
-		Department department = DepartmentService.getDepartment(id);
-		DepartmentService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+		String birthday = request.getParameter("birthday");
+		String email = request.getParameter("email");
+		String id = request.getSession().getAttribute("empid").toString();
+		Employee employee = EmployeeService.getEmployee(id);
+		EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
+//		response.sendRedirect("/employeeManagement.jsp");
 	}
 
 }

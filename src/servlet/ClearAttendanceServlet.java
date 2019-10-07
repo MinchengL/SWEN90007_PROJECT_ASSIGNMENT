@@ -1,28 +1,24 @@
 package servlet;
 
-import java.awt.Window;
 import java.io.IOException;
-import java.rmi.server.SkeletonNotFoundException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.tools.DocumentationTool.Location;
 
 /**
- * Servlet implementation class ClearDepartmentServlet
+ * Servlet implementation class ClearAttendanceServlet
  */
-@WebServlet("/ClearDepartmentServlet")
-public class ClearDepartmentServlet extends HttpServlet {
+@WebServlet("/ClearAttendanceServlet")
+public class ClearAttendanceServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClearDepartmentServlet() {
+    public ClearAttendanceServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,9 +29,9 @@ public class ClearDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		session.setAttribute("searchDepartment", null);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+		session.setAttribute("searchAttendance", null);
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
+//		response.sendRedirect("/attendanceManagement.jsp");
 	}
 
 	/**

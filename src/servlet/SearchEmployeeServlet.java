@@ -1,28 +1,28 @@
 package servlet;
 
-import java.awt.Window;
 import java.io.IOException;
-import java.rmi.server.SkeletonNotFoundException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.tools.DocumentationTool.Location;
+
+import models.Employee;
+import service_layer.EmployeeService;
 
 /**
- * Servlet implementation class ClearDepartmentServlet
+ * Servlet implementation class SearchEmployeeServlet
  */
-@WebServlet("/ClearDepartmentServlet")
-public class ClearDepartmentServlet extends HttpServlet {
+@WebServlet("/SearchEmployeeServlet")
+public class SearchEmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ClearDepartmentServlet() {
+    public SearchEmployeeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +32,12 @@ public class ClearDepartmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		session.setAttribute("searchDepartment", null);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.setContentType("text/html;charset=UTF-8");
+		String str = request.getParameter("searchEmployee");
+		request.getSession().setAttribute("searchEmployee", str);
+		ArrayList<Employee> employees = EmployeeService.searchEmployee(str);
 //		response.sendRedirect("/departmentManagement.jsp");
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
 	}
 
 	/**

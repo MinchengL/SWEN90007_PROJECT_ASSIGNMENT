@@ -27,14 +27,30 @@ String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
 String type = usertype == 1 ? "admin" : "employee";
 
-ArrayList<Employee> dptlist = new ArrayList<>();
+ArrayList<Attendance> atdlist = new ArrayList<>();
+Object str = session.getAttribute("searchAttendance");
+if(str != null) {atdlist = AttendanceService.searchByEmployee(str.toString());}
+else {atdlist = AttendanceService.getAllAttendance();}
+if (usertype == 0) {atdlist = AttendanceService.searchByEmployee(user.getUserID());}
+int len = atdlist == null ? 0: atdlist.size();
  %>
  
- <%= username %> + <%= type %>
+<%= username %> + <%= type %>
 
 <% if(usertype == 1) { %>
+<form id="searchform" name="/searchForm" action="SearchAttendanceServlet" method="post">
+     Search by Employee:
+     <input type="text" name="searchAttendance" placeholder="Employee ID">
+     <input type="submit" value="Search">
+</form>
+<form id="clearform" name="/clearForm" action="ClearAttendanceServlet" method="post">
+	<input type="submit" value="Clear">
+</form>
+<% } %>
+
+<% if(usertype == 0) { %>
 <div>
-<form action="AttendanceClockServlet" method="post">
+<form action="AttendanceClockServlet?id=<%=user.getUserID() %>" method="post">
     <button type="submit" name="button" value="clockOn">Clock-on</button>
     <button type="submit" name="button" value="clockOff">Clock-off</button>
 </form>
@@ -47,6 +63,18 @@ ArrayList<Employee> dptlist = new ArrayList<>();
     <th>Clock Type</th> 
     <th>Clock Time</th>
   </tr>
+  
+<% int i = 0;
+for(i = 0; i < len; i++){ 
+%>
+		<tr>
+			 <td align = "center"><%= atdlist.get(i).getUserID() %></td>
+			 <td align = "center"><%= atdlist.get(i).getClockType %></td>
+			 <td align = "center"><%= atdlist.get(i).getClockTime() %></td>
+		 </tr>
+<% }
+ %>
+  
 </table>
 
 </body>

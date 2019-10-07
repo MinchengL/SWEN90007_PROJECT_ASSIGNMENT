@@ -33,7 +33,7 @@ ArrayList<Department> dptlist = new ArrayList<>();
 Object str = session.getAttribute("searchDepartment");
 if(str != null) {dptlist = DepartmentService.searchDepartment(str.toString());}
 else {dptlist = DepartmentService.getAllDepartment();}
-int len = dptlist.size();
+int len = dptlist == null ? 0: dptlist.size();
  %>
  
  <%= username %> + <%= type %>

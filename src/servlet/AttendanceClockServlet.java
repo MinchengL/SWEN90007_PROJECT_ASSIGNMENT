@@ -3,6 +3,8 @@ package servlet;
 import service_layer.*;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,11 +32,16 @@ public class AttendanceClockServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String button = request.getParameter("button");
-		if ("clockOn".equals(button)) {
-            
-        } else if ("clockOff".equals(button)) {
-            
+		String id = request.getParameter("id");
+		Date date = new Date();
+		if ("clockOn".equals(button)) { // clock on
+            AttendanceService.insertClockOnRecord(id, date.toString());
         } 
+		else if ("clockOff".equals(button)) { // clock off
+            AttendanceService.insertClockOffRecord(id, date.toString());
+        } 
+//		response.sendRedirect("/attendanceManagement.jsp");
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 	}
 
 	/**
