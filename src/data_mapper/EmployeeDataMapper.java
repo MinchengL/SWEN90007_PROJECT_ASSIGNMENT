@@ -12,12 +12,44 @@ import java.util.Set;
 import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.ResolutionSyntax;
 
+import IdentityMap.DepartmentIdentityMap;
 import database.DBConnection;
 
 public class EmployeeDataMapper {
 	
 	public static Employee search(String name){
 		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE username = '"+name+"'";
+		Connection connection;
+		Employee employee=null;
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int employee_id = rs.getInt(1);
+				String username = rs.getString(2);
+				String password = rs.getString(3);
+				String firstname = rs.getString(4);
+				String lastname = rs.getString(5);
+				int department_id = rs.getInt(6);
+				int phoneNumber = rs.getInt(7);
+				String birthday = rs.getString(8);
+				String email = rs.getString(9);
+				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return employee;
+	}
+	
+	public static Employee searchbyid(int id){
+		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE employee_id = "+id;
 		Connection connection;
 		Employee employee=null;
 		try {
@@ -65,7 +97,7 @@ public class EmployeeDataMapper {
 				int phoneNumber = rs.getInt(7);
 				String birthday = rs.getString(8);
 				String email = rs.getString(9);
-				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				Department department = DepartmentIdentityMap.getInstance().get(department_id);
 				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
 				employees.add(employee);
 			}
@@ -86,7 +118,7 @@ public class EmployeeDataMapper {
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO employee_table (employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table) VALUES ( "
+			String sql= "INSERT INTO employee_table (employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email) VALUES ( "
 						+employee.getUserID()+",'"+employee.getUserName()+"','"+employee.getPassWord()+"','"+employee.getFirstName()+"', '"+employee.getLastName()+"',"+employee.getDepartment().getDepartmentID()
 						+","+employee.getPhoneNumber()+"','"+employee.getBirthday()+"','"+employee.getEmail()+"')";
 			result = statement.executeUpdate(sql);

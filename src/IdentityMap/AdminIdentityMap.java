@@ -25,6 +25,4 @@ public class AdminIdentityMap {
 	public Admin get(String username) {
 		return map.get(username);
 	}
-	
-
 }
