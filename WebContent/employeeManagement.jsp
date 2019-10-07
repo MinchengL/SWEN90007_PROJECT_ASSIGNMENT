@@ -6,13 +6,14 @@ import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="se
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Human Resource System-Attendance Management</title>
+<title>Human Resource System-Employee Management</title>
 <style>
 th, td {
   padding-left: 20px;
 }
 </style>
 </head>
+
 <body>
 <nav>
 <a href="departmentManagement.jsp">Department Management</a> |
@@ -32,22 +33,20 @@ ArrayList<Employee> dptlist = new ArrayList<>();
  
  <%= username %> + <%= type %>
 
-<% if(usertype == 1) { %>
-<div>
-<form action="AttendanceClockServlet" method="post">
-    <button type="submit" name="button" value="clockOn">Clock-on</button>
-    <button type="submit" name="button" value="clockOff">Clock-off</button>
-</form>
-</div>
-<% } %>
- 
 <table>
   <tr>
     <th>Employee ID</th>
-    <th>Clock Type</th> 
-    <th>Clock Time</th>
+    <th>First Name</th> 
+    <th>Last Name</th>
+    <th>Department</th>
+    <th>Phone Number</th>
+    <th>Date of Birth</th>
+    <th>Email</th>
   </tr>
 </table>
+
+</br>
+<button onclick="window.location='addEmployee.jsp'">Add New Employee</button>
 
 </body>
 </html>
