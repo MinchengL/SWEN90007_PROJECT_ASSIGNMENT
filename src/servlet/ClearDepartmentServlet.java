@@ -35,7 +35,7 @@ public class ClearDepartmentServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("searchDepartment", null);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-		response.sendRedirect("/departmentManagement.jsp");
+//		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 	/**

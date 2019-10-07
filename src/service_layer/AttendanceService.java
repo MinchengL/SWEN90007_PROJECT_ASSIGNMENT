@@ -8,11 +8,21 @@ import models.Employee;
 
 public class AttendanceService {
 
-//	public static ArrayList<Employee> getAllEmployee(){
-//		return EmployeeDataMapper.loadAllEmployee();
-//	}
+	public static ArrayList<Attendance> searchByEmployee(String id) {
+		return null;
+	}
 	
-	public static void addEmployee(String firstName, String lastName, String department, int phoneNumber, String birthday, String email) {
+	public static ArrayList<Attendance> getAllAttendance() {
+		
+	}
+
+	public static void insertClockOnRecord(String id, String time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void insertClockOffRecord(String id, String time) {
+		// TODO Auto-generated method stub
 		
 	}
 	

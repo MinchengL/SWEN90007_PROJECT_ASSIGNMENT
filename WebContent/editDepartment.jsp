@@ -30,6 +30,7 @@ String location = department.getLocation();
 			<td>Phone Number:</td>
 			<td><input type="number" name="phoneNumber" value="<%= phoneNumber %>"></td>
 			</tr>
+			<tr>
 			<td>Location:</td>
 			<td><input type="text" name="location" value="<%= location %>"></td>
 			</tr>

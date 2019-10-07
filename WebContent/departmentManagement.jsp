@@ -7,11 +7,17 @@ import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="se
 <head>
 <meta charset="UTF-8">
 <title>Human Resource System-Department Management</title>
+<style>
+th, td {
+  padding-left: 20px;
+}
+</style>
 </head>
 
 <body>
 <nav>
 <a href="departmentManagement.jsp">Department Management</a> |
+<a href="employeeManagement.jsp">Employee Management</a> |
 <a href="attendanceManagement.jsp">Attendance Management</a> |
 <a href="LogoutServlet">Logout</a>
 </nav>
@@ -27,25 +33,21 @@ ArrayList<Department> dptlist = new ArrayList<>();
 Object str = session.getAttribute("searchDepartment");
 if(str != null) {dptlist = DepartmentService.searchDepartment(str.toString());}
 else {dptlist = DepartmentService.getAllDepartment();}
-int len = dptlist.size();
+int len = dptlist == null ? 0: dptlist.size();
  %>
  
  <%= username %> + <%= type %>
  
 <form id="searchform" name="/searchForm" action="SearchDepartmentServlet" method="post">
-                <table border="0">
-                    <tr>
-                        <td>Search for Department:</td>
-                        <td><input type="text" name="searchDepartment" placeholder="Department ID or name"></td>
-                    </tr>
-                </table>
-                <input type="submit" value="Search">
+     Search for Department:
+     <input type="text" name="searchDepartment" placeholder="Department ID or name">
+     <input type="submit" value="Search">
 </form>
 <form id="clearform" name="/clearForm" action="ClearDepartmentServlet" method="post">
 	<input type="submit" value="Clear">
 </form>
             
-<table>
+<table id="departmentTable">
 
   <tr>
     <th>DepartmentID</th>
@@ -62,12 +64,14 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= dptlist.get(i).getName() %></td>
 			 <td align = "center"><%= dptlist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= dptlist.get(i).getLocation() %></td>
+			 <% if(usertype == 1){ %>
 			 <td>
 			 <a href="EditDepartmentServlet?id=<%=dptlist.get(i).getDepartmentID()%>"  onclick="window.location='editDepartment.jsp'">Edit</a>
 			 </td>
 			 <td>
 			 <a  href="DeleteDepartmentServlet?id=<%=dptlist.get(i).getDepartmentID()%>">Delete</a>
 			 </td>
+			 <% } %>
 		 </tr>
 <% }
  %>

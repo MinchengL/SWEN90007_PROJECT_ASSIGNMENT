@@ -1,9 +1,10 @@
 package servlet;
 
-import service_layer.EmployeeService;
+import service_layer.*;
 
 import java.io.IOException;
 import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class AddEmployeeServlet
+ * Servlet implementation class AttendanceClockServlet
  */
-@WebServlet("/AddEmployeeServlet")
-public class AddEmployeeServlet extends HttpServlet {
+@WebServlet("/AttendanceClockServlet")
+public class AttendanceClockServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddEmployeeServlet() {
+    public AttendanceClockServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,16 +31,17 @@ public class AddEmployeeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html;charset=UTF-8");
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String department = request.getParameter("department");
-		int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
-		String birthday = request.getParameter("birthday");
-		String email = request.getParameter("email");
-		EmployeeService.addEmployee(firstName, lastName, department, phoneNumber, birthday, email);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
+		String button = request.getParameter("button");
+		String id = request.getParameter("id");
+		Date date = new Date();
+		if ("clockOn".equals(button)) { // clock on
+            AttendanceService.insertClockOnRecord(id, date.toString());
+        } 
+		else if ("clockOff".equals(button)) { // clock off
+            AttendanceService.insertClockOffRecord(id, date.toString());
+        } 
 //		response.sendRedirect("/attendanceManagement.jsp");
+		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 	}
 
 	/**
