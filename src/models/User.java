@@ -13,7 +13,7 @@ public abstract class User {
 	
 	private String userName = null;
 	private String passWord = null;
-	private int userID; // corresponds to id in database
+	private int userID =0; // corresponds to id in database
 	private String firstName = null;
 	private String lastName = null;
 	//private ArrayList<Department> department = new ArrayList<Department>();
