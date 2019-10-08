@@ -35,7 +35,7 @@ public class SearchEmployeeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String str = request.getParameter("searchEmployee");
 		request.getSession().setAttribute("searchEmployee", str);
-		ArrayList<Employee> employees = EmployeeService.searchEmployee(str);
+//		ArrayList<Employee> employees = EmployeeService.searchEmployee(str);
 //		response.sendRedirect("/departmentManagement.jsp");
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
 	}

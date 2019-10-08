@@ -1,9 +1,5 @@
 package servlet;
 
-import service_layer.*;
-import models.*;
-
-import java.util.ArrayList;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +30,7 @@ public class SearchAttendanceServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String str = request.getParameter("searchAttendance");
 		request.getSession().setAttribute("searchAttendance", str);
-		ArrayList<Attendance> attendance = AttendanceService.searchDepartment(str);
+//		ArrayList<AttendanceRecord> attendance = AttendanceService.searchDepartment(str);
 //		response.sendRedirect("/attendanceManagement.jsp");
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 	}

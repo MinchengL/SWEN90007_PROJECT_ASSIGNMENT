@@ -9,11 +9,11 @@ import unitofwork.unitofworkDepartment;
 public class DepartmentService {
 	
 	public static ArrayList<Department> getAllDepartment(){
-		return DepartmentDataMapper.loadAllDepartment();
+		return Department.getAllDepartmentList();
 	}
 	
 	public static Department getDepartment(String id) {
-		return DepartmentDataMapper.search("department_id", id);
+		return Department.getDepartmentById(id);
 	}
 	
 	public static void addDepartment(String name, int phoneNumber, String location) {
@@ -37,7 +37,7 @@ public class DepartmentService {
 	}
 	
 	public static void deleteDepartment(String id) {
-		Department department = DepartmentDataMapper.search("department_id", id);
+		Department department = Department.getDepartmentById(id);
 		if(unitofworkDepartment.getCurrent()==null) {
 			unitofworkDepartment.newCurrent();
 		}
@@ -47,11 +47,11 @@ public class DepartmentService {
 	
 	public static ArrayList<Department> searchDepartment(String str){
 		ArrayList<Department> departments = new ArrayList<>();
-		Department department = DepartmentDataMapper.search("department_id", str);
+		Department department = Department.getDepartmentById(str);
 		if(department!=null) {
 			departments.add(department);
 		}
-		department = DepartmentDataMapper.search("name", str);
+		department = Department.getDepartmentByName(str);
 		if(department!=null) {
 			departments.add(department);
 		}

@@ -33,7 +33,7 @@ public class EditEmployeeServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String id = request.getParameter("id");
 		request.getSession().setAttribute("empid", id);
-		Employee employee = EmployeeService.getEmployee(id);
+		Employee employee = EmployeeService.getEmployeeById(id);
 		request.getSession().setAttribute("employee", employee);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editEmployee.jsp");
 //		response.sendRedirect("/editEmployee.jsp");
@@ -52,7 +52,7 @@ public class EditEmployeeServlet extends HttpServlet {
 		String birthday = request.getParameter("birthday");
 		String email = request.getParameter("email");
 		String id = request.getSession().getAttribute("empid").toString();
-		Employee employee = EmployeeService.getEmployee(id);
+		Employee employee = EmployeeService.getEmployeeById(id);
 		EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
 //		response.sendRedirect("/employeeManagement.jsp");

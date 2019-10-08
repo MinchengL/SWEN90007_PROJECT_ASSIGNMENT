@@ -7,6 +7,7 @@ import java.util.HashMap;
 import org.omg.CORBA.IdentifierHelper;
 
 import IdentityMap.DepartmentIdentityMap;
+import IdentityMap.EmployeeIdentityMap;
 import data_mapper.DepartmentDataMapper;
 import data_mapper.EmployeeDataMapper;
 import unitofwork.unitofworkEmployee;
@@ -130,4 +131,44 @@ public class Employee extends User{
 		
 	}
 
+	public static Employee loginbyEmployee(String username, String password) {
+		EmployeeIdentityMap employeeIdentityMap = EmployeeIdentityMap.getInstance();
+		
+		Employee employee = employeeIdentityMap.get(username);
+		if(employee!=null) {
+			if(employee.getPassWord().equals(password))
+			{
+				return employee;
+			}
+			else {
+				return null;
+			}
+		}else {
+			employee = EmployeeDataMapper.search(username);
+			if(employee!=null) {
+				if(employee.getPassWord().equals(password)) {
+					employeeIdentityMap.put(username, employee);
+					return employee;
+				}else {
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static ArrayList<Employee> getAllEmployeeList(){
+		return EmployeeDataMapper.loadAllEmployees();
+	}
+	
+	public static Employee getEmployeeById(String id) {
+		int id_int = Integer.parseInt(id);
+		Employee employee=EmployeeDataMapper.searchbyid(id_int);
+		return employee;
+	}
+	
+	public static Employee getEmployeeByUsername(String username) {
+		Employee employee=EmployeeDataMapper.search(username);
+		return employee;
+	}
 }

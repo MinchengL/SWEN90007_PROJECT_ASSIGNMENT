@@ -1,6 +1,6 @@
 <%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
-import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*"
+import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*" import=""
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -27,11 +27,11 @@ String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
 String type = usertype == 1 ? "admin" : "employee";
 
-ArrayList<Attendance> atdlist = new ArrayList<>();
+ArrayList<AttendanceRecord> atdlist = new ArrayList<>();
 Object str = session.getAttribute("searchAttendance");
 if(str != null) {atdlist = AttendanceService.searchByEmployee(str.toString());}
 else {atdlist = AttendanceService.getAllAttendance();}
-if (usertype == 0) {atdlist = AttendanceService.searchByEmployee(user.getUserID());}
+if (usertype == 0) {atdlist = AttendanceService.searchByEmployee(user.getUserID()+"");}
 int len = atdlist == null ? 0: atdlist.size();
  %>
  
@@ -68,9 +68,9 @@ int len = atdlist == null ? 0: atdlist.size();
 for(i = 0; i < len; i++){ 
 %>
 		<tr>
-			 <td align = "center"><%= atdlist.get(i).getUserID() %></td>
-			 <td align = "center"><%= atdlist.get(i).getClockType %></td>
-			 <td align = "center"><%= atdlist.get(i).getClockTime() %></td>
+			 <td align = "center"><%= atdlist.get(i).getUser().getUserName() %></td>
+			 <td align = "center"><%= atdlist.get(i).getOperationType() %></td>
+			 <td align = "center"><%= atdlist.get(i).getOperationTime() %></td>
 		 </tr>
 <% }
  %>

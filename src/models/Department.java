@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import IdentityMap.DepartmentIdentityMap;
 import unitofwork.unitofworkDepartment;
 import data_mapper.DepartmentDataMapper;
 
@@ -97,4 +98,23 @@ public class Department {
 			this.admins = result.getAdmins();
 		}
 	}
+	
+	public static ArrayList<Department> getAllDepartmentList(){
+		return DepartmentDataMapper.loadAllDepartment();
+	}
+	
+	public static Department getDepartmentById(String id) {
+		int id_int = Integer.parseInt(id);
+		Department department = DepartmentIdentityMap.getInstance().get(id_int);
+		if(department==null) {
+			department = DepartmentDataMapper.search("department_id", id);
+		}
+		return department;
+	}
+	
+	public static Department getDepartmentByName(String name) {
+		Department department = DepartmentDataMapper.search("name", name);
+		return department;
+	}
+	
 }

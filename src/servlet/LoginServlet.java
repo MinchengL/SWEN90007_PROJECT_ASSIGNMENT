@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 		username = request.getParameter("username");
 		String password = null;
 		password = request.getParameter("password");
-		IUserService service = new UserServiceImpl();
+		UserService service = new UserService();
 		User user = service.loginUser(username, password);
 		
 		if(user == null) {

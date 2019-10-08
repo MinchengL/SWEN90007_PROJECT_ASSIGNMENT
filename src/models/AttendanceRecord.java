@@ -1,11 +1,9 @@
 package models;
 
-import java.rmi.server.LoaderHandler;
+import java.util.ArrayList;
 import java.util.Date;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
-
 import data_mapper.AttendanceRecordDataMapper;
+import data_mapper.EmployeeDataMapper;
 import unitofwork.unitofworkAttendanceRecord;
 
 public class AttendanceRecord {
@@ -15,10 +13,10 @@ public class AttendanceRecord {
 	private String operationType = null;
 	private String operationTime = null;
 	
-	public AttendanceRecord(User user, String operationType) {
+	public AttendanceRecord(User user, String operationType, String operationTime) {
 		this.user = user;
 		this.operationType = operationType;
-		this.operationTime = new Date().toString();
+		this.operationTime = operationTime;
 	}
 	
 	public AttendanceRecord(int id, User user, String operationType, String operationTime) {
@@ -87,4 +85,33 @@ public class AttendanceRecord {
 		}
 	}
 
+	public static ArrayList<AttendanceRecord> getRecordByEmployee(String id){
+		int id_int = Integer.parseInt(id);
+		return AttendanceRecordDataMapper.getRecordsByUser(id_int);
+	}
+	
+	public static ArrayList<AttendanceRecord> getAllRecords(){
+		return AttendanceRecordDataMapper.getAllRecords();
+	}
+	
+	public static void clockon(String id, String time) {
+		Employee employee = Employee.getEmployeeById(id);
+		AttendanceRecord record = new AttendanceRecord(employee, "clock on", time);
+		if(unitofworkAttendanceRecord.getCurrent()==null) {
+			unitofworkAttendanceRecord.newCurrent();
+		}
+		unitofworkAttendanceRecord.getCurrent().registerNew(record);
+		unitofworkAttendanceRecord.getCurrent().commit();
+	}
+	
+	public static void clockoff(String id, String time) {
+		Employee employee = Employee.getEmployeeById(id);
+		AttendanceRecord record = new AttendanceRecord(employee, "clock off", time);
+		if(unitofworkAttendanceRecord.getCurrent()==null) {
+			unitofworkAttendanceRecord.newCurrent();
+		}
+		unitofworkAttendanceRecord.getCurrent().registerNew(record);
+		unitofworkAttendanceRecord.getCurrent().commit();
+	}
+	
 }

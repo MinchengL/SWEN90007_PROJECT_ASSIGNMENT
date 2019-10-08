@@ -1,10 +1,8 @@
 package models;
 
-import java.rmi.server.LoaderHandler;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
+import IdentityMap.AdminIdentityMap;
 import data_mapper.AdminDataMapper;
 import unitofwork.unitofworkAdmin;
 
@@ -129,5 +127,30 @@ public class Admin extends User{
 			this.department = admin.getDepartment();
 		}
 	}
+	
+	public static Admin loginbyAdmin(String username, String password) {
+		AdminIdentityMap adminIdentityMap = AdminIdentityMap.getInstance();
+		
+		Admin admin = adminIdentityMap.get(username);
+		if(admin != null) {
+			if(admin.getPassWord().equals(password)) {
+				return admin;
+			}else {
+				return null;
+			}
+		}else{
+			admin = AdminDataMapper.search("username", username);
+			if(admin!=null) {
+				if(admin.getPassWord().equals(password)) {
+					adminIdentityMap.put(username, admin);
+					return admin;
+				}else {
+					return null;
+				}
+			}
+		}
+		return null;
+	}
+	
 
 }

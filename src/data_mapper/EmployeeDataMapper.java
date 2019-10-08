@@ -13,6 +13,7 @@ import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.ResolutionSyntax;
 
 import IdentityMap.DepartmentIdentityMap;
+import IdentityMap.EmployeeIdentityMap;
 import database.DBConnection;
 
 public class EmployeeDataMapper {
@@ -99,6 +100,41 @@ public class EmployeeDataMapper {
 				String email = rs.getString(9);
 				Department department = DepartmentIdentityMap.getInstance().get(department_id);
 				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+				employees.add(employee);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return employees;
+	}
+	
+	public static ArrayList<Employee> loadAllEmployees(){
+		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table";
+		Connection connection;
+		ArrayList<Employee> employees = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int employee_id = rs.getInt(1);
+				String username = rs.getString(2);
+				String password = rs.getString(3);
+				String firstname = rs.getString(4);
+				String lastname = rs.getString(5);
+				int department_id = rs.getInt(6);
+				int phoneNumber = rs.getInt(7);
+				String birthday = rs.getString(8);
+				String email = rs.getString(9);
+				Department department = Department.getDepartmentById(department_id+"");
+				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+				if(EmployeeIdentityMap.getInstance().get(username)==null) {
+					EmployeeIdentityMap.getInstance().put(username, employee);
+				}
 				employees.add(employee);
 			}
 		} catch (SQLException e) {
