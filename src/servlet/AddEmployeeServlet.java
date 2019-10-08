@@ -31,13 +31,15 @@ public class AddEmployeeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
+		String username = request.getParameter("userName");
+		String password = request.getParameter("password");
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String department = request.getParameter("department");
 		int phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
 		String birthday = request.getParameter("birthday");
 		String email = request.getParameter("email");
-		EmployeeService.addEmployee(firstName, lastName, department, phoneNumber, birthday, email);
+		EmployeeService.addEmployee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
 //		response.sendRedirect("/attendanceManagement.jsp");
 	}

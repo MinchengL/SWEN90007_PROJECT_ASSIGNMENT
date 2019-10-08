@@ -28,11 +28,11 @@ String email = employee.getEmail();
 			</tr>
 			<tr>
 			<td>First Name:</td>
-			<td><%= firstName %></td>
+			<td><input type="text" name="firstName" value="<%= firstName %>"></td>
 			</tr>
 			<tr>
 			<td>Last Name:</td>
-			<td><%= lastName %></td>
+			<td><input type="text" name="lastName" value="<%= lastName %>"></td>
 			</tr>
 			<tr>
 			<td>Department:</td>

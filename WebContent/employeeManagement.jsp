@@ -81,7 +81,9 @@ for(i = 0; i < len; i++){
 </table>
 
 </br>
+<% if (usertype == 1) {%>
 <button onclick="window.location='addEmployee.jsp'">Add New Employee</button>
+<% } %>
 
 </body>
 </html>

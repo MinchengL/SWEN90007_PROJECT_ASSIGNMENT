@@ -57,6 +57,9 @@ public class Employee extends User{
 	
 	public void setUserName(String userName) {
 		this.userName = userName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getPassWord() {
@@ -68,14 +71,23 @@ public class Employee extends User{
 	}
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getPhoneNumber() {
@@ -87,6 +99,9 @@ public class Employee extends User{
 	}
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getBirthday() {
@@ -98,6 +113,9 @@ public class Employee extends User{
 	}
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getEmail() {
@@ -109,6 +127,9 @@ public class Employee extends User{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getUserID() {

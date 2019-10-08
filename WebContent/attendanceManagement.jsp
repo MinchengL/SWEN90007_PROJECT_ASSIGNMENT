@@ -48,7 +48,7 @@ int len = atdlist == null ? 0: atdlist.size();
 </form>
 <% } %>
 
-<% if(usertype == 0) { %>
+<% if(usertype != 1) { %>
 <div>
 <form action="AttendanceClockServlet?id=<%=user.getUserID() %>" method="post">
     <button type="submit" name="button" value="clockOn">Clock-on</button>

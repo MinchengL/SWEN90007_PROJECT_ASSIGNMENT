@@ -11,6 +11,14 @@
 	<form id="addEmployeeForm" name="/addEmployeeForm" action="AddEmployeeServlet" method="post">
 		<table border="0">
 			<tr>
+			<td>User Name:</td>
+			<td><input type="text" name="userName"></td>
+			</tr>
+			<tr>
+			<td>Password:</td>
+			<td><input type="text" name="password"></td>
+			</tr>
+			<tr>
 			<td>First Name:</td>
 			<td><input type="text" name="firstName"></td>
 			</tr>

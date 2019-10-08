@@ -8,7 +8,7 @@ import unitofwork.unitofworkEmployee;
 
 public class EmployeeService {
 
-	public static void addEmployee(String firstName, String lastName, String department, int phoneNumber, String birthday, String email) {
+	public static void addEmployee(String username, String password, String firstName, String lastName, String department, int phoneNumber, String birthday, String email) {
 		
 	}
 

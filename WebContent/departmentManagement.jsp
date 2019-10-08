@@ -78,7 +78,9 @@ for(i = 0; i < len; i++){
 
 </table>
 </br>
+<% if (usertype == 1) { %>
 <button onclick="window.location='addDepartment.jsp'">Add New Department</button>
+<% } %>
 
 </div>
 </body>
