@@ -8,8 +8,9 @@ import unitofwork.unitofworkEmployee;
 
 public class EmployeeService {
 
-	public static void addEmployee(String username, String password, String firstName, String lastName, String department, int phoneNumber, String birthday, String email) {
-		
+	public static void addEmployee(String username, String password, String firstName, String lastName, String department_name, int phoneNumber, String birthday, String email) {
+		Department department = Department.getDepartmentByName(department_name);
+		Employee employee = new Employee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
 	}
 
 	public static ArrayList<Employee> searchEmployee(String str) {

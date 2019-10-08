@@ -53,6 +53,7 @@ public class Employee extends User{
 			unitofworkEmployee.newCurrent();
 		}
 		unitofworkEmployee.getCurrent().registerNew(this);
+		unitofworkEmployee.getCurrent().commit();
 	}
 	
 	public void setUserName(String userName) {
@@ -133,7 +134,6 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getUserID() {
-		System.out.println(this.userID);
 		if(this.userID == 0)
 		{
 			load();
@@ -154,7 +154,6 @@ public class Employee extends User{
 	}
 
 	public void load() {
-		System.out.println(this.userName);
 		Employee employee = EmployeeDataMapper.search(this.userName);
 		if(this.passWord == null)
 		{

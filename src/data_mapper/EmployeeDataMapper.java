@@ -151,12 +151,20 @@ public class EmployeeDataMapper {
 		
 		Connection connection;
 		int result=0;
+		int max_id=0;
 		try {
 			connection = DBConnection.getConnection();
+			Statement id_statement =connection.createStatement();
+			String id_sql = "SELECT MAX(employee_id) from employee_table";
+			ResultSet rs = id_statement.executeQuery(id_sql);
+			while(rs.next()) {
+				max_id = rs.getInt(1);
+			}
+			int id = max_id+1;
 			Statement statement = connection.createStatement();
 			String sql= "INSERT INTO employee_table (employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email) VALUES ( "
-						+employee.getUserID()+",'"+employee.getUserName()+"','"+employee.getPassWord()+"','"+employee.getFirstName()+"', '"+employee.getLastName()+"',"+employee.getDepartment().getDepartmentID()
-						+","+employee.getPhoneNumber()+"','"+employee.getBirthday()+"','"+employee.getEmail()+"')";
+						+id+",'"+employee.getUserName()+"','"+employee.getPassWord()+"','"+employee.getFirstName()+"', '"+employee.getLastName()+"',"+employee.getDepartment().getDepartmentID()
+						+","+employee.getPhoneNumber()+",'"+employee.getBirthday()+"','"+employee.getEmail()+"')";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
