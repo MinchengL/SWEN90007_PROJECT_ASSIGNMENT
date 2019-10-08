@@ -42,6 +42,7 @@ public class DatabaseInitializationServlet extends HttpServlet {
     		unitofworkAdmin.newCurrent();
     		unitofworkDepartment.newCurrent();
     		unitofworkEmployee.newCurrent();
+    		unitofworkAttendanceRecord.newCurrent();
     		//System.out.println(feature_a.loginbyAdmin("jack", "1234").getLastName());
 	}
 
