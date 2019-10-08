@@ -20,14 +20,39 @@ public class Employee extends User{
 	private String firstName = null;
 	private String lastName = null;
 	private Department department = null;
-	private int phoneNumber=0;
+	private int phoneNumber;
 	private String birthday = null;
 	private String email = null;
 
 	public Employee(int UserID, String userName, String passWord, String firstName, String lastName,Department department, int phoneNumber, String birthday, String email) {
 		
 		super(UserID, userName,passWord,firstName,lastName, phoneNumber, birthday, email);
+		this.userID = UserID;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		this.department = department;
+	}
+	
+	public Employee(String userName, String passWord, String firstName, String lastName,Department department, int phoneNumber, String birthday, String email) {
+		
+		super(userName,passWord,firstName,lastName, phoneNumber, birthday, email);
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
+		this.department = department;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
+		unitofworkEmployee.getCurrent().registerNew(this);
 	}
 	
 	public void setUserName(String userName) {
@@ -35,7 +60,7 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getPassWord() {
-		if(passWord == null)
+		if(this.passWord == null)
 		{
 			load();
 		}
@@ -54,7 +79,7 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getPhoneNumber() {
-		if(phoneNumber == 0)
+		if(this.phoneNumber == 0)
 		{
 			load();
 		}
@@ -65,7 +90,7 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getBirthday() {
-		if(birthday == null)
+		if(this.birthday == null)
 		{
 			load();
 		}
@@ -76,7 +101,7 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getEmail() {
-		if(email == null)
+		if(this.email == null)
 		{
 			load();
 		}
@@ -87,7 +112,8 @@ public class Employee extends User{
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getUserID() {
-		if(userID == 0)
+		System.out.println(this.userID);
+		if(this.userID == 0)
 		{
 			load();
 		}
@@ -95,7 +121,7 @@ public class Employee extends User{
 	}
 	
 	public Department getDepartment() {
-		if(department==null) {
+		if(this.department==null) {
 			load();
 		}
 		return department;
@@ -107,25 +133,26 @@ public class Employee extends User{
 	}
 
 	public void load() {
+		System.out.println(this.userName);
 		Employee employee = EmployeeDataMapper.search(this.userName);
-		if(passWord == null)
+		if(this.passWord == null)
 		{
 			this.passWord = employee.getPassWord();
 		}
-		if(phoneNumber == 0)
+		if(this.phoneNumber == 0)
 		{
 			this.phoneNumber = employee.getPhoneNumber();
 		}
-		if(birthday==null) {
+		if(this.birthday==null) {
 			this.birthday = employee.getBirthday();
 		}
-		if(email==null) {
+		if(this.email==null) {
 			this.email = employee.getEmail();
 		}
-		if(userID==0) {
+		if(this.userID==0) {
 			this.userID = employee.getUserID();
 		}
-		if(department==null) {
+		if(this.department==null) {
 			this.department = employee.getDepartment();
 		}
 		
