@@ -106,6 +106,12 @@ public class DepartmentDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,6 +132,12 @@ public class DepartmentDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,6 +175,12 @@ public class DepartmentDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
