@@ -19,14 +19,14 @@ public class DBConnection {
 	private static final String DB_User = "postgres";
 	private static final String DB_Password = "2223";
 	
-	static Connection connection = null;
+	public static Connection connection = null;
 	static PreparedStatement ps = null;
 	
 	public static Connection getConnection() throws SQLException, URISyntaxException{
 		try {
 			DriverManager.registerDriver(new org.postgresql.Driver());
 			connection = DriverManager.getConnection(DB_CONNECTION, DB_User, DB_Password);
-			connection.setAutoCommit(true);
+			connection.setAutoCommit(false);
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
