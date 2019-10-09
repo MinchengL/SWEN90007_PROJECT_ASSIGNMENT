@@ -9,19 +9,21 @@ import unitofwork.unitofworkAttendanceRecord;
 public class AttendanceRecord {
 	
 	private int attendancerecord_id = 0;
-	private User user=null;
+	private Employee employee=null;
 	private String operationType = null;
 	private String operationTime = null;
 	
-	public AttendanceRecord(User user, String operationType, String operationTime) {
-		this.user = user;
+	public AttendanceRecord() {}
+	
+	public AttendanceRecord(Employee employee, String operationType, String operationTime) {
+		this.employee = employee;
 		this.operationType = operationType;
 		this.operationTime = operationTime;
 	}
 	
-	public AttendanceRecord(int id, User user, String operationType, String operationTime) {
+	public AttendanceRecord(int id, Employee employee, String operationType, String operationTime) {
 		this.attendancerecord_id = id;
-		this.user = user;
+		this.employee = employee;
 		this.operationTime = operationTime;
 		this.operationType = operationType;
 	}
@@ -41,12 +43,12 @@ public class AttendanceRecord {
 		unitofworkAttendanceRecord.getCurrent().registerDirty(this);
 	}
 
-	public User getUser() {
-		return user;
+	public Employee getEmployee() {
+		return employee;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 		if(unitofworkAttendanceRecord.getCurrent()==null) {
 			unitofworkAttendanceRecord.newCurrent();
 		}
@@ -79,7 +81,7 @@ public class AttendanceRecord {
 	
 	private void load() {
 		// TODO Auto-generated method stub
-		AttendanceRecord record = AttendanceRecordDataMapper.search(this.user.getUserID(), this.getOperationType(), this.getOperationTime());
+		AttendanceRecord record = AttendanceRecordDataMapper.search(this.employee.getUserID(), this.getOperationType(), this.getOperationTime());
 		if(this.attendancerecord_id == 0) {
 			this.attendancerecord_id = record.getattendancerecord_id();
 		}

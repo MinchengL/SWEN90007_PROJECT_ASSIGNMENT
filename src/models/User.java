@@ -21,6 +21,8 @@ public abstract class User {
 	private String birthday = null;
 	private String email = null;
 	
+	public User() {}
+	
 	public User(int userID, String userName, String password, String firstName, String lastName, int phoneNumber, String birthday, String email)
 	{
 		//userID should be generated automatically here.

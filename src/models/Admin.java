@@ -18,6 +18,8 @@ public class Admin extends User{
 	private String birthday = null;
 	private String email = null;
 
+	public Admin() {}
+	
 	public Admin(String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email) {
 		super(userName, passWord, firstName, lastName, phoneNumber, birthday, email);
 		unitofworkAdmin.getCurrent().registerNew(this);
@@ -99,6 +101,11 @@ public class Admin extends User{
 		return department;
 	}
 
+	public void setId(int id) {
+		this.userID = id;
+		unitofworkAdmin.getCurrent().registerDirty(this);
+	}
+	
 	public void setDepartment(ArrayList<Department> department) {
 		this.department = department;
 		unitofworkAdmin.getCurrent().registerDirty(this);

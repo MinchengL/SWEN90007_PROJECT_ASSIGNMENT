@@ -104,7 +104,7 @@ public class AttendanceRecordDataMapper {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			String sql= "INSERT INTO attendance_record_table (employee_id, operation_type, operation_time) VALUES ( "
-						+record.getUser().getUserID()+",'"+record.getOperationType()+"','"+record.getOperationTime()+"')";
+						+record.getEmployee().getUserID()+",'"+record.getOperationType()+"','"+record.getOperationTime()+"')";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -123,7 +123,7 @@ public class AttendanceRecordDataMapper {
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
-			String sql= "UPDATE attendance_record_table SET employee_id ='"+record.getUser().getUserID()+"', operation_type= '"+record.getOperationType() 
+			String sql= "UPDATE attendance_record_table SET employee_id ='"+record.getEmployee().getUserID()+"', operation_type= '"+record.getOperationType() 
 						+"', operation_time='"+record.getOperationTime()+"' WHERE id ="+ record.getattendancerecord_id();
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {

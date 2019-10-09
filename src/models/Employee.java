@@ -24,6 +24,8 @@ public class Employee extends User{
 	private String birthday = null;
 	private String email = null;
 
+	public Employee() {}
+	
 	public Employee(int UserID, String userName, String passWord, String firstName, String lastName,Department department, int phoneNumber, String birthday, String email) {
 		
 		super(UserID, userName,passWord,firstName,lastName, phoneNumber, birthday, email);
@@ -139,6 +141,14 @@ public class Employee extends User{
 			load();
 		}
 		return userID;
+	}
+	
+	public void setUserID(int userid) {
+		this.userID = userid;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
+		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	
 	public Department getDepartment() {

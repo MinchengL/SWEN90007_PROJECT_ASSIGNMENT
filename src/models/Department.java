@@ -16,6 +16,8 @@ public class Department {
 	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	private ArrayList<Admin> admins = new ArrayList<Admin>();
 	
+	public Department() {}
+	
 	public Department(String name, int phoneNumber, String location) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
