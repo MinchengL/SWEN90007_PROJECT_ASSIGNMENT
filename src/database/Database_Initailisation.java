@@ -20,7 +20,7 @@ public class Database_Initailisation {
 	public static String EMPLOYEE_TABLE_CREATE = "CREATE TABLE employee_table (employee_id serial, username VARCHAR(25),password VARCHAR(25), firstname VARCHAR(25), lastname VARCHAR(25), phoneNumber INT, birthday VARCHAR(25), email VARCHAR(25), department_id INT REFERENCES department_table(department_id), PRIMARY KEY (employee_id));";
 	public static String DEPARTMENT_TABLE_CREATE = "CREATE TABLE department_table (department_id serial, name VARCHAR(25), location VARCHAR(25), phoneNumber INT, PRIMARY KEY (department_id));";
 	public static String ADMIN_DEPARTMENT_TABLE_CREATE = "CREATE TABLE admin_department_table (id serial, admin_id INT REFERENCES admin_table(admin_id), department_id INT REFERENCES department_table(department_id), PRIMARY KEY (id));";
-	public static String ATTENDANCE_RECORD_TABLE_CREATE = "CREATE TABLE attendance_record_table(id serial,  employee_id INT REFERENCES employee_table(employee_id), operation_type VARCHAR(25), operation_time VARCHAR(25), PRIMARY KEY(id));";
+	public static String ATTENDANCE_RECORD_TABLE_CREATE = "CREATE TABLE attendance_record_table(id serial,  employee_id INT REFERENCES employee_table(employee_id), operation_type VARCHAR(25), operation_time VARCHAR(50), PRIMARY KEY(id));";
 	
 	public static void initailize_dataset() {
 		try {

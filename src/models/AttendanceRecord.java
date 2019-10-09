@@ -93,12 +93,16 @@ public class AttendanceRecord {
 	}
 	
 	public static ArrayList<AttendanceRecord> getAllRecords(){
-		return AttendanceRecordDataMapper.getAllRecords();
+		ArrayList<AttendanceRecord> list = AttendanceRecordDataMapper.getAllRecords();
+		System.out.println(list.size());
+		return list;
 	}
 	
 	public static void clockon(String id, String time) {
 		Employee employee = Employee.getEmployeeById(id);
 		AttendanceRecord record = new AttendanceRecord(employee, "clock on", time);
+		System.out.println(time.length());
+		System.out.println(time);
 		if(unitofworkAttendanceRecord.getCurrent()==null) {
 			unitofworkAttendanceRecord.newCurrent();
 		}
