@@ -68,7 +68,7 @@ int len = atdlist == null ? 0: atdlist.size();
 for(i = 0; i < len; i++){ 
 %>
 		<tr>
-			 <td align = "center"><%= atdlist.get(i).getUser().getUserName() %></td>
+			 <td align = "center"><%= atdlist.get(i).getEmployee().getUserName() %></td>
 			 <td align = "center"><%= atdlist.get(i).getOperationType() %></td>
 			 <td align = "center"><%= atdlist.get(i).getOperationTime() %></td>
 		 </tr>
