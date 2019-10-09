@@ -1,6 +1,7 @@
 package servlet;
 
 import data_mapper.DepartmentDataMapper;
+import data_mapper.LockManager;
 import service_layer.*;
 import models.Department;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class DeleteDepartment
@@ -30,8 +32,18 @@ public class DeleteDepartmentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		try {
+			LockManager.getInstance().acquireWriteLock(session.getId());
+		} catch (InterruptedException e) {
+			System.out.println("Acquire write lock when deleting department failed");
+		}
+		
 		String id = request.getParameter("id");
 		DepartmentService.deleteDepartment(id);
+		
+		LockManager.getInstance().releaseWriteLock(session.getId());
+		
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 //		response.sendRedirect("/departmentManagement.jsp");
 	}

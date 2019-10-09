@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.tools.DocumentationTool.Location;
 
+import data_mapper.LockManager;
+
 /**
  * Servlet implementation class ClearDepartmentServlet
  */
@@ -33,9 +35,17 @@ public class ClearDepartmentServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+		try {
+			LockManager.getInstance().acquireReadLock(session.getId());
+		} catch (InterruptedException e) {
+			System.out.println("Acquire read lock when clear department failed");
+		}
+
 		session.setAttribute("searchDepartment", null);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 //		response.sendRedirect("/departmentManagement.jsp");
+		
+		LockManager.getInstance().releaseReadLock(session.getId());
 	}
 
 	/**

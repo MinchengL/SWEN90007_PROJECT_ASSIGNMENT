@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import data_mapper.LockManager;
+
 /**
  * Servlet implementation class ClearAttendanceServlet
  */
@@ -29,9 +31,17 @@ public class ClearAttendanceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+		try {
+			LockManager.getInstance().acquireReadLock(session.getId());
+		} catch (InterruptedException e) {
+			System.out.println("Acquire read lock when clear attendance failed");
+		}
+		
 		session.setAttribute("searchAttendance", null);
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 //		response.sendRedirect("/attendanceManagement.jsp");
+		
+		LockManager.getInstance().releaseReadLock(session.getId());
 	}
 
 	/**

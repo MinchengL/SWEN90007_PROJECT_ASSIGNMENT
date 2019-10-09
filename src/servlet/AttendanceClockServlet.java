@@ -10,6 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import data_mapper.LockManager;
 
 /**
  * Servlet implementation class AttendanceClockServlet
@@ -31,6 +34,13 @@ public class AttendanceClockServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		try {
+			LockManager.getInstance().acquireWriteLock(session.getId());
+		} catch (InterruptedException e) {
+			System.out.println("Acquire write lock when adding attendance failed");
+		}
+		
 		String button = request.getParameter("button");
 		String id = request.getParameter("id");
 		Date date = new Date();
@@ -40,6 +50,9 @@ public class AttendanceClockServlet extends HttpServlet {
 		else if ("clockOff".equals(button)) { // clock off
             AttendanceService.insertClockOffRecord(id, date.toString());
         } 
+		
+		LockManager.getInstance().releaseWriteLock(session.getId());
+		
 //		response.sendRedirect("/attendanceManagement.jsp");
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 	}

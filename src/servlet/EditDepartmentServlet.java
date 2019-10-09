@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import data_mapper.LockManager;
 import models.Department;
 import service_layer.*;
 import unitofwork.unitofworkDepartment;
@@ -46,6 +48,12 @@ public class EditDepartmentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		try {
+			LockManager.getInstance().acquireWriteLock(session.getId());
+		} catch (InterruptedException e) {
+			System.out.println("Acquire write lock when editing department failed");
+		}
 		
 		response.setContentType("text/html;charset=UTF-8");
 		String name = request.getParameter("name");
@@ -53,7 +61,12 @@ public class EditDepartmentServlet extends HttpServlet {
 		String location = request.getParameter("location");
 		String id = request.getSession().getAttribute("dptid").toString();
 		Department department = DepartmentService.getDepartment(id);
-		DepartmentService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
+		if(department != null && name != null && phonenumber != null && location != null) {
+			DepartmentService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
+		}
+		
+		LockManager.getInstance().releaseWriteLock(session.getId());
+		
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 //		response.sendRedirect("/departmentManagement.jsp");
 	}
