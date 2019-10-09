@@ -43,7 +43,7 @@ public class AttendanceRecordDataMapper {
 	public static ArrayList<AttendanceRecord> getAllRecords(){
 		String sql = "SELECT id, employee_id, operation_type, operation_time from attendance_record_table";
 		Connection connection;
-		ArrayList<AttendanceRecord> records = null;
+		ArrayList<AttendanceRecord> records = new ArrayList<>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
@@ -56,6 +56,7 @@ public class AttendanceRecordDataMapper {
 				Employee employee = EmployeeDataMapper.searchbyid(employee_id);
 				AttendanceRecord record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 				records.add(record);
+				System.out.println(records.size());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
