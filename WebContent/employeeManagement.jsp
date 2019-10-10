@@ -62,7 +62,7 @@ for(i = 0; i < len; i++){
 		<tr>
 			 <td align = "center"><%= emplist.get(i).getUserID() %></td>
 			 <td align = "center"><%= emplist.get(i).getUserName() %></td>
-			 <td align = "center"><%= emplist.get(i).getDepartment() %></td>
+			 <td align = "center"><%= emplist.get(i).getDepartment().getName() %></td>
 			 <td align = "center"><%= emplist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= emplist.get(i).getBirthday() %></td>
 			 <td align = "center"><%= emplist.get(i).getEmail() %></td>

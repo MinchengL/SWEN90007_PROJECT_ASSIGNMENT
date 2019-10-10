@@ -41,16 +41,37 @@ public class AddEmployeeServlet extends HttpServlet {
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
+		Boolean valid = true;
+		
 		String username = request.getParameter("userName");
+		if(username.length() > 25 || username == null) valid = false;
+		
 		String password = request.getParameter("password");
+		if(password.length() > 25 || password == null) valid = false;
+		
 		String firstName = request.getParameter("firstName");
+		if(firstName.length() > 25 || firstName == null) valid = false;
+		
 		String lastName = request.getParameter("lastName");
+		if(lastName.length() > 25 || lastName == null) valid = false;
+		
 		String department = request.getParameter("department");
+		if(department.length() > 25 || department == null) valid = false;
+		
 		int phoneNumber = 0;
-		phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
+		String tmpPhoneNumber = request.getParameter("phoneNumber");
+		if(tmpPhoneNumber.length() <= 10) {
+			phoneNumber = Integer.parseInt(tmpPhoneNumber);
+		}
+		else valid = false;
+		
 		String birthday = request.getParameter("birthday");
+		if(birthday.length() > 25 || birthday == null) valid = false;
+		
 		String email = request.getParameter("email");
-		if(username != null && password != null && firstName != null && lastName != null && department != null && phoneNumber != 0 && birthday!= null && email != null) {
+		if(email.length() > 25 || email == null) valid = false;
+		
+		if(valid == true) {
 			EmployeeService.addEmployee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
 		}
 		

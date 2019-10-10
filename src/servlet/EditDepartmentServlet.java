@@ -56,12 +56,23 @@ public class EditDepartmentServlet extends HttpServlet {
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
+		Boolean valid = true;
 		String name = request.getParameter("name");
+		name = request.getParameter("name");
+		if(name.length() > 25 || name == null) valid = false;
+		
 		String phonenumber = request.getParameter("phoneNumber");
+		if(phonenumber.length() > 10) valid = false; 
+		
 		String location = request.getParameter("location");
+		location = request.getParameter("location");
+		if(location.length() > 25 || location == null) valid = false;
+		
 		String id = request.getSession().getAttribute("dptid").toString();
 		Department department = DepartmentService.getDepartment(id);
-		if(department != null && name != null && phonenumber != null && location != null) {
+		if(department == null) valid = false;
+		
+		if(valid == true) {
 			DepartmentService.editDepartment(department, name, Integer.parseInt(phonenumber), location);
 		}
 		
