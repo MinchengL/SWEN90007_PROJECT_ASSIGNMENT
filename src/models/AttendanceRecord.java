@@ -2,8 +2,8 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
-import data_mapper.AttendanceRecordDataMapper;
-import data_mapper.EmployeeDataMapper;
+import dataMapper.AttendanceRecordDataMapper;
+import dataMapper.EmployeeDataMapper;
 import unitofwork.unitofworkAttendanceRecord;
 
 public class AttendanceRecord {

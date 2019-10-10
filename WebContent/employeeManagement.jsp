@@ -1,6 +1,6 @@
 <%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
-import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*"
+import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

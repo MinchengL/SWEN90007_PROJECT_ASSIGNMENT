@@ -2,7 +2,7 @@ package RemoteFacade;
 
 import DTO.AttendanceRecordAssembler;
 import DTO.AttendanceRecordDTO;
-import data_mapper.AttendanceRecordDataMapper;
+import dataMapper.AttendanceRecordDataMapper;
 import models.AttendanceRecord;
 
 public class AttendanceRecordFacade {

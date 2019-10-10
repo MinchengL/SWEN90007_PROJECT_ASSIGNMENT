@@ -1,8 +1,8 @@
-package service_layer;
+package serviceLayer;
 
 import java.util.ArrayList;
 
-import data_mapper.DepartmentDataMapper;
+import dataMapper.DepartmentDataMapper;
 import models.Department;
 import unitofwork.unitofworkDepartment;
 

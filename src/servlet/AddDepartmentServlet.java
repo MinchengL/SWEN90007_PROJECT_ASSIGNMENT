@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
-import service_layer.*;
+import dataMapper.LockManager;
+import serviceLayer.*;
 
 /**
  * Servlet implementation class AddDepartmentServlet

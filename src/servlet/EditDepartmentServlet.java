@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
+import dataMapper.LockManager;
 import models.Department;
-import service_layer.*;
+import serviceLayer.*;
 import unitofwork.unitofworkDepartment;
 
 /**

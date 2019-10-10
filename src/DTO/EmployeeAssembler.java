@@ -2,8 +2,8 @@ package DTO;
 
 import java.util.ArrayList;
 
-import data_mapper.AdminDataMapper;
-import data_mapper.EmployeeDataMapper;
+import dataMapper.AdminDataMapper;
+import dataMapper.EmployeeDataMapper;
 import models.Admin;
 import models.Department;
 import models.Employee;

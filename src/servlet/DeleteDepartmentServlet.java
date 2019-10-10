@@ -1,8 +1,8 @@
 package servlet;
 
-import data_mapper.DepartmentDataMapper;
-import data_mapper.LockManager;
-import service_layer.*;
+import dataMapper.DepartmentDataMapper;
+import dataMapper.LockManager;
+import serviceLayer.*;
 import models.Department;
 import java.io.IOException;
 import javax.servlet.ServletException;

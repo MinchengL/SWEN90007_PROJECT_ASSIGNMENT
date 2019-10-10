@@ -2,8 +2,8 @@ package DTO;
 
 import java.util.ArrayList;
 
-import data_mapper.AttendanceRecordDataMapper;
-import data_mapper.DepartmentDataMapper;
+import dataMapper.AttendanceRecordDataMapper;
+import dataMapper.DepartmentDataMapper;
 import models.Admin;
 import models.AttendanceRecord;
 import models.Department;

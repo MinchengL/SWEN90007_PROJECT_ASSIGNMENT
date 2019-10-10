@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.tools.DocumentationTool.Location;
 
-import data_mapper.LockManager;
+import dataMapper.LockManager;
 
 /**
  * Servlet implementation class ClearDepartmentServlet

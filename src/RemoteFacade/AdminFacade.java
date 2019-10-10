@@ -2,7 +2,7 @@ package RemoteFacade;
 
 import DTO.AdminAssembler;
 import DTO.AdminDTO;
-import data_mapper.AdminDataMapper;
+import dataMapper.AdminDataMapper;
 import models.Admin;
 
 public class AdminFacade {

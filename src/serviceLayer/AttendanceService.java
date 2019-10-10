@@ -1,9 +1,9 @@
-package service_layer;
+package serviceLayer;
 
 import java.sql.Date;
 import java.util.ArrayList;
 
-import data_mapper.EmployeeDataMapper;
+import dataMapper.EmployeeDataMapper;
 import models.AttendanceRecord;
 import models.Employee;
 
