@@ -26,7 +26,7 @@ public class DBConnection {
 		try {
 			DriverManager.registerDriver(new org.postgresql.Driver());
 			connection = DriverManager.getConnection(DB_CONNECTION, DB_User, DB_Password);
-			connection.setAutoCommit(false);
+			connection.setAutoCommit(true);
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

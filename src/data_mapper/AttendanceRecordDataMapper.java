@@ -26,7 +26,7 @@ public class AttendanceRecordDataMapper {
 				int employeeId = rs.getInt(2);
 				String operationType = rs.getString(3);
 				String operationTime = rs.getString(4);
-				Employee employee = EmployeeDataMapper.searchbyid(employeeId);
+				Employee employee = Employee.getEmployeeById(employee_id+"");
 				record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 			}
 		} catch (SQLException e) {
@@ -53,7 +53,7 @@ public class AttendanceRecordDataMapper {
 				int employee_id = rs.getInt(2);
 				String operationType = rs.getString(3);
 				String operationTime = rs.getString(4);
-				Employee employee = EmployeeDataMapper.searchbyid(employee_id);
+				Employee employee = Employee.getEmployeeById(employee_id+"");//EmployeeDataMapper.searchbyid(employee_id);
 				AttendanceRecord record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 				records.add(record);
 				System.out.println(records.size());

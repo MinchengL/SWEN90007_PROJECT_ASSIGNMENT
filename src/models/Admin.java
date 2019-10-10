@@ -3,7 +3,9 @@ package models;
 import java.util.ArrayList;
 
 import IdentityMap.AdminIdentityMap;
+import IdentityMap.EmployeeIdentityMap;
 import data_mapper.AdminDataMapper;
+import data_mapper.EmployeeDataMapper;
 import unitofwork.unitofworkAdmin;
 
 public class Admin extends User{
@@ -34,6 +36,11 @@ public class Admin extends User{
 		this.userName = userName;
 		unitofworkAdmin.getCurrent().registerDirty(this);
 	}
+	
+	public String getUserName() {
+		return this.userName;
+	}
+	
 	public String getPassWord() {
 		if(this.passWord == "")
 		{
@@ -158,6 +165,10 @@ public class Admin extends User{
 		}
 		return null;
 	}
-	
+
+	public static Admin getAdminById(int id) {
+		Admin admin = AdminDataMapper.search("admin_id", id+"");
+		return admin;
+	}
 
 }

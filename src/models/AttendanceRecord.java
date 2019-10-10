@@ -19,6 +19,11 @@ public class AttendanceRecord {
 		this.employee = employee;
 		this.operationType = operationType;
 		this.operationTime = operationTime;
+		if(unitofworkAttendanceRecord.getCurrent()==null) {
+			unitofworkAttendanceRecord.newCurrent();
+		}
+		unitofworkAttendanceRecord.getCurrent().registerNew(this);
+		unitofworkAttendanceRecord.getCurrent().commit();
 	}
 	
 	public AttendanceRecord(int id, Employee employee, String operationType, String operationTime) {
@@ -26,6 +31,7 @@ public class AttendanceRecord {
 		this.employee = employee;
 		this.operationTime = operationTime;
 		this.operationType = operationType;
+		
 	}
 	
 	public int getattendancerecord_id() {
@@ -103,21 +109,12 @@ public class AttendanceRecord {
 		AttendanceRecord record = new AttendanceRecord(employee, "clock on", time);
 		System.out.println(time.length());
 		System.out.println(time);
-		if(unitofworkAttendanceRecord.getCurrent()==null) {
-			unitofworkAttendanceRecord.newCurrent();
-		}
-		unitofworkAttendanceRecord.getCurrent().registerNew(record);
-		unitofworkAttendanceRecord.getCurrent().commit();
+		
 	}
 	
 	public static void clockoff(String id, String time) {
 		Employee employee = Employee.getEmployeeById(id);
 		AttendanceRecord record = new AttendanceRecord(employee, "clock off", time);
-		if(unitofworkAttendanceRecord.getCurrent()==null) {
-			unitofworkAttendanceRecord.newCurrent();
-		}
-		unitofworkAttendanceRecord.getCurrent().registerNew(record);
-		unitofworkAttendanceRecord.getCurrent().commit();
 	}
 	
 }

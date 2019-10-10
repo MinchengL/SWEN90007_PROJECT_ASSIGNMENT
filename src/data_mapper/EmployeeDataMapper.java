@@ -36,7 +36,7 @@ public class EmployeeDataMapper {
 				int phoneNumber = rs.getInt(7);
 				String birthday = rs.getString(8);
 				String email = rs.getString(9);
-				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				Department department = Department.getDepartmentById(department_id+"");
 				employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
 			}
 		} catch (SQLException e) {
@@ -67,7 +67,7 @@ public class EmployeeDataMapper {
 				int phoneNumber = rs.getInt(7);
 				String birthday = rs.getString(8);
 				String email = rs.getString(9);
-				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				Department department = Department.getDepartmentById(department_id+"");
 				employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
 			}
 		} catch (SQLException e) {

@@ -65,6 +65,10 @@ public class Employee extends User{
 		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
+	
+	public String getUserName() {
+		return this.userName;
+	}
 	public String getPassWord() {
 		if(this.passWord == null)
 		{
