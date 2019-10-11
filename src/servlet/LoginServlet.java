@@ -48,8 +48,8 @@ public class LoginServlet extends HttpServlet {
 		Boolean valid = true;
 		String username = null;
 		username = request.getParameter("username");
-		String regex = "^[0-9]*$";
-		valid =  username.matches(regex);
+		//String regex = "^[0-9]*$";
+		//valid =  username.matches(regex);
 		String password = null;
 		password = request.getParameter("password");
 		String role = "admin";

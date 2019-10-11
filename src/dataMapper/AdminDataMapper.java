@@ -56,18 +56,51 @@ public class AdminDataMapper {
 		return admin;
 	}
 
+	public static int getAdminMaxId() {
+		Connection connection;
+		int max_id=0;
+		try {
+			connection = DBConnection.getConnection();
+			Statement id_statement =connection.createStatement();
+			String id_sql = "SELECT MAX(admin_id) from admin_table";
+			ResultSet rs = id_statement.executeQuery(id_sql);
+			while(rs.next()) {
+				max_id = rs.getInt(1);
+			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return max_id;
+		
+	}
+	
 	public static boolean insert(Admin admin) {
 		
 		Connection connection;
+		int max_id=0;
 		int result=0;
 		try {
 			if(AdminIdentityMap.getInstance().get(admin.getUserID())==null) {
 				AdminIdentityMap.getInstance().put(admin.getUserID(), admin);
 			}
 			connection = DBConnection.getConnection();
+			int max_employee_id = EmployeeDataMapper.getEmployeeMaxId();
+			int max_admin_id = AdminDataMapper.getAdminMaxId();
+			max_id = Math.max(max_employee_id, max_admin_id);
+			int id = max_id+1;
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO admin_table (username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
-						+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
+			String sql= "INSERT INTO admin_table (admin_id, username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
+						+id+",'"+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
 						+"',"+admin.getPhoneNumber()+",'"+admin.getBirthday()+"','"+admin.getEmail()+"')";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {

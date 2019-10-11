@@ -142,15 +142,10 @@ public class EmployeeDataMapper {
 		return employees;
 	}
 	
-	public static boolean insert(Employee employee) {
-		
+	public static int getEmployeeMaxId() {
 		Connection connection;
-		int result=0;
 		int max_id=0;
 		try {
-			if(EmployeeIdentityMap.getInstance().get(employee.getUserID())==null) {
-				EmployeeIdentityMap.getInstance().put(employee.getUserID(), employee);
-			}
 			connection = DBConnection.getConnection();
 			Statement id_statement =connection.createStatement();
 			String id_sql = "SELECT MAX(employee_id) from employee_table";
@@ -158,12 +153,42 @@ public class EmployeeDataMapper {
 			while(rs.next()) {
 				max_id = rs.getInt(1);
 			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return max_id;
+		
+	}
+	
+	public static boolean insert(Employee employee) {
+		
+		Connection connection;
+		int result=0;
+		int max_id=0;
+		try {
+			connection = DBConnection.getConnection();
+			int max_employee_id = getEmployeeMaxId();
+			int max_admin_id = AdminDataMapper.getAdminMaxId();
+			max_id = Math.max(max_employee_id, max_admin_id);
 			int id = max_id+1;
 			Statement statement = connection.createStatement();
 			String sql= "INSERT INTO employee_table (employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email) VALUES ( "
 						+id+",'"+employee.getUserName()+"','"+employee.getPassWord()+"','"+employee.getFirstName()+"', '"+employee.getLastName()+"',"+employee.getDepartment().getDepartmentID()
 						+","+employee.getPhoneNumber()+",'"+employee.getBirthday()+"','"+employee.getEmail()+"')";
 			result = statement.executeUpdate(sql);
+			if(EmployeeIdentityMap.getInstance().get(id)==null) {
+				EmployeeIdentityMap.getInstance().put(id, employee);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
