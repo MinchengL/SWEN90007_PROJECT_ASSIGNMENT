@@ -1,3 +1,5 @@
+<%@ page import="servlet.AppSession" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +8,8 @@
 </head>
 <body>
 	<div class="container">
+
+	
         <h1 style="color:steelblue">Login</h1>
             <form id="loginform" name="/loginForm" action="LoginServlet" method="post">
                 <table border="0">
@@ -28,6 +32,8 @@
             <br>
                 <input type="submit" value="Login">
             </form>
+
+            
     </div>
 </body>
 </html>

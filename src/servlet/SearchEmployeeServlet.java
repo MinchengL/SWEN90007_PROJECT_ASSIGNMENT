@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
+import dataMapper.LockManager;
 import models.Employee;
-import service_layer.EmployeeService;
+import serviceLayer.EmployeeService;
 
 /**
  * Servlet implementation class SearchEmployeeServlet

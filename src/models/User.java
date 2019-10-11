@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import IdentityMap.AdminIdentityMap;
+import IdentityMap.EmployeeIdentityMap;
 import models.Department;
 
 public abstract class User {
@@ -46,6 +48,14 @@ public abstract class User {
 		this.phoneNumber = phoneNumber;
 		this.birthday = birthday;
 		this.email = email;
+	}
+	
+	public static User getUser(String username) {
+		Admin admin = AdminIdentityMap.getInstance().get(username);
+		if(admin != null) return (User)admin;
+		Employee employee = EmployeeIdentityMap.getInstance().get(username);
+		if(employee != null) return (User)employee;
+		return null;
 	}
 	
 	public String getUserName() {

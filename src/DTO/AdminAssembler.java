@@ -2,7 +2,7 @@ package DTO;
 
 import java.util.ArrayList;
 
-import data_mapper.AdminDataMapper;
+import dataMapper.AdminDataMapper;
 import models.Admin;
 import models.Department;
 

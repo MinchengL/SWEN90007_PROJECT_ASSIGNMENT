@@ -1,8 +1,8 @@
 package servlet;
 
-import service_layer.*;
+import serviceLayer.*;
 import models.*;
-import data_mapper.*;
+import dataMapper.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

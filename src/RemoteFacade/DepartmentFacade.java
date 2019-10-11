@@ -2,7 +2,7 @@ package RemoteFacade;
 
 import DTO.DepartmentAssembler;
 import DTO.DepartmentDTO;
-import data_mapper.DepartmentDataMapper;
+import dataMapper.DepartmentDataMapper;
 import models.Department;
 
 public class DepartmentFacade {

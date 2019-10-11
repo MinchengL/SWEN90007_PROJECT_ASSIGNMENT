@@ -1,4 +1,4 @@
-package data_mapper;
+package dataMapper;
 
 import java.net.URISyntaxException;
 import java.sql.Connection;

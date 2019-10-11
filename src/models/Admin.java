@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import IdentityMap.AdminIdentityMap;
 import IdentityMap.EmployeeIdentityMap;
-import data_mapper.AdminDataMapper;
-import data_mapper.EmployeeDataMapper;
+import dataMapper.AdminDataMapper;
+import dataMapper.EmployeeDataMapper;
 import unitofwork.unitofworkAdmin;
 
 public class Admin extends User{

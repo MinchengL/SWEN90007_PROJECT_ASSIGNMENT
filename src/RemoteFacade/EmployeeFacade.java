@@ -2,7 +2,7 @@ package RemoteFacade;
 
 import DTO.EmployeeAssembler;
 import DTO.EmployeeDTO;
-import data_mapper.EmployeeDataMapper;
+import dataMapper.EmployeeDataMapper;
 import models.Employee;
 
 public class EmployeeFacade {

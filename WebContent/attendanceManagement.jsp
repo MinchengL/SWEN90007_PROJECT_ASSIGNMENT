@@ -1,6 +1,6 @@
 <%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
-import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*" 
+import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*" 
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -60,6 +60,7 @@ int len = atdlist == null ? 0: atdlist.size();
 <table>
   <tr>
     <th>Employee ID</th>
+    <th>Employee Name</th>
     <th>Clock Type</th> 
     <th>Clock Time</th>
   </tr>
@@ -68,6 +69,7 @@ int len = atdlist == null ? 0: atdlist.size();
 for(i = 0; i < len; i++){ 
 %>
 		<tr>
+			 <td align = "center"><%= atdlist.get(i).getEmployee().getUserID() %></td>
 			 <td align = "center"><%= atdlist.get(i).getEmployee().getUserName() %></td>
 			 <td align = "center"><%= atdlist.get(i).getOperationType() %></td>
 			 <td align = "center"><%= atdlist.get(i).getOperationTime() %></td>

@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
+import dataMapper.LockManager;
 import models.Employee;
-import service_layer.EmployeeService;
+import serviceLayer.EmployeeService;
 
 /**
  * Servlet implementation class EditEmployeeServlet
@@ -54,15 +54,30 @@ public class EditEmployeeServlet extends HttpServlet {
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
+		Boolean valid = true;
+		
 		String firstName = request.getParameter("firstName");
+		if(firstName.length() > 25 || firstName == null) valid = false;
+		
 		String lastName = request.getParameter("lastName");
+		if(lastName.length() > 25 || lastName == null) valid = false;
+		
 		String department = request.getParameter("department");
+		if(department.length() > 25 || department == null) valid = false;
+		
 		String phonenumber = request.getParameter("phoneNumber");
+		if(phonenumber.length() > 10 || phonenumber == null) valid = false;
+		
 		String birthday = request.getParameter("birthday");
+		if(birthday.length() > 25 || birthday == null) valid = false;
+		
 		String email = request.getParameter("email");
+		if(email.length() > 25 || email == null) valid = false;
+		
 		String id = request.getSession().getAttribute("empid").toString();
 		Employee employee = EmployeeService.getEmployeeById(id);
-		if(employee != null && firstName != null && lastName != null && department != null && phonenumber != null && birthday != null && email != null) {
+		
+		if(valid == true) {
 			EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
 		}
 		

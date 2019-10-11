@@ -9,8 +9,8 @@ import org.omg.CORBA.IdentifierHelper;
 import DTO.EmployeeAssembler;
 import IdentityMap.DepartmentIdentityMap;
 import IdentityMap.EmployeeIdentityMap;
-import data_mapper.DepartmentDataMapper;
-import data_mapper.EmployeeDataMapper;
+import dataMapper.DepartmentDataMapper;
+import dataMapper.EmployeeDataMapper;
 import unitofwork.unitofworkEmployee;
 
 public class Employee extends User{

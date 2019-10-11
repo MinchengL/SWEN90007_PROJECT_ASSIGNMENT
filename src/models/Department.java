@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import IdentityMap.DepartmentIdentityMap;
 import unitofwork.unitofworkDepartment;
-import data_mapper.DepartmentDataMapper;
+import dataMapper.DepartmentDataMapper;
 
 public class Department {
 	

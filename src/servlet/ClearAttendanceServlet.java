@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
+import dataMapper.LockManager;
 
 /**
  * Servlet implementation class ClearAttendanceServlet

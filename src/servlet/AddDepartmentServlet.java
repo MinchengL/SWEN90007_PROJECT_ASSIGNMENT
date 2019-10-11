@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
-import service_layer.*;
+import dataMapper.LockManager;
+import serviceLayer.*;
 
 /**
  * Servlet implementation class AddDepartmentServlet
@@ -42,21 +42,32 @@ public class AddDepartmentServlet extends HttpServlet {
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
+		Boolean valid = true;
+		
 		String name = null;
 		name = request.getParameter("name");
+		if(name.length() > 25 || name == null) valid = false;
+		
 		int phoneNumber = 0;
-		phoneNumber = Integer.parseInt(request.getParameter("phoneNumber"));
+		String tmpPhoneNumber = request.getParameter("phoneNumber");
+		if(tmpPhoneNumber.length() <= 10) {
+			phoneNumber = Integer.parseInt(tmpPhoneNumber);
+		}
+		else valid = false;
+		
 		String location = null;
 		location = request.getParameter("location");
-		if(name != null && phoneNumber != 0 && location != null) {
+		if(location.length() > 25 || location == null) valid = false;
+		
+		if(valid == true) {
 			DepartmentService.addDepartment(name, phoneNumber, location);
 		}
-		
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 //		response.sendRedirect("/departmentManagement.jsp");
+
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <%@page import="java.awt.Window"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
-import="models.*" import="data_mapper.*" import="java.util.ArrayList" import="service_layer.*"
+import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -62,7 +62,7 @@ for(i = 0; i < len; i++){
 		<tr>
 			 <td align = "center"><%= emplist.get(i).getUserID() %></td>
 			 <td align = "center"><%= emplist.get(i).getUserName() %></td>
-			 <td align = "center"><%= emplist.get(i).getDepartment() %></td>
+			 <td align = "center"><%= emplist.get(i).getDepartment().getName() %></td>
 			 <td align = "center"><%= emplist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= emplist.get(i).getBirthday() %></td>
 			 <td align = "center"><%= emplist.get(i).getEmail() %></td>

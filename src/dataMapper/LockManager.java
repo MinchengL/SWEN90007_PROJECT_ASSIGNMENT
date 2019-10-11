@@ -1,4 +1,4 @@
-package data_mapper;
+package dataMapper;
 
 import java.util.HashMap;
 import java.util.Map;;

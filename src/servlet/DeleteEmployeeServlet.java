@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import data_mapper.LockManager;
-import service_layer.EmployeeService;
+import dataMapper.LockManager;
+import serviceLayer.EmployeeService;
 
 /**
  * Servlet implementation class DeleteEmployeeServlet

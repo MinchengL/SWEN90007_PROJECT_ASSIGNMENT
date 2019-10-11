@@ -1,4 +1,4 @@
-package data_mapper;
+package dataMapper;
 
 import models.*;
 import java.awt.List;
