@@ -41,8 +41,8 @@ public class AdminDataMapper {
 				String email = rs.getString(8);
 				ArrayList<Department> departments = DepartmentDataMapper.loadDepartmentListByAdmin(admin_id);
 				admin = new Admin(admin_id,username,password, firstname, lastname,phoneNumber, birthday, email, departments);
-				if(AdminIdentityMap.getInstance().get(admin.getUserName())==null) {
-					AdminIdentityMap.getInstance().put(username, admin);
+				if(AdminIdentityMap.getInstance().get(admin_id)==null) {
+					AdminIdentityMap.getInstance().put(admin_id, admin);
 				}
 			}
 		} catch (SQLException e) {
@@ -61,6 +61,9 @@ public class AdminDataMapper {
 		Connection connection;
 		int result=0;
 		try {
+			if(AdminIdentityMap.getInstance().get(admin.getUserID())==null) {
+				AdminIdentityMap.getInstance().put(admin.getUserID(), admin);
+			}
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			String sql= "INSERT INTO admin_table (username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
@@ -182,10 +185,7 @@ public class AdminDataMapper {
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
 				int admin_id = rs.getInt(1);
-				Admin admin = AdminDataMapper.search("admin_id", admin_id+"");
-				if(AdminIdentityMap.getInstance().get(admin.getUserName())==null) {
-					AdminIdentityMap.getInstance().put(admin.getUserName(), admin);
-				}
+				Admin admin = AdminIdentityMap.getInstance().get(admin_id);
 				admins.add(admin);
 			}
 		}catch (Exception e) {

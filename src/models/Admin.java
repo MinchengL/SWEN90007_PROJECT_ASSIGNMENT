@@ -142,32 +142,23 @@ public class Admin extends User{
 		}
 	}
 	
-	public static Admin loginbyAdmin(String username, String password) {
-		AdminIdentityMap adminIdentityMap = AdminIdentityMap.getInstance();
-		
-		Admin admin = adminIdentityMap.get(username);
-		if(admin != null) {
+	public static Admin loginbyAdmin(String id, String password) {
+		Admin admin = getAdminById(Integer.parseInt(id));
+		if(admin!=null) {
 			if(admin.getPassWord().equals(password)) {
 				return admin;
 			}else {
 				return null;
-			}
-		}else{
-			admin = AdminDataMapper.search("username", username);
-			if(admin!=null) {
-				if(admin.getPassWord().equals(password)) {
-					adminIdentityMap.put(username, admin);
-					return admin;
-				}else {
-					return null;
-				}
 			}
 		}
 		return null;
 	}
 
 	public static Admin getAdminById(int id) {
-		Admin admin = AdminDataMapper.search("admin_id", id+"");
+		Admin admin = AdminIdentityMap.getInstance().get(id);
+		if(admin==null) {
+			admin = AdminDataMapper.search("admin_id", id+"");
+		}
 		return admin;
 	}
 

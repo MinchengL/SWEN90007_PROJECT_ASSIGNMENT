@@ -4,15 +4,14 @@ import models.*;
 
 public class UserService {
 
-	public User loginUser(String username, String password) {
+	public User loginUser(String username, String password, String role) {
 		// TODO Auto-generated method stub
-		Admin admin = Admin.loginbyAdmin(username, password);
-		if(admin == null) {
-			Employee empl = Employee.loginbyEmployee(username, password);
-			return empl;
+		if(role.equals("admin")) {
+			Admin admin = Admin.loginbyAdmin(username, password);
+			return admin;
 		}
-
-		else return admin;
+		Employee empl = Employee.loginbyEmployee(username, password);
+		return empl;
 		
 	}
 	

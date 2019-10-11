@@ -18,6 +18,12 @@
                         <td><input type="password" name="password" placeholder="Password" width="200px">
                         </td>
                     </tr>
+                    <tr>
+                        <td>Role:</td>
+                        <td><input type="radio" value="admin" name="role" placeholder="Role" width="100px">Admin
+                        <td><input type="radio" value="employee" name="role" placeholder="Role" width="100px">Employee
+                        </td>
+                    </tr>
                 </table>
             <br>
                 <input type="submit" value="Login">

@@ -38,6 +38,9 @@ public class EmployeeDataMapper {
 				String email = rs.getString(9);
 				Department department = Department.getDepartmentById(department_id+"");
 				employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+				if(EmployeeIdentityMap.getInstance().get(employee_id)==null) {
+					EmployeeIdentityMap.getInstance().put(employee_id, employee);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -81,25 +84,17 @@ public class EmployeeDataMapper {
 	}
 	
 	public static ArrayList<Employee> searchbydepartment(int departmentid){
-		String sql = "SELECT employee_id, username, password, firstname, lastname, department_id, phoneNumber, birthday, email from employee_table WHERE department_id = "+departmentid;
+		String sql = "SELECT employee_id from employee_table WHERE department_id = "+departmentid;
 		Connection connection;
 		ArrayList<Employee> employees = new ArrayList<>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
+			Employee employee;
 			while(rs.next()) {
 				int employee_id = rs.getInt(1);
-				String username = rs.getString(2);
-				String password = rs.getString(3);
-				String firstname = rs.getString(4);
-				String lastname = rs.getString(5);
-				int department_id = rs.getInt(6);
-				int phoneNumber = rs.getInt(7);
-				String birthday = rs.getString(8);
-				String email = rs.getString(9);
-				Department department = DepartmentIdentityMap.getInstance().get(department_id);
-				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
+				employee=EmployeeIdentityMap.getInstance().get(employee_id);
 				employees.add(employee);
 			}
 		} catch (SQLException e) {
@@ -132,8 +127,8 @@ public class EmployeeDataMapper {
 				String email = rs.getString(9);
 				Department department = Department.getDepartmentById(department_id+"");
 				Employee employee = new Employee(employee_id, username, password, firstname, lastname, department, phoneNumber, birthday, email);
-				if(EmployeeIdentityMap.getInstance().get(username)==null) {
-					EmployeeIdentityMap.getInstance().put(username, employee);
+				if(EmployeeIdentityMap.getInstance().get(employee_id)==null) {
+					EmployeeIdentityMap.getInstance().put(employee_id, employee);
 				}
 				employees.add(employee);
 			}
@@ -153,6 +148,9 @@ public class EmployeeDataMapper {
 		int result=0;
 		int max_id=0;
 		try {
+			if(EmployeeIdentityMap.getInstance().get(employee.getUserID())==null) {
+				EmployeeIdentityMap.getInstance().put(employee.getUserID(), employee);
+			}
 			connection = DBConnection.getConnection();
 			Statement id_statement =connection.createStatement();
 			String id_sql = "SELECT MAX(employee_id) from employee_table";
