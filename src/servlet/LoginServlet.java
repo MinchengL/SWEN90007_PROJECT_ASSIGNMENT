@@ -64,7 +64,9 @@ public class LoginServlet extends HttpServlet {
 		if(valid == true) {
 		try {
 			user = service.loginUser(username, password,role);
-			if(user != null) currentUser.login(token);
+			if(user != null) {
+				currentUser.login(token);
+			}
 
 		} catch (UnknownAccountException | IncorrectCredentialsException e) {
 			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");

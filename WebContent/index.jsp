@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 
-	<% if(!AppSession.isAuthenticated()) { %>
+	<% if(!AppSession.isAuthenticated() || AppSession.getUser() == null) { %>
 	
         <h1 style="color:steelblue">Login</h1>
             <form id="loginform" name="/loginForm" action="LoginServlet" method="post">

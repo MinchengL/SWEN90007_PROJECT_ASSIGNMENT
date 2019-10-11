@@ -53,9 +53,17 @@ public abstract class User {
 	public static User getUser(String id) {
 		int id_int = Integer.parseInt(id);
 		Admin admin = Admin.getAdminById(id_int);
-		if(admin != null) return (User)admin;
+		if(admin != null) return (Admin)admin;
 		Employee employee = Employee.getEmployeeById(id);
-		if(employee != null) return (User)employee;
+		if(employee != null) return (Employee)employee;
+		return null;
+	}
+	
+	public static User getUserByUsername(String username) {
+		Admin admin = Admin.getAdminbyUsername(username);
+		if(admin != null) return admin;
+		Employee employee = Employee.getEmployeeByUsername(username);
+		if(employee != null) return employee;
 		return null;
 	}
 	

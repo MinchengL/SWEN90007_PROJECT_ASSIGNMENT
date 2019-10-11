@@ -214,10 +214,15 @@ public class Employee extends User{
 	
 	public static Employee getEmployeeById(String id) {
 		int id_int = Integer.parseInt(id);
-		Employee employee=EmployeeIdentityMap.getInstance().get(id_int);
+		Employee employee = EmployeeIdentityMap.getInstance().get(id_int);
 		if(employee==null) {
 			employee = EmployeeDataMapper.searchbyid(id_int);
 		}
 		return employee;
+	}
+
+	public static Employee getEmployeeByUsername(String username) {
+		
+		return null;
 	}
 }

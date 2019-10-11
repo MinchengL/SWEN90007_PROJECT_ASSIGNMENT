@@ -36,7 +36,7 @@ public class AppRealm extends JdbcRealm {
 			return null;
 		}
 		
-		String username = (String) principals.getPrimaryPrincipal();
+		String username = principals.getPrimaryPrincipal().toString();
 		final User user = User.getUser(username);
 		
 		if(user == null) {

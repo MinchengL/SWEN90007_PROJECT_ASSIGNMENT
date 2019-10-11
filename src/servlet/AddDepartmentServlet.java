@@ -59,9 +59,16 @@ public class AddDepartmentServlet extends HttpServlet {
 		location = request.getParameter("location");
 		if(location.length() > 25 || location == null) valid = false;
 		
-		if(valid == true) {
-			DepartmentService.addDepartment(name, phoneNumber, location);
-		}
+		System.out.println(AppSession.hasRole(AppSession.ADMIN_ROLE));
+//		if(AppSession.isAuthenticated() && valid) {
+//			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+//				DepartmentService.addDepartment(name, phoneNumber, location);
+//			}
+//		}
+		
+//		if(valid == true) {
+//			DepartmentService.addDepartment(name, phoneNumber, location);
+//		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
