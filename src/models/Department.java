@@ -11,14 +11,14 @@ public class Department {
 	
 	private int departmentID;
 	private String name = null;
-	private int phoneNumber;
+	private long phoneNumber;
 	private String location = null;
 	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	private ArrayList<Admin> admins = new ArrayList<Admin>();
 	
 	public Department() {}
 	
-	public Department(String name, int phoneNumber, String location) {
+	public Department(String name, long phoneNumber, String location) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.location = location;
@@ -28,7 +28,7 @@ public class Department {
 		}
 		unitofworkDepartment.getCurrent().registerNew(this);
 	}
-	public Department(int departmentID, String name, int phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {
+	public Department(int departmentID, String name, long phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {
 		this.departmentID=departmentID;
 		this.name=name;
 		this.phoneNumber=phoneNumber;
@@ -53,10 +53,10 @@ public class Department {
 		this.name = name;
 		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		unitofworkDepartment.getCurrent().registerDirty(this);
 		

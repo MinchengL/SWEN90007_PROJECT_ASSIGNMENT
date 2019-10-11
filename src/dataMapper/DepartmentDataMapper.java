@@ -66,12 +66,12 @@ public class DepartmentDataMapper {
 				String name = rs.getString(2);
 				int phoneNumber = rs.getInt(3);
 				String location = rs.getString(4);
-//				ArrayList<Admin> admins = AdminDataMapper.loadAdminsbyDepartmentId(department_id);
-//				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
+				ArrayList<Admin> admins = AdminDataMapper.loadAdminsbyDepartmentId(department_id);
+				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
 				result = new Department(department_id,name, phoneNumber, location, null, null);
-//				if(DepartmentIdentityMap.getInstance().get(result.getDepartmentID())==null) {
-//					DepartmentIdentityMap.getInstance().put(department_id, result);
-//				}
+				if(DepartmentIdentityMap.getInstance().get(result.getDepartmentID())==null) {
+					DepartmentIdentityMap.getInstance().put(department_id, result);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -216,7 +216,7 @@ public class DepartmentDataMapper {
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
 				int department_id = rs.getInt(1);
-				Department department = DepartmentDataMapper.search("department_id", department_id+"");
+				Department department = Department.getDepartmentById(department_id+"");
 				departments.add(department);
 			}
 		}catch (Exception e) {

@@ -10,7 +10,7 @@ import models.Employee;
 public class DepartmentDTO {
 	private int departmentID;
 	private String name;
-	private int phoneNumber;
+	private long phoneNumber;
 	private String location;
 	private ArrayList<EmployeeDTO> employees;
 	private ArrayList<AdminDTO> admins;
@@ -41,12 +41,12 @@ public class DepartmentDTO {
 		this.name = name;
 	}
 
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setPhoneNumber(long l) {
+		this.phoneNumber = l;
 	}
 
 	public String getLocation() {

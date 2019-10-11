@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import IdentityMap.EmployeeIdentityMap;
 import database.DBConnection;
 import models.AttendanceRecord;
 import models.Employee;
@@ -53,7 +54,7 @@ public class AttendanceRecordDataMapper {
 				int employee_id = rs.getInt(2);
 				String operationType = rs.getString(3);
 				String operationTime = rs.getString(4);
-				Employee employee = Employee.getEmployeeById(employee_id+"");//EmployeeDataMapper.searchbyid(employee_id);
+				Employee employee = Employee.getEmployeeById(employee_id+"");
 				AttendanceRecord record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 				records.add(record);
 				System.out.println(records.size());
@@ -71,7 +72,7 @@ public class AttendanceRecordDataMapper {
 	public static ArrayList<AttendanceRecord> getRecordsByUser(int employee_id){
 		String sql = "SELECT id, employee_id, operation_type, operation_time from attendance_record_table WHERE employee_id="+employee_id;
 		Connection connection;
-		ArrayList<AttendanceRecord> records = null;
+		ArrayList<AttendanceRecord> records = new ArrayList<>();
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();

@@ -20,10 +20,6 @@ public class EmployeeService {
 		if(employee!=null) {
 			employees.add(employee);
 		}
-		Employee employee2 = Employee.getEmployeeByUsername(str);
-		if(employee2!=null) {
-			employees.add(employee2);
-		}
 		return employees;
 	}
 	

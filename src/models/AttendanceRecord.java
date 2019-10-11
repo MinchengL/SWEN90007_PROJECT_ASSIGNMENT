@@ -100,7 +100,6 @@ public class AttendanceRecord {
 	
 	public static ArrayList<AttendanceRecord> getAllRecords(){
 		ArrayList<AttendanceRecord> list = AttendanceRecordDataMapper.getAllRecords();
-		System.out.println(list.size());
 		return list;
 	}
 	

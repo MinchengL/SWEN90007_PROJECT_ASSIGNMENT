@@ -46,8 +46,10 @@ public class LoginServlet extends HttpServlet {
 		username = request.getParameter("username");
 		String password = null;
 		password = request.getParameter("password");
+		String role = "admin";
+		role = request.getParameter("role");
 		UserService service = new UserService();
-		User user = service.loginUser(username, password);
+		User user = service.loginUser(username, password,role);
 		
 		if(user == null) {
 			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
