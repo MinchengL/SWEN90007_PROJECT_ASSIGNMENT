@@ -9,6 +9,7 @@
 <body>
 	<div class="container">
 
+	<% if(!AppSession.isAuthenticated()) { %>
 	
         <h1 style="color:steelblue">Login</h1>
             <form id="loginform" name="/loginForm" action="LoginServlet" method="post">
@@ -33,6 +34,9 @@
                 <input type="submit" value="Login">
             </form>
 
+            <% } else { %>
+            You are already logged in as <%=AppSession.getUser().getUserName() %>
+            <% } %>
             
     </div>
 </body>

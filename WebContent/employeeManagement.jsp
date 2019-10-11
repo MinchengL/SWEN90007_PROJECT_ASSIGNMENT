@@ -23,9 +23,16 @@ th, td {
 </nav>
 
 <% 
-User user = (User)session.getAttribute("user");
-String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
+int user_id = (int)session.getAttribute("user_id");
+User user;
+if(usertype==1){
+	user=Admin.getAdminById(user_id);
+}
+else{
+	user=Employee.getEmployeeById(user_id+"");
+}
+String username = user.getUserName();
 String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<Employee> emplist = new ArrayList<>();

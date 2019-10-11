@@ -27,16 +27,13 @@ th, td {
 int usertype = (int)session.getAttribute("usertype");
 int user_id = (int)session.getAttribute("user_id");
 User user;
-if(usertype==1){
-	user=Admin.getAdminById(user_id);
+if(usertype == 1){
+	user = Admin.getAdminById(user_id);
 }
 else{
-	user=Employee.getEmployeeById(user_id+"");
+	user = Employee.getEmployeeById(user_id+"");
 }
-//User user = (User)session.getAttribute("user");
-System.out.println(user==null);
 String username = user.getUserName();
-
 String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<Department> dptlist = new ArrayList<>();

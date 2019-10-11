@@ -54,6 +54,9 @@ public class Department {
 		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
 	public long getPhoneNumber() {
+		if(this.phoneNumber == 0) {
+			load();
+		}
 		return phoneNumber;
 	}
 	public void setPhoneNumber(long phoneNumber) {

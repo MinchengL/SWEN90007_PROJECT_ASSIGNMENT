@@ -22,17 +22,24 @@ th, td {
 </nav>
 
 <% 
-User user = (User)session.getAttribute("user");
-String username = user.getUserName();
 int usertype = (int)session.getAttribute("usertype");
+int user_id = (int)session.getAttribute("user_id");
+User user;
+if(usertype==1){
+	user=Admin.getAdminById(user_id);
+}
+else{
+	user=Employee.getEmployeeById(user_id+"");
+}
+String username = user.getUserName();
 String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<AttendanceRecord> atdlist = new ArrayList<>();
 Object str = session.getAttribute("searchAttendance");
 if(str != null) {atdlist = AttendanceService.searchByEmployee(str.toString());}
 else {atdlist = AttendanceService.getAllAttendance();}
-if (usertype == 0) {atdlist = AttendanceService.searchByEmployee(user.getUserID()+"");}
-int len = atdlist == null ? 0: atdlist.size();
+if (usertype == 2) {atdlist = AttendanceService.searchByEmployee(user.getUserID()+"");}
+int len = atdlist == null ? 0 : atdlist.size();
  %>
  
 <%= username %> + <%= type %>
