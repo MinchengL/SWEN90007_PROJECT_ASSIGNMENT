@@ -50,10 +50,11 @@ public abstract class User {
 		this.email = email;
 	}
 	
-	public static User getUser(String username) {
-		Admin admin = AdminIdentityMap.getInstance().get(username);
+	public static User getUser(String id) {
+		int id_int = Integer.parseInt(id);
+		Admin admin = Admin.getAdminById(id_int);
 		if(admin != null) return (User)admin;
-		Employee employee = EmployeeIdentityMap.getInstance().get(username);
+		Employee employee = Employee.getEmployeeById(id);
 		if(employee != null) return (User)employee;
 		return null;
 	}

@@ -12,7 +12,7 @@
 Department department = (Department)session.getAttribute("department");
 int id = department.getDepartmentID();
 String name = department.getName();
-int phoneNumber = department.getPhoneNumber();
+long phoneNumber = department.getPhoneNumber();
 String location = department.getLocation();
  %>
 <div class="container">

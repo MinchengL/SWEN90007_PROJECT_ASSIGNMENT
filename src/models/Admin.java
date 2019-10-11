@@ -24,11 +24,25 @@ public class Admin extends User{
 	
 	public Admin(String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email) {
 		super(userName, passWord, firstName, lastName, phoneNumber, birthday, email);
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		unitofworkAdmin.getCurrent().registerNew(this);
 	}
 	public Admin(int UserID, String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email, ArrayList<Department> department) {
 		super(UserID, userName, passWord,firstName, lastName, phoneNumber, birthday, email);
+		this.userID = UserID;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		this.department = department;
 	}
 	
@@ -159,6 +173,11 @@ public class Admin extends User{
 		if(admin==null) {
 			admin = AdminDataMapper.search("admin_id", id+"");
 		}
+		return admin;
+	}
+	
+	public static Admin getAdminbyUsername(String username) {
+		Admin admin = AdminDataMapper.search("username", username);
 		return admin;
 	}
 

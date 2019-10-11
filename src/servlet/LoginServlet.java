@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			Logger logger = Logger.getAnonymousLogger();
 			logger.info("usertype is "+userType);
 			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
+			session.setAttribute("user_id", user.getUserID());
 			session.setAttribute("usertype", userType);
 			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 //			response.sendRedirect("/departmentManagement.jsp");

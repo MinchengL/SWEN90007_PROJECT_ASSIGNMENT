@@ -17,7 +17,7 @@ public class DBConnection {
 	
 	private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/hrm";
 	private static final String DB_User = "postgres";
-	private static final String DB_Password = "admin";
+	private static final String DB_Password = "2223";
 	
 	public static Connection connection = null;
 	static PreparedStatement ps = null;
