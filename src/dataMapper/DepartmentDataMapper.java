@@ -1,5 +1,6 @@
 package dataMapper;
 
+import java.awt.Checkbox;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -7,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
 
 import IdentityMap.DepartmentIdentityMap;
 import database.DBConnection;
@@ -72,6 +75,28 @@ public class DepartmentDataMapper {
 				if(DepartmentIdentityMap.getInstance().get(result.getDepartmentID())==null) {
 					DepartmentIdentityMap.getInstance().put(department_id, result);
 				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static boolean checkDepartmentName(String name) {
+		String sql = "SELECT department_id WHERE name = '" + name+"'";
+		Connection connection = null;
+		boolean result = false;
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int department_id = rs.getInt(1);
+				result = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -122,4 +122,9 @@ public class Department {
 		return department;
 	}
 	
+	public static boolean checkDepartmentExist(String name) {
+		boolean result = DepartmentDataMapper.checkDepartmentName(name);
+		return result;
+	}
+	
 }
