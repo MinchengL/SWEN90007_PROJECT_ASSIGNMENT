@@ -87,7 +87,7 @@ public class DepartmentDataMapper implements IDepartmentMapper {
 	}
 	
 	public static boolean checkDepartmentName(String name) {
-		String sql = "SELECT department_id WHERE name = '" + name+"'";
+		String sql = "SELECT department_id from department_table WHERE name = '" + name+"'";
 		Connection connection = null;
 		boolean result = false;
 		try {

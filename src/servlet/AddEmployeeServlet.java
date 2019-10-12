@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dataMapper.LockManager;
+import models.Department;
 
 /**
  * Servlet implementation class AddEmployeeServlet
@@ -61,6 +62,10 @@ public class AddEmployeeServlet extends HttpServlet {
 		
 		String department = request.getParameter("department");
 		if(department.length() > 25 || department == null) valid = false;
+		boolean departmentExist = Department.checkDepartmentExist(department);
+		if(!departmentExist) {
+			valid = false;
+		}
 		
 		int phoneNumber = 0;
 		String tmpPhoneNumber = request.getParameter("phoneNumber");
@@ -83,9 +88,15 @@ public class AddEmployeeServlet extends HttpServlet {
 				EmployeeService.addEmployee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
 			}
 		}
-		else {
+		else if(!departmentExist) {
 			PrintWriter out = response.getWriter();
 			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='addEmployee.jsp' </script>");
+			out.flush();
+			out.close();
+		}
+		else {
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Input department name does not exist!'); window.location='addEmployee.jsp' </script>");
 			out.flush();
 			out.close();
 		}
@@ -93,7 +104,7 @@ public class AddEmployeeServlet extends HttpServlet {
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
-//		response.sendRedirect("/attendanceManagement.jsp");
+//		response.sendRedirect("/employeeManagement.jsp");
 	}
 
 	/**

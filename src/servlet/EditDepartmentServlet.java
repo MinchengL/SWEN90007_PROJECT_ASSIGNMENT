@@ -63,6 +63,10 @@ public class EditDepartmentServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		name = request.getParameter("name");
 		if(name.length() > 25 || name == null) valid = false;
+		boolean departmentExist = Department.checkDepartmentExist(name);
+		if(departmentExist) {
+			valid = false;
+		}
 		
 		int phoneNumber = 0;
 		String tmpPhoneNumber = request.getParameter("phoneNumber");
@@ -85,9 +89,15 @@ public class EditDepartmentServlet extends HttpServlet {
 				DepartmentService.editDepartment(department, name, phoneNumber, location);
 			}
 		}
-		else {
+		else if(!departmentExist) {
 			PrintWriter out = response.getWriter();
 			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='editDepartment.jsp' </script>");
+			out.flush();
+			out.close();
+		}
+		else {
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Department name already exists!'); window.location='editDepartment.jsp' </script>");
 			out.flush();
 			out.close();
 		}

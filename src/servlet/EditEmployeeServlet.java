@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dataMapper.LockManager;
+import models.Department;
 import models.Employee;
 import serviceLayer.EmployeeService;
 
@@ -67,6 +68,10 @@ public class EditEmployeeServlet extends HttpServlet {
 		
 		String department = request.getParameter("department");
 		if(department.length() > 25 || department == null) valid = false;
+		boolean departmentExist = Department.checkDepartmentExist(department);
+		if(!departmentExist) {
+			valid = false;
+		}
 		
 		String phonenumber = request.getParameter("phoneNumber");
 		String regex_phone = "^(?:\\+?61|0)[2-478](?:[ -]?[0-9]){8}$";
@@ -88,9 +93,15 @@ public class EditEmployeeServlet extends HttpServlet {
 				EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
 			}
 		}
+		else if(departmentExist) {
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='editEmployee.jsp' </script>");
+			out.flush();
+			out.close();
+		}
 		else {
 			PrintWriter out = response.getWriter();
-			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='employeeManagement.jsp' </script>");
+			out.print("<script>alert('Input department name does not exist!'); window.location='editEmployee.jsp' </script>");
 			out.flush();
 			out.close();
 		}
