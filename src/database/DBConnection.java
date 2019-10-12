@@ -19,7 +19,7 @@ public class DBConnection {
 //	private static final String DB_User = "postgres";
 //	private static final String DB_Password = "admin";
 	
-	static Connection connection = null;
+	public static Connection connection = null;
 	static PreparedStatement ps = null;
 	
 	public static Connection getConnection() throws SQLException, URISyntaxException{

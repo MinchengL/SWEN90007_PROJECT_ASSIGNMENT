@@ -1,10 +1,10 @@
 package servlet;
 
-import data_mapper.*;
+import dataMapper.*;
 import models.*;
 import unitofwork.unitofworkDepartment;
 import database.*;
-import service_layer.*;
+import serviceLayer.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -42,6 +42,7 @@ public class DatabaseInitializationServlet extends HttpServlet {
     		unitofworkAdmin.newCurrent();
     		unitofworkDepartment.newCurrent();
     		unitofworkEmployee.newCurrent();
+    		unitofworkAttendanceRecord.newCurrent();
     		//System.out.println(feature_a.loginbyAdmin("jack", "1234").getLastName());
 	}
 

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+
 /**
  * Servlet implementation class LogoutServlet
  */
@@ -28,6 +30,8 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		org.apache.shiro.subject.Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
 		HttpSession session = request.getSession();
 		session.invalidate();
 		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/index.jsp");

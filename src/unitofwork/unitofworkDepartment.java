@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import models.Admin;
 import models.Department;
-import data_mapper.*;
+import dataMapper.*;
 
 public class unitofworkDepartment {
 	
@@ -53,15 +53,15 @@ public class unitofworkDepartment {
 	
 	public void commit() {
 		for(Department department: newDepartments) {
-			DepartmentDataMapper.insert(department);
+			DepartmentLockingMapper.insert(department);
 		}
 	
 		for(Department department: dirtyDepartments) {
-			DepartmentDataMapper.update(department);
+			DepartmentLockingMapper.update(department);
 		}
 		
 		for(Department department: deletedDepartments) {
-			DepartmentDataMapper.delete(department);
+			DepartmentLockingMapper.delete(department);
 		}
 		
 	}

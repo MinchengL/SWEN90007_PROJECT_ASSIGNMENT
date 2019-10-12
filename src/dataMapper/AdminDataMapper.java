@@ -1,4 +1,4 @@
-package data_mapper;
+package dataMapper;
 
 import models.*;
 import java.awt.List;
@@ -12,6 +12,7 @@ import java.util.Set;
 
 import javax.print.attribute.HashAttributeSet;
 
+import IdentityMap.AdminIdentityMap;
 import database.DBConnection;
 
 public class AdminDataMapper {
@@ -38,8 +39,11 @@ public class AdminDataMapper {
 				int phoneNumber = rs.getInt(6);
 				String birthday = rs.getString(7);
 				String email = rs.getString(8);
-				ArrayList<Department> departments = loadDepartmentList(admin_id);
+				ArrayList<Department> departments = DepartmentDataMapper.loadDepartmentListByAdmin(admin_id);
 				admin = new Admin(admin_id,username,password, firstname, lastname,phoneNumber, birthday, email, departments);
+				if(AdminIdentityMap.getInstance().get(admin_id)==null) {
+					AdminIdentityMap.getInstance().put(admin_id, admin);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -52,41 +56,62 @@ public class AdminDataMapper {
 		return admin;
 	}
 
-	private static ArrayList<Department> loadDepartmentList(int admin_id) {
-		// TODO Auto-generated method stub
+	public static int getAdminMaxId() {
 		Connection connection;
-		ArrayList<Department> departments = new ArrayList<>();
+		int max_id=0;
 		try {
 			connection = DBConnection.getConnection();
-			Statement statement= connection.createStatement();
-			String sql = "SELECT department_id from admin_department_table WHERE admin_id = "+admin_id;
-			ResultSet rs = statement.executeQuery(sql);
+			Statement id_statement =connection.createStatement();
+			String id_sql = "SELECT MAX(admin_id) from admin_table";
+			ResultSet rs = id_statement.executeQuery(id_sql);
 			while(rs.next()) {
-				int department_id = rs.getInt(1);
-				Department department = DepartmentDataMapper.search("department_id", department_id+"");
-				departments.add(department);
+				max_id = rs.getInt(1);
 			}
-		}catch (Exception e) {
-			// TODO: handle exception
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return departments;
+		return max_id;
+		
 	}
-
+	
 	public static boolean insert(Admin admin) {
 		
 		Connection connection;
+		int max_id=0;
 		int result=0;
 		try {
+			if(AdminIdentityMap.getInstance().get(admin.getUserID())==null) {
+				AdminIdentityMap.getInstance().put(admin.getUserID(), admin);
+			}
 			connection = DBConnection.getConnection();
+			int max_employee_id = EmployeeDataMapper.getEmployeeMaxId();
+			int max_admin_id = AdminDataMapper.getAdminMaxId();
+			max_id = Math.max(max_employee_id, max_admin_id);
+			int id = max_id+1;
 			Statement statement = connection.createStatement();
-			String sql= "INSERT INTO admin_table (username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
-						+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
+			String sql= "INSERT INTO admin_table (admin_id, username, password, firstname, lastname, phoneNumber, birthday, email) VALUES ( "
+						+id+",'"+admin.getUserName()+"','"+admin.getPassWord()+"','"+admin.getFirstName()+"','"+admin.getLastName()
 						+"',"+admin.getPhoneNumber()+",'"+admin.getBirthday()+"','"+admin.getEmail()+"')";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,6 +134,12 @@ public class AdminDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,6 +177,12 @@ public class AdminDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,6 +205,27 @@ public class AdminDataMapper {
 			e.printStackTrace();
 		}
 		return result>0?true:false;
+	}
+	
+	static ArrayList<Admin> loadAdminsbyDepartmentId(int department_id) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		ArrayList<Admin> admins = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement= connection.createStatement();
+			String sql = "SELECT admin_id from admin_department_table WHERE department_id = "+department_id;
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int admin_id = rs.getInt(1);
+				Admin admin = AdminIdentityMap.getInstance().get(admin_id);
+				admins.add(admin);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return admins;
 	}
 	
 }

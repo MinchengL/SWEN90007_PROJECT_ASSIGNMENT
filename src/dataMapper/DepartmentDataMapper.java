@@ -1,5 +1,6 @@
-package data_mapper;
+package dataMapper;
 
+import java.awt.Checkbox;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,12 +9,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.omg.PortableServer.ID_ASSIGNMENT_POLICY_ID;
+
+import IdentityMap.DepartmentIdentityMap;
 import database.DBConnection;
 import models.Admin;
 import models.Department;
 import models.Employee;
 
-public class DepartmentDataMapper {
+public class DepartmentDataMapper implements IDepartmentMapper {
 	
 	public static ArrayList<Department> loadAllDepartment(){
 		String sql = "SELECT * from department_table";
@@ -29,10 +33,12 @@ public class DepartmentDataMapper {
 				String name = rs.getString(2);
 				String location = rs.getString(3);
 				int phoneNumber = rs.getInt(4);
-				
-				ArrayList<Admin> admins = loadAdmins(department_id);
+				ArrayList<Admin> admins = AdminDataMapper.loadAdminsbyDepartmentId(department_id);
 				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
 				result = new Department(department_id,name, phoneNumber, location, admins, employees);
+				if(DepartmentIdentityMap.getInstance().get(result.getDepartmentID())==null) {
+					DepartmentIdentityMap.getInstance().put(department_id, result);
+				}
 				resList.add(result);
 			}
 		} catch (SQLException e) {
@@ -53,7 +59,7 @@ public class DepartmentDataMapper {
 		}
 		String sql = "SELECT department_id, name, phoneNumber, location from department_table WHERE "+parameter+" = "+value;
 		Connection connection = null;
-		Department results = null;
+		Department result = null;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
@@ -63,9 +69,12 @@ public class DepartmentDataMapper {
 				String name = rs.getString(2);
 				int phoneNumber = rs.getInt(3);
 				String location = rs.getString(4);
-				ArrayList<Admin> admins = loadAdmins(department_id);
+				ArrayList<Admin> admins = AdminDataMapper.loadAdminsbyDepartmentId(department_id);
 				ArrayList<Employee> employees = EmployeeDataMapper.searchbydepartment(department_id);
-				results = new Department(department_id,name, phoneNumber, location, admins, employees);
+				result = new Department(department_id,name, phoneNumber, location, null, null);
+				if(DepartmentIdentityMap.getInstance().get(result.getDepartmentID())==null) {
+					DepartmentIdentityMap.getInstance().put(department_id, result);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -74,42 +83,20 @@ public class DepartmentDataMapper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return results;
+		return result;
 	}
 	
-
-	private static ArrayList<Admin> loadAdmins(int department_id) {
-		// TODO Auto-generated method stub
-		Connection connection;
-		ArrayList<Admin> admins = new ArrayList<>();
-		try {
-			connection = DBConnection.getConnection();
-			Statement statement= connection.createStatement();
-			String sql = "SELECT admin_id from admin_department_table WHERE department_id = "+department_id;
-			ResultSet rs = statement.executeQuery(sql);
-			while(rs.next()) {
-				int admin_id = rs.getInt(1);
-				Admin admin = AdminDataMapper.search("admin_id", admin_id+"");
-				admins.add(admin);
-			}
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return admins;
-	}
-
-	public static ArrayList<Integer> searchforadmins(int id){
-		String sql = "SELECT admin_id from department_table WHERE id = "+id;
+	public static boolean checkDepartmentName(String name) {
+		String sql = "SELECT department_id from department_table WHERE name = '" + name+"'";
 		Connection connection = null;
-		ArrayList<Integer> results = new ArrayList<>();
+		boolean result = false;
 		try {
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			while(rs.next()) {
-				int admin_id = rs.getInt(1);
-				results.add(admin_id);
+				int department_id = rs.getInt(1);
+				result = true;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -118,9 +105,8 @@ public class DepartmentDataMapper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return results;
+		return result;
 	}
-	
 	
 	public static boolean insert(Department department) {
 		
@@ -136,12 +122,21 @@ public class DepartmentDataMapper {
 				max_id = rs.getInt(1);
 			}
 			int id = max_id+1;
+			if(DepartmentIdentityMap.getInstance().get(id)==null) {
+				DepartmentIdentityMap.getInstance().put(id, department);
+			}
 			Statement statement = connection.createStatement();
 			String sql= "INSERT INTO department_table (department_id, name, location, phonenumber) VALUES ("+id+",'"+department.getName()+"', '"+department.getLocation()+"', "+department.getPhoneNumber()+")";
 			result = statement.executeUpdate(sql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,6 +157,12 @@ public class DepartmentDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,6 +200,12 @@ public class DepartmentDataMapper {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				DBConnection.connection.rollback();
+			}catch (SQLException ignored) {
+				// TODO: handle exception
+				System.out.println("rollback failed");
+			}
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -221,6 +228,27 @@ public class DepartmentDataMapper {
 			e.printStackTrace();
 		}
 		return result>0?true:false;
+	}
+	
+	static ArrayList<Department> loadDepartmentListByAdmin(int admin_id) {
+		// TODO Auto-generated method stub
+		Connection connection;
+		ArrayList<Department> departments = new ArrayList<>();
+		try {
+			connection = DBConnection.getConnection();
+			Statement statement= connection.createStatement();
+			String sql = "SELECT department_id from admin_department_table WHERE admin_id = "+admin_id;
+			ResultSet rs = statement.executeQuery(sql);
+			while(rs.next()) {
+				int department_id = rs.getInt(1);
+				Department department = Department.getDepartmentById(department_id+"");
+				departments.add(department);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return departments;
 	}
 	
 }

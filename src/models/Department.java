@@ -3,29 +3,32 @@ package models;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import IdentityMap.DepartmentIdentityMap;
 import unitofwork.unitofworkDepartment;
-import data_mapper.DepartmentDataMapper;
+import dataMapper.DepartmentDataMapper;
 
 public class Department {
 	
 	private int departmentID;
 	private String name = null;
-	private int phoneNumber;
+	private long phoneNumber;
 	private String location = null;
 	private ArrayList<Employee> employees = new ArrayList<Employee>();
 	private ArrayList<Admin> admins = new ArrayList<Admin>();
 	
-	public Department(String name, int phoneNumber, String location) {
+	public Department() {}
+	
+	public Department(String name, long phoneNumber, String location) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.location = location;
-		System.out.println(unitofworkDepartment.getCurrent() == null);
+		//System.out.println(unitofworkDepartment.getCurrent() == null);
 		if(unitofworkDepartment.getCurrent()==null) {
 			unitofworkDepartment.newCurrent();
 		}
 		unitofworkDepartment.getCurrent().registerNew(this);
 	}
-	public Department(int departmentID, String name, int phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {
+	public Department(int departmentID, String name, long phoneNumber, String location, ArrayList<Admin> admins, ArrayList<Employee> employees) {
 		this.departmentID=departmentID;
 		this.name=name;
 		this.phoneNumber=phoneNumber;
@@ -50,10 +53,13 @@ public class Department {
 		this.name = name;
 		unitofworkDepartment.getCurrent().registerDirty(this);
 	}
-	public int getPhoneNumber() {
+	public long getPhoneNumber() {
+		if(this.phoneNumber == 0) {
+			load();
+		}
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(long phoneNumber) {
 		this.phoneNumber = phoneNumber;
 		unitofworkDepartment.getCurrent().registerDirty(this);
 		
@@ -97,4 +103,28 @@ public class Department {
 			this.admins = result.getAdmins();
 		}
 	}
+	
+	public static ArrayList<Department> getAllDepartmentList(){
+		return DepartmentDataMapper.loadAllDepartment();
+	}
+	
+	public static Department getDepartmentById(String id) {
+		int id_int = Integer.parseInt(id);
+		Department department = DepartmentIdentityMap.getInstance().get(id_int);
+		if(department==null) {
+			department = DepartmentDataMapper.search("department_id", id);
+		}
+		return department;
+	}
+	
+	public static Department getDepartmentByName(String name) {
+		Department department = DepartmentDataMapper.search("name", name);
+		return department;
+	}
+	
+	public static boolean checkDepartmentExist(String name) {
+		boolean result = DepartmentDataMapper.checkDepartmentName(name);
+		return result;
+	}
+	
 }

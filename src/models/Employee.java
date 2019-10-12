@@ -6,35 +6,72 @@ import java.util.HashMap;
 
 import org.omg.CORBA.IdentifierHelper;
 
+import DTO.EmployeeAssembler;
 import IdentityMap.DepartmentIdentityMap;
-import data_mapper.DepartmentDataMapper;
-import data_mapper.EmployeeDataMapper;
+import IdentityMap.EmployeeIdentityMap;
+import dataMapper.DepartmentDataMapper;
+import dataMapper.EmployeeDataMapper;
 import unitofwork.unitofworkEmployee;
 
 public class Employee extends User{
 	
 	private String userName = null;
 	private String passWord = null;
-	private int userID; // corresponds to id in database
+	private int userID=0; // corresponds to id in database
 	private String firstName = null;
 	private String lastName = null;
 	private Department department = null;
-	private int phoneNumber=0;
+	private int phoneNumber;
 	private String birthday = null;
 	private String email = null;
 
+	public Employee() {}
+	
 	public Employee(int UserID, String userName, String passWord, String firstName, String lastName,Department department, int phoneNumber, String birthday, String email) {
 		
 		super(UserID, userName,passWord,firstName,lastName, phoneNumber, birthday, email);
+		this.userID = UserID;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		this.department = department;
+	}
+	
+	public Employee(String userName, String passWord, String firstName, String lastName,Department department, int phoneNumber, String birthday, String email) {
+		
+		super(userName,passWord,firstName,lastName, phoneNumber, birthday, email);
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
+		this.department = department;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
+		unitofworkEmployee.getCurrent().registerNew(this);
+		unitofworkEmployee.getCurrent().commit();
 	}
 	
 	public void setUserName(String userName) {
 		this.userName = userName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
+	
+	public String getUserName() {
+		return this.userName;
+	}
 	public String getPassWord() {
-		if(passWord == null)
+		if(this.passWord == null)
 		{
 			load();
 		}
@@ -42,18 +79,27 @@ public class Employee extends User{
 	}
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getPhoneNumber() {
-		if(phoneNumber == 0)
+		if(this.phoneNumber == 0)
 		{
 			load();
 		}
@@ -61,10 +107,13 @@ public class Employee extends User{
 	}
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getBirthday() {
-		if(birthday == null)
+		if(this.birthday == null)
 		{
 			load();
 		}
@@ -72,10 +121,13 @@ public class Employee extends User{
 	}
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public String getEmail() {
-		if(email == null)
+		if(this.email == null)
 		{
 			load();
 		}
@@ -83,18 +135,29 @@ public class Employee extends User{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
 		unitofworkEmployee.getCurrent().registerDirty(this);
 	}
 	public int getUserID() {
-		if(userID == 0)
+		if(this.userID == 0)
 		{
 			load();
 		}
 		return userID;
 	}
 	
+	public void setUserID(int userid) {
+		this.userID = userid;
+		if(unitofworkEmployee.getCurrent()==null) {
+			unitofworkEmployee.newCurrent();
+		}
+		unitofworkEmployee.getCurrent().registerDirty(this);
+	}
+	
 	public Department getDepartment() {
-		if(department==null) {
+		if(this.department==null) {
 			load();
 		}
 		return department;
@@ -107,27 +170,59 @@ public class Employee extends User{
 
 	public void load() {
 		Employee employee = EmployeeDataMapper.search(this.userName);
-		if(passWord == null)
+		if(this.passWord == null)
 		{
 			this.passWord = employee.getPassWord();
 		}
-		if(phoneNumber == 0)
+		if(this.phoneNumber == 0)
 		{
 			this.phoneNumber = employee.getPhoneNumber();
 		}
-		if(birthday==null) {
+		if(this.birthday==null) {
 			this.birthday = employee.getBirthday();
 		}
-		if(email==null) {
+		if(this.email==null) {
 			this.email = employee.getEmail();
 		}
-		if(userID==0) {
+		if(this.userID==0) {
 			this.userID = employee.getUserID();
 		}
-		if(department==null) {
+		if(this.department==null) {
 			this.department = employee.getDepartment();
 		}
 		
 	}
 
+	public static Employee loginbyEmployee(String id, String password) {
+		Employee employee = EmployeeIdentityMap.getInstance().get(Integer.parseInt(id));
+		if(employee==null) {
+			employee = EmployeeDataMapper.searchbyid(Integer.parseInt(id));
+		}
+		if(employee!=null) {
+			if(employee.getPassWord().equals(password)) {
+				return employee;
+			}else {
+				return null;
+			}
+		}
+		return null;
+	}
+	
+	public static ArrayList<Employee> getAllEmployeeList(){
+		return EmployeeDataMapper.loadAllEmployees();
+	}
+	
+	public static Employee getEmployeeById(String id) {
+		int id_int = Integer.parseInt(id);
+		Employee employee = EmployeeIdentityMap.getInstance().get(id_int);
+		if(employee==null) {
+			employee = EmployeeDataMapper.searchbyid(id_int);
+		}
+		return employee;
+	}
+
+	public static Employee getEmployeeByUsername(String username) {
+		
+		return null;
+	}
 }

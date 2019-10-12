@@ -1,3 +1,4 @@
+<%@ page import="servlet.AppSession" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -8,6 +9,7 @@
 </head>
 <body>
 <div class="container">
+
 	<form id="addDepartmentForm" name="/addDepartmentForm" action="AddDepartmentServlet" method="post">
 		<table border="0">
 			<tr>
@@ -18,6 +20,7 @@
 			<td>Phone Number:</td>
 			<td><input type="number" name="phoneNumber"></td>
 			</tr>
+			<tr>
 			<td>Location:</td>
 			<td><input type="text" name="location"></td>
 			</tr>
@@ -25,6 +28,7 @@
             <br>
                 <input type="submit" value="ConFirm">
 	</form>
-    </div>
+	
+</div>
 </body>
 </html>

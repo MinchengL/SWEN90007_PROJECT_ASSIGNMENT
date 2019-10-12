@@ -1,11 +1,11 @@
 package models;
 
-import java.rmi.server.LoaderHandler;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
-import data_mapper.AdminDataMapper;
+import IdentityMap.AdminIdentityMap;
+import IdentityMap.EmployeeIdentityMap;
+import dataMapper.AdminDataMapper;
+import dataMapper.EmployeeDataMapper;
 import unitofwork.unitofworkAdmin;
 
 public class Admin extends User{
@@ -20,13 +20,29 @@ public class Admin extends User{
 	private String birthday = null;
 	private String email = null;
 
+	public Admin() {}
+	
 	public Admin(String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email) {
 		super(userName, passWord, firstName, lastName, phoneNumber, birthday, email);
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		unitofworkAdmin.getCurrent().registerNew(this);
 	}
 	public Admin(int UserID, String userName, String passWord, String firstName, String lastName, int phoneNumber, String birthday, String email, ArrayList<Department> department) {
 		super(UserID, userName, passWord,firstName, lastName, phoneNumber, birthday, email);
+		this.userID = UserID;
+		this.userName = userName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.passWord = passWord;
+		this.phoneNumber = phoneNumber;
+		this.birthday = birthday;
+		this.email = email;
 		this.department = department;
 	}
 	
@@ -34,6 +50,11 @@ public class Admin extends User{
 		this.userName = userName;
 		unitofworkAdmin.getCurrent().registerDirty(this);
 	}
+	
+	public String getUserName() {
+		return this.userName;
+	}
+	
 	public String getPassWord() {
 		if(this.passWord == "")
 		{
@@ -101,6 +122,11 @@ public class Admin extends User{
 		return department;
 	}
 
+	public void setId(int id) {
+		this.userID = id;
+		unitofworkAdmin.getCurrent().registerDirty(this);
+	}
+	
 	public void setDepartment(ArrayList<Department> department) {
 		this.department = department;
 		unitofworkAdmin.getCurrent().registerDirty(this);
@@ -128,6 +154,31 @@ public class Admin extends User{
 		if(department.size()==0) {
 			this.department = admin.getDepartment();
 		}
+	}
+	
+	public static Admin loginbyAdmin(String id, String password) {
+		Admin admin = getAdminById(Integer.parseInt(id));
+		if(admin!=null) {
+			if(admin.getPassWord().equals(password)) {
+				return admin;
+			}else {
+				return null;
+			}
+		}
+		return null;
+	}
+
+	public static Admin getAdminById(int id) {
+		Admin admin = AdminIdentityMap.getInstance().get(id);
+		if(admin==null) {
+			admin = AdminDataMapper.search("admin_id", id+"");
+		}
+		return admin;
+	}
+	
+	public static Admin getAdminbyUsername(String username) {
+		Admin admin = AdminDataMapper.search("username", username);
+		return admin;
 	}
 
 }
