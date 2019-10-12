@@ -1,4 +1,6 @@
+<%@page import="servlet.AppSession"%>
 <%@page import="java.awt.Window"%>
+<%@page import="java.util.regex.Pattern" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*" 
     pageEncoding="UTF-8"%>
@@ -36,18 +38,20 @@ String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<AttendanceRecord> atdlist = new ArrayList<>();
 Object str = session.getAttribute("searchAttendance");
-if(str != null) {atdlist = AttendanceService.searchByEmployee(str.toString());}
-else {atdlist = AttendanceService.getAllAttendance();}
+String regex = "\\d*";
+if(str != null && Pattern.matches(regex, str.toString())) {atdlist = AttendanceService.searchByEmployee(str.toString());}
+else {atdlist = AttendanceService.getAllAttendance();
+str = "Enter valid employee ID";}
 if (usertype == 2) {atdlist = AttendanceService.searchByEmployee(user.getUserID()+"");}
 int len = atdlist == null ? 0 : atdlist.size();
  %>
  
 <%= username %> + <%= type %>
 
-<% if(usertype == 1) { %>
+<% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)) { %>
 <form id="searchform" name="/searchForm" action="SearchAttendanceServlet" method="post">
      Search by Employee:
-     <input type="text" name="searchAttendance" placeholder="Employee ID">
+     <input type="text" name="searchAttendance" value="<%=str%>">
      <input type="submit" value="Search">
 </form>
 <form id="clearform" name="/clearForm" action="ClearAttendanceServlet" method="post">
@@ -55,7 +59,7 @@ int len = atdlist == null ? 0 : atdlist.size();
 </form>
 <% } %>
 
-<% if(usertype != 1) { %>
+<% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.EMPLOYEE_ROLE)) { %>
 <div>
 <form action="AttendanceClockServlet?id=<%=user.getUserID() %>" method="post">
     <button type="submit" name="button" value="clockOn">Clock-on</button>

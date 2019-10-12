@@ -17,7 +17,7 @@ import models.Admin;
 import models.Department;
 import models.Employee;
 
-public class DepartmentDataMapper {
+public class DepartmentDataMapper implements IDepartmentMapper {
 	
 	public static ArrayList<Department> loadAllDepartment(){
 		String sql = "SELECT * from department_table";

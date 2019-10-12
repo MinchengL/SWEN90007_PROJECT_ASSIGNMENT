@@ -1,4 +1,6 @@
 <%@page import="java.awt.Window"%>
+<%@page import="servlet.AppSession"%>
+<%@page import="java.util.regex.Pattern" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*"
     pageEncoding="UTF-8"%>
@@ -37,8 +39,10 @@ String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<Employee> emplist = new ArrayList<>();
 Object str = session.getAttribute("searchEmployee");
-if(str != null) {emplist = EmployeeService.searchEmployee(str.toString());}
-else {emplist = EmployeeService.getAllEmployee();}
+String regex = "\\d*";
+if(str != null && Pattern.matches(regex, str.toString())) {emplist = EmployeeService.searchEmployee(str.toString());}
+else {emplist = EmployeeService.getAllEmployee();
+str = "Enter valid Employee ID";}
 int len = emplist == null ? 0: emplist.size();
  %>
  
@@ -46,7 +50,7 @@ int len = emplist == null ? 0: emplist.size();
 
 <form id="searchform" name="/searchForm" action="SearchEmployeeServlet" method="post">
      Search for Employee:
-     <input type="text" name="searchEmployee" placeholder="Employee ID or name">
+     <input type="text" name="searchEmployee" value="<%=str%>">
      <input type="submit" value="Search">
 </form>
 <form id="clearform" name="/clearForm" action="ClearEmployeeServlet" method="post">
@@ -73,7 +77,7 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= emplist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= emplist.get(i).getBirthday() %></td>
 			 <td align = "center"><%= emplist.get(i).getEmail() %></td>
-			 <% if(usertype == 1){ %>
+			 <% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)){ %>
 			 <td>
 			 <a href="EditEmployeeServlet?id=<%=emplist.get(i).getUserID()%>"  onclick="window.location='editEmployee.jsp'">Edit</a>
 			 </td>
@@ -88,7 +92,7 @@ for(i = 0; i < len; i++){
 </table>
 
 </br>
-<% if (usertype == 1) {%>
+<% if (AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)) {%>
 <button onclick="window.location='addEmployee.jsp'">Add New Employee</button>
 <% } %>
 

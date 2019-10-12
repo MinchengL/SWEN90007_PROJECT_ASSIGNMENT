@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <td>Role:</td>
-                        <td><input type="radio" value="admin" name="role" placeholder="Role" width="100px">Admin
+                        <td><input type="radio" value="admin" name="role" placeholder="Role" checked="true" width="100px">Admin
                         <td><input type="radio" value="employee" name="role" placeholder="Role" width="100px">Employee
                         </td>
                     </tr>

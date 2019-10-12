@@ -44,12 +44,16 @@ public class AttendanceClockServlet extends HttpServlet {
 		String button = request.getParameter("button");
 		String id = request.getParameter("id");
 		Date date = new Date();
-		if ("clockOn".equals(button)) { // clock on
-            AttendanceService.insertClockOnRecord(id, date.toString());
-        } 
-		else if ("clockOff".equals(button)) { // clock off
-            AttendanceService.insertClockOffRecord(id, date.toString());
-        } 
+		if(AppSession.isAuthenticated()) {
+			if(AppSession.hasRole(AppSession.EMPLOYEE_ROLE)) {
+				if ("clockOn".equals(button)) { // clock on
+		            AttendanceService.insertClockOnRecord(id, date.toString());
+		        } 
+				else if ("clockOff".equals(button)) { // clock off
+		            AttendanceService.insertClockOffRecord(id, date.toString());
+		        } 
+			}
+		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		

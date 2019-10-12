@@ -1,4 +1,6 @@
 <%@page import="java.awt.Window"%>
+<%@page import="servlet.AppSession"%>
+<%@page import="java.util.regex.Pattern" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 import="models.*" import="dataMapper.*" import="java.util.ArrayList" import="serviceLayer.*"
     pageEncoding="UTF-8"%>
@@ -38,8 +40,10 @@ String type = usertype == 1 ? "admin" : "employee";
 
 ArrayList<Department> dptlist = new ArrayList<>();
 Object str = session.getAttribute("searchDepartment");
-if(str != null) {dptlist = DepartmentService.searchDepartment(str.toString());}
-else {dptlist = DepartmentService.getAllDepartment();}
+String regex = "\\d*";
+if(str != null && Pattern.matches(regex, str.toString())) {dptlist = DepartmentService.searchDepartment(str.toString());}
+else {dptlist = DepartmentService.getAllDepartment();
+	str = "Enter valid department ID";}
 int len = dptlist == null ? 0: dptlist.size();
  %>
  
@@ -47,7 +51,7 @@ int len = dptlist == null ? 0: dptlist.size();
  
 <form id="searchform" name="/searchForm" action="SearchDepartmentServlet" method="post">
      Search for Department:
-     <input type="text" name="searchDepartment" placeholder="Department ID or name">
+     <input type="text" name="searchDepartment" value="<%=str%>">
      <input type="submit" value="Search">
 </form>
 <form id="clearform" name="/clearForm" action="ClearDepartmentServlet" method="post">
@@ -71,7 +75,7 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= dptlist.get(i).getName() %></td>
 			 <td align = "center"><%= dptlist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= dptlist.get(i).getLocation() %></td>
-			 <% if(usertype == 1){ %>
+			 <% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)){ %>
 			 <td>
 			 <a href="EditDepartmentServlet?id=<%=dptlist.get(i).getDepartmentID()%>"  onclick="window.location='editDepartment.jsp'">Edit</a>
 			 </td>
@@ -85,7 +89,7 @@ for(i = 0; i < len; i++){
 
 </table>
 </br>
-<% if (usertype == 1) { %>
+<% if (AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)) { %>
 <button onclick="window.location='addDepartment.jsp'">Add New Department</button>
 <% } %>
 

@@ -3,6 +3,9 @@ package servlet;
 import models.Department;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.SessionCookieConfig;
 import javax.servlet.annotation.WebServlet;
@@ -50,25 +53,27 @@ public class AddDepartmentServlet extends HttpServlet {
 		
 		int phoneNumber = 0;
 		String tmpPhoneNumber = request.getParameter("phoneNumber");
-		if(tmpPhoneNumber.length() <= 10) {
+		String regex_phone = "^(?:\\+?61|0)[2-478](?:[ -]?[0-9]){8}$";
+		if(tmpPhoneNumber.length() > 10 || tmpPhoneNumber == null || !Pattern.matches(regex_phone, tmpPhoneNumber)) valid = false;
+		else {
 			phoneNumber = Integer.parseInt(tmpPhoneNumber);
 		}
-		else valid = false;
 		
 		String location = null;
 		location = request.getParameter("location");
 		if(location.length() > 25 || location == null) valid = false;
-		
-		System.out.println(AppSession.hasRole(AppSession.ADMIN_ROLE));
-//		if(AppSession.isAuthenticated() && valid) {
-//			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
-//				DepartmentService.addDepartment(name, phoneNumber, location);
-//			}
-//		}
-		
-//		if(valid == true) {
-//			DepartmentService.addDepartment(name, phoneNumber, location);
-//		}
+
+		if(AppSession.isAuthenticated() && valid) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+				DepartmentService.addDepartment(name, phoneNumber, location);
+			}
+		}
+		else {
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='addDepartment.jsp' </script>");
+			out.flush();
+			out.close();
+		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
