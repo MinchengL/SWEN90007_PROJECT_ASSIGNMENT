@@ -1,9 +1,13 @@
 package servlet;
 
+import serviceLayer.DepartmentService;
 import serviceLayer.EmployeeService;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -60,19 +64,30 @@ public class AddEmployeeServlet extends HttpServlet {
 		
 		int phoneNumber = 0;
 		String tmpPhoneNumber = request.getParameter("phoneNumber");
-		if(tmpPhoneNumber.length() <= 10) {
+		String regex_phone = "^(?:\\+?61|0)[2-478](?:[ -]?[0-9]){8}$";
+		if(tmpPhoneNumber.length() > 10 || tmpPhoneNumber == null || !Pattern.matches(regex_phone, tmpPhoneNumber)) valid = false;
+		else {
 			phoneNumber = Integer.parseInt(tmpPhoneNumber);
 		}
-		else valid = false;
 		
 		String birthday = request.getParameter("birthday");
-		if(birthday.length() > 25 || birthday == null) valid = false;
+		String regex_date = "((((19|20)\\d{2})-(0?(1|[3-9])|1[012])-(0?[1-9]|[12]\\d|30))|(((19|20)\\d{2})-(0?[13578]|1[02])-31)|(((19|20)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|((((19|20)([13579][26]|[2468][048]|0[48]))|(2000))-0?2-29))$";
+		if(birthday.length() > 25 || birthday == null || !Pattern.matches(regex_date, birthday)) valid = false;
 		
 		String email = request.getParameter("email");
-		if(email.length() > 25 || email == null) valid = false;
+		String regex_email = "^([a-zA-Z]|[0-9])(\\w|-)+@[a-zA-Z0-9]+\\.([a-zA-Z]{2,4})$";
+		if(email.length() > 25 || email == null || !Pattern.matches(regex_email, email)) valid = false;
 		
-		if(valid == true) {
-			EmployeeService.addEmployee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
+		if(AppSession.isAuthenticated() && valid) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+				EmployeeService.addEmployee(username, password, firstName, lastName, department, phoneNumber, birthday, email);
+			}
+		}
+		else {
+			PrintWriter out = response.getWriter();
+			out.print("<script>alert('Illegal input or unauthenticated user'); window.location='addEmployee.jsp' </script>");
+			out.flush();
+			out.close();
 		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());

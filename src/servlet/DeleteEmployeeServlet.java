@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dataMapper.LockManager;
+import serviceLayer.DepartmentService;
 import serviceLayer.EmployeeService;
 
 /**
@@ -39,7 +40,12 @@ public class DeleteEmployeeServlet extends HttpServlet {
 		}
 		
 		String id = request.getParameter("id");
-		EmployeeService.deleteEmployee(id);
+		
+		if(AppSession.isAuthenticated()) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+				EmployeeService.deleteEmployee(id);
+			}
+		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		

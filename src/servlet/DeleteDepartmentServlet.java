@@ -40,7 +40,12 @@ public class DeleteDepartmentServlet extends HttpServlet {
 		}
 		
 		String id = request.getParameter("id");
-		DepartmentService.deleteDepartment(id);
+
+		if(AppSession.isAuthenticated()) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+				DepartmentService.deleteDepartment(id);
+			}
+		}
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		

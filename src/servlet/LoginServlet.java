@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.security.auth.Subject;
 import javax.servlet.ServletException;
@@ -48,8 +49,8 @@ public class LoginServlet extends HttpServlet {
 		Boolean valid = true;
 		String username = null;
 		username = request.getParameter("username");
-		//String regex = "^[0-9]*$";
-		//valid =  username.matches(regex);
+		String regex = "\\d*";
+		valid = Pattern.matches(regex, username);
 		String password = null;
 		password = request.getParameter("password");
 		String role = "admin";
