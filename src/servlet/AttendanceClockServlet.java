@@ -53,8 +53,8 @@ public class AttendanceClockServlet extends HttpServlet {
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
-//		response.sendRedirect("/attendanceManagement.jsp");
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
+		response.sendRedirect("/attendanceManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 	}
 
 	/**

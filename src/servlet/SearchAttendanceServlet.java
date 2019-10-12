@@ -40,9 +40,9 @@ public class SearchAttendanceServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String str = request.getParameter("searchAttendance");
 		request.getSession().setAttribute("searchAttendance", str);
-//		ArrayList<AttendanceRecord> attendance = AttendanceService.searchDepartment(str);
-//		response.sendRedirect("/attendanceManagement.jsp");
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
+
+		response.sendRedirect("/attendanceManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/attendanceManagement.jsp");
 		
 		LockManager.getInstance().releaseReadLock(session.getId());
 	}

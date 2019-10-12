@@ -49,21 +49,40 @@ public class LoginServlet extends HttpServlet {
 		String role = "admin";
 		role = request.getParameter("role");
 		UserService service = new UserService();
-		User user = service.loginUser(username, password,role);
-		
-		if(user == null) {
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
-//			response.sendRedirect("/loginFailed.jsp");
+
+		User user = null;
+		if(valid == true) {
+		try {
+			user = service.loginUser(username, password,role);
+			if(user != null) {
+				currentUser.login(token);
+			}
+
+		} catch (UnknownAccountException | IncorrectCredentialsException e) {
+//			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			response.sendRedirect("/loginFailed.jsp");
+		} finally {
+			if(user == null) {
+//				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+				response.sendRedirect("/loginFailed.jsp");
+			}
+			else {
+				AppSession.init(user);
+				int userType = role.equals("admin") ? 1 : 2;
+//				Logger logger = Logger.getAnonymousLogger();
+//				logger.info("usertype is "+userType);
+				HttpSession session = request.getSession();
+				session.setAttribute("user_id", Integer.parseInt(username));
+				session.setAttribute("usertype", userType);
+//				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+				response.sendRedirect("/departmentManagement.jsp");
+			}
+		}
 		}
 		else {
-			int userType = service.getUsertype(username, password);
-			Logger logger = Logger.getAnonymousLogger();
-			logger.info("usertype is "+userType);
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-			session.setAttribute("usertype", userType);
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//			response.sendRedirect("/departmentManagement.jsp");
+//			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			response.sendRedirect("/loginFailed.jsp");
+
 		}
 
 	}

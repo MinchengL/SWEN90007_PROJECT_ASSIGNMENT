@@ -42,8 +42,8 @@ public class ClearDepartmentServlet extends HttpServlet {
 		}
 
 		session.setAttribute("searchDepartment", null);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 		
 		LockManager.getInstance().releaseReadLock(session.getId());
 	}

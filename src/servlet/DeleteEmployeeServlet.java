@@ -43,8 +43,8 @@ public class DeleteEmployeeServlet extends HttpServlet {
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
-//		response.sendRedirect("/employeeManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
+		response.sendRedirect("/employeeManagement.jsp");
 	}
 
 	/**
