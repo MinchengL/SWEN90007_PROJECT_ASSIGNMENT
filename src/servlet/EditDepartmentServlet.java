@@ -42,8 +42,8 @@ public class EditDepartmentServlet extends HttpServlet {
 		request.getSession().setAttribute("dptid", id);
 		Department department = DepartmentService.getDepartment(id);
 		request.getSession().setAttribute("department", department);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editDepartment.jsp");
-//		response.sendRedirect("/editDepartment.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editDepartment.jsp");
+		response.sendRedirect("/editDepartment.jsp");
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class EditDepartmentServlet extends HttpServlet {
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 	}
 
 }

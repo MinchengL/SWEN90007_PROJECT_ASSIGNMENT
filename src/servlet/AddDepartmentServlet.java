@@ -87,8 +87,8 @@ public class AddDepartmentServlet extends HttpServlet {
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//		response.sendRedirect("/departmentManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
 
 	}
 

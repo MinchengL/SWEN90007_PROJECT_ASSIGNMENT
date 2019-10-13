@@ -70,12 +70,12 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		} catch (UnknownAccountException | IncorrectCredentialsException e) {
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
-//			response.sendRedirect("/loginFailed.jsp");
+//			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			response.sendRedirect("/loginFailed.jsp");
 		} finally {
 			if(user == null) {
-				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
-//				response.sendRedirect("/loginFailed.jsp");
+//				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+				response.sendRedirect("/loginFailed.jsp");
 			}
 			else {
 				AppSession.init(user);
@@ -85,14 +85,14 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("user_id", Integer.parseInt(username));
 				session.setAttribute("usertype", userType);
-				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
-//				response.sendRedirect("/departmentManagement.jsp");
+//				response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+				response.sendRedirect("/departmentManagement.jsp");
 			}
 		}
 		}
 		else {
-			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
-//			response.sendRedirect("/loginFailed.jsp");
+//			response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/loginFailed.jsp");
+			response.sendRedirect("/loginFailed.jsp");
 		}
 
 	}
