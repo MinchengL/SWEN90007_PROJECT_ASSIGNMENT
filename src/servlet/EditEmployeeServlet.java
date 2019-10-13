@@ -89,8 +89,9 @@ public class EditEmployeeServlet extends HttpServlet {
 		Employee employee = EmployeeService.getEmployeeById(id);
 
 		if(AppSession.isAuthenticated() && valid) {
-			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE) || (AppSession.hasRole(AppSession.EMPLOYEE_ROLE) && (employee.getUserID()+"").equals(request.getSession().getAttribute("user_id").toString()))) {
 				EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
+				System.out.println("test");
 			}
 		}
 		else if(departmentExist) {

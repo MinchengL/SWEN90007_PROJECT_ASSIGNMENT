@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import IdentityMap.AttendanceRecordIdentityMap;
 import IdentityMap.EmployeeIdentityMap;
 import database.DBConnection;
 import models.AttendanceRecord;
@@ -14,6 +15,7 @@ import models.Employee;
 
 public class AttendanceRecordDataMapper {
 	
+	//search attendance records given employee_id, operatin_type and operation_time
 	public static AttendanceRecord search(int employee_id, String operation_type, String operation_time){
 		String sql = "SELECT id, employee_id, operation_type, operation_time from attendance_record_table WHERE id ="+employee_id+" and operation_type ="+operation_type+" and operation_time="+operation_time;
 		Connection connection;
@@ -29,6 +31,9 @@ public class AttendanceRecordDataMapper {
 				String operationTime = rs.getString(4);
 				Employee employee = Employee.getEmployeeById(employee_id+"");
 				record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
+				if(AttendanceRecordIdentityMap.getInstance().get(attendancerecord_id)==null) {
+					AttendanceRecordIdentityMap.getInstance().put(attendancerecord_id, record);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -41,6 +46,7 @@ public class AttendanceRecordDataMapper {
 		return record;
 	}
 	
+	//search all the attendance records
 	public static ArrayList<AttendanceRecord> getAllRecords(){
 		String sql = "SELECT id, employee_id, operation_type, operation_time from attendance_record_table";
 		Connection connection;
@@ -57,7 +63,9 @@ public class AttendanceRecordDataMapper {
 				Employee employee = Employee.getEmployeeById(employee_id+"");
 				AttendanceRecord record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 				records.add(record);
-				System.out.println(records.size());
+				if(AttendanceRecordIdentityMap.getInstance().get(attendancerecord_id)==null) {
+					AttendanceRecordIdentityMap.getInstance().put(attendancerecord_id, record);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -69,6 +77,7 @@ public class AttendanceRecordDataMapper {
 		return records;
 	}
 	
+	//search attendance records given employee_id
 	public static ArrayList<AttendanceRecord> getRecordsByUser(int employee_id){
 		String sql = "SELECT id, employee_id, operation_type, operation_time from attendance_record_table WHERE employee_id="+employee_id;
 		Connection connection;
@@ -85,6 +94,9 @@ public class AttendanceRecordDataMapper {
 				Employee employee = EmployeeDataMapper.searchbyid(employee_id);
 				AttendanceRecord record = new AttendanceRecord(attendancerecord_id, employee, operationType, operationTime);
 				records.add(record);
+				if(AttendanceRecordIdentityMap.getInstance().get(attendancerecord_id)==null) {
+					AttendanceRecordIdentityMap.getInstance().put(attendancerecord_id, record);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

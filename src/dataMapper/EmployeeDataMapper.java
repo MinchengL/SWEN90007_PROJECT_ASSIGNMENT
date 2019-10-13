@@ -239,6 +239,13 @@ public class EmployeeDataMapper {
 		Connection connection;
 		int result=0;
 		try {
+			ArrayList<AttendanceRecord> attendanceRecords = new ArrayList<>();
+			attendanceRecords=AttendanceRecord.getRecordByEmployee(employee.getUserID()+"");
+			if(attendanceRecords.size()>0) {
+				for(int i=0; i<attendanceRecords.size(); i++) {
+					AttendanceRecordDataMapper.delete(attendanceRecords.get(i));
+				}
+			}
 			connection = DBConnection.getConnection();
 			Statement statement = connection.createStatement();
 			String sql= "DELETE FROM public.employee_table WHERE employee_id = "+employee.getUserID();

@@ -15,7 +15,7 @@
             <form id="loginform" name="/loginForm" action="LoginServlet" method="post">
                 <table border="0">
                     <tr>
-                        <td>Username:</td>
+                        <td>User ID:</td>
                         <td><input type="text" name="username" placeholder="Username"></td>
                     </tr>
                     <tr>

@@ -77,10 +77,12 @@ for(i = 0; i < len; i++){
 			 <td align = "center"><%= emplist.get(i).getPhoneNumber() %></td>
 			 <td align = "center"><%= emplist.get(i).getBirthday() %></td>
 			 <td align = "center"><%= emplist.get(i).getEmail() %></td>
-			 <% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)){ %>
+			 <% if(AppSession.isAuthenticated() && (AppSession.hasRole(AppSession.ADMIN_ROLE) || (AppSession.hasRole(AppSession.EMPLOYEE_ROLE)&&emplist.get(i).getUserID()==user_id))){ %>
 			 <td>
 			 <a href="EditEmployeeServlet?id=<%=emplist.get(i).getUserID()%>"  onclick="window.location='editEmployee.jsp'">Edit</a>
 			 </td>
+			 <% } %>
+			 <% if(AppSession.isAuthenticated() && AppSession.hasRole(AppSession.ADMIN_ROLE)) { %>
 			 <td>
 			 <a  href="DeleteEmployeeServlet?id=<%=emplist.get(i).getUserID()%>">Delete</a>
 			 </td>
