@@ -45,8 +45,8 @@ public class SearchDepartmentServlet extends HttpServlet {
 		String str = request.getParameter("searchDepartment");
 		request.getSession().setAttribute("searchDepartment", str);
 //		ArrayList<Department> departments = DepartmentService.searchDepartment(str);
-//		response.sendRedirect("/departmentManagement.jsp");
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
+		response.sendRedirect("/departmentManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/departmentManagement.jsp");
 
 		LockManager.getInstance().releaseReadLock(session.getId());
 	}

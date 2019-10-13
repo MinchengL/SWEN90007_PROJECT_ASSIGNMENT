@@ -45,8 +45,8 @@ public class SearchEmployeeServlet extends HttpServlet {
 		String str = request.getParameter("searchEmployee");
 		request.getSession().setAttribute("searchEmployee", str);
 //		ArrayList<Employee> employees = EmployeeService.searchEmployee(str);
-//		response.sendRedirect("/employeeManagement.jsp");
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
+		response.sendRedirect("/employeeManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
 		
 		LockManager.getInstance().releaseReadLock(session.getId());
 	}

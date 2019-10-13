@@ -41,8 +41,8 @@ public class EditEmployeeServlet extends HttpServlet {
 		request.getSession().setAttribute("empid", id);
 		Employee employee = EmployeeService.getEmployeeById(id);
 		request.getSession().setAttribute("employee", employee);
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editEmployee.jsp");
-//		response.sendRedirect("/editEmployee.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/editEmployee.jsp");
+		response.sendRedirect("/editEmployee.jsp");
 	}
 
 	/**
@@ -89,8 +89,9 @@ public class EditEmployeeServlet extends HttpServlet {
 		Employee employee = EmployeeService.getEmployeeById(id);
 
 		if(AppSession.isAuthenticated() && valid) {
-			if(AppSession.hasRole(AppSession.ADMIN_ROLE)) {
+			if(AppSession.hasRole(AppSession.ADMIN_ROLE) || (AppSession.hasRole(AppSession.EMPLOYEE_ROLE) && (employee.getUserID()+"").equals(request.getSession().getAttribute("user_id").toString()))) {
 				EmployeeService.editEmployee(employee, firstName, lastName, department, Integer.parseInt(phonenumber), birthday, email);
+				System.out.println("test");
 			}
 		}
 		else if(departmentExist) {
@@ -108,8 +109,8 @@ public class EditEmployeeServlet extends HttpServlet {
 		
 		LockManager.getInstance().releaseWriteLock(session.getId());
 		
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
-//		response.sendRedirect("/employeeManagement.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/employeeManagement.jsp");
+		response.sendRedirect("/employeeManagement.jsp");
 	}
 
 }

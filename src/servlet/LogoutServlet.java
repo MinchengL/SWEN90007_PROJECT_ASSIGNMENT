@@ -34,8 +34,8 @@ public class LogoutServlet extends HttpServlet {
 		currentUser.logout();
 		HttpSession session = request.getSession();
 		session.invalidate();
-		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/index.jsp");
-//		response.sendRedirect("/index.jsp");
+//		response.sendRedirect("/SWEN90007_PROJECT_ASSIGNMENT/index.jsp");
+		response.sendRedirect("/index.jsp");
 	}
 
 	/**
